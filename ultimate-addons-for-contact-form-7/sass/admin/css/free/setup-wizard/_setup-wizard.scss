@@ -1,0 +1,656 @@
+// Variables for breakpoints
+$xx-small-screen: 375px;
+$x-small-screen: 576px;
+$small-screen: 768px;
+$medium-screen: 1024px;
+$large-screen: 1200px;
+$x-large-screen: 1400px;
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
+
+//hide wp menu and admin bar
+body.admin_page_uacf7-setup-wizard {
+    background-color: #fff;
+    font-family: "Inter", sans-serif !important;
+    line-height: 1.7 !important;
+    font-weight: 400 !important;
+    font-size: 16px;
+    color: #636266 !important;
+    p {
+        line-height: 1.7 !important;
+        font-weight: 400 !important;
+        font-size: 16px;
+        color: #636266 !important;
+        font-family: "Inter", sans-serif !important;
+    }
+    h1,
+    h2,
+    h3 {
+        font-family: "Inter", sans-serif !important;
+        line-height: 1.25 !important;
+        font-weight: 700 !important;
+        color: #382673 !important;
+    }
+    .select2.select2-container.select2-container--default {
+        border: 1px solid #ccc !important;
+        padding-top: 6px;
+        border-radius: 3px;
+    }
+    .select2-dropdown {
+        // border: 1px solid #EAECF0 !important;
+        // padding: 5px !important;
+        // border-top: 1px solid #EAECF0 !important;
+
+        .select2-search__field {
+            border: 1px solid #eaecf0 !important;
+        }
+        .select2-results ul li {
+            font-size: 16px !important;
+        }
+    }
+}
+.admin_page_uacf7-setup-wizard #wpcontent {
+    margin-left: 0 !important;
+}
+
+.admin_page_uacf7-setup-wizard #wpbody-content,
+.admin_page_uacf7-setup-wizard #wpcontent {
+    padding: 0;
+    overflow-x: hidden !important;
+    min-height: calc(100vh - 32px);
+}
+
+.admin_page_uacf7-setup-wizard #adminmenumain,
+.admin_page_uacf7-setup-wizard .error,
+.admin_page_uacf7-setup-wizard .notice,
+.admin_page_uacf7-setup-wizard .update-nag,
+.admin_page_uacf7-setup-wizard .updated,
+.admin_page_uacf7-setup-wizard div#wpadminbar,
+.admin_page_uacf7-setup-wizard div#wpfooter {
+    display: none;
+}
+
+.uacf7-setup-widzard-btn {
+    color: #fff;
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px;
+    padding: 12px 16px;
+    border-radius: 4px;
+    background: #382673;
+    border: none;
+    cursor: pointer;
+
+    &.disabled {
+        opacity: 0.4;
+    }
+    &.skip {
+        color: #382673;
+        background-color: #fff;
+    }
+    &:hover {
+        background: #06040c !important;
+    }
+    svg {
+        padding-left: 5px;
+    }
+}
+
+.uacf7-setup-wizard {
+    min-height: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 32px;
+    min-height: calc(100vh - 100px);
+    position: relative;
+
+    .uacf7-step-items-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        @media only screen and (max-width: $x-small-screen) {
+            display: none;
+        }
+
+        .uacf7-single-step-item {
+            width: 25%;
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+            z-index: 1;
+
+            &::before {
+                position: absolute;
+                background: var(--gray-200, #eaecf0);
+                height: 2px;
+                width: 100%;
+                content: "";
+                left: 50%;
+                top: 11px;
+                z-index: -1;
+            }
+
+            &.step-first::before {
+                // display: none;
+            }
+
+            &.step-last::before {
+                display: none;
+            }
+
+            &.active::before {
+                background: #7f56d9;
+            }
+
+            &.active {
+                .step-item-dots {
+                    background: var(--primary-50, #f9f5ff);
+                    box-shadow: 0px 0px 0px 4px #f4ebff;
+                }
+            }
+
+            .step-item-dots {
+                display: inline-block;
+                height: 24px;
+                width: 25px;
+                border-radius: 12px;
+                background: var(--gray-50, #f9fafb);
+            }
+
+            .step-item-title {
+                display: block;
+                padding: 12px;
+                color: var(--gray-700, #344054);
+                text-align: center;
+                font-family: "Inter", sans-serif;
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: 20px;
+            }
+        }
+    }
+    .uacf7-step-content-container {
+        margin-bottom: 100px;
+
+        .uacf7-single-step-content {
+            display: none;
+            visibility: hidden;
+
+            .uacf7-single-step-content-wrap {
+                padding: 32px 32px 32px 32px;
+                position: relative;
+                @media only screen and (max-width: $x-small-screen) {
+                    padding: 10px 10px 10px 10px;
+                }
+            }
+            &.active {
+                display: block;
+                visibility: visible;
+            }
+            &.installation {
+                width: 60%;
+                margin: 0 auto;
+
+                @media only screen and (max-width: $x-small-screen) {
+                    width: 90%;
+                }
+                .uacf7-single-step-content-wrap {
+                    padding: 56px 32px 56px 32px;
+                    margin-top: 100px;
+                    border-radius: 8px;
+                    /*! border: 0.1px solid #9E9E9E; */
+                    background: #f7f4fd;
+                    box-shadow: 0px 4px 40px 0px rgba(37, 22, 84, 0.05);
+                    text-align: center;
+                    position: relative;
+                    @media only screen and (max-width: $x-small-screen) {
+                        margin-top: 0;
+                    }
+                    .uacf7-wizard-logo {
+                        position: absolute;
+                        left: 50%;
+                        top: 0;
+                        height: 73px;
+                        width: 73px;
+                        margin-left: -36px;
+                        top: -36px;
+                    }
+
+                    .uacf7-single-step-content-inner {
+                        h1 {
+                            color: #06040c !important;
+                            text-align: center;
+                            font-size: 40px;
+                            font-style: normal;
+                            @media only screen and (max-width: $x-small-screen) {
+                                font-size: 32px;
+                            }
+                        }
+
+                        p {
+                            color: #636266;
+                            text-align: center;
+                            font-family: "Inter", sans-serif;
+                            font-size: 16px;
+                            font-style: normal;
+                            font-weight: 400;
+                            line-height: 24px;
+                        }
+
+                        .uacf7-step-plugin-required {
+                            padding-top: 0px;
+                            display: inline-block;
+                            p {
+                                margin-top: 10px;
+                                color: #06040c !important;
+                                text-align: center;
+                                font-size: 20px !important;
+                            }
+                            .required-plugin-button {
+                                border-radius: 4px;
+                                background: #382673;
+                                padding: 12px 16px;
+                                border: none;
+                                color: #fff;
+                                font-family: "Inter", sans-serif;
+                                font-size: 16px;
+                                font-style: normal;
+                                font-weight: 600;
+                                line-height: 20px;
+                                &:hover {
+                                    background: #06040c !important;
+                                }
+                                svg {
+                                    margin-left: 8px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            &.form-type {
+                margin-top: 80px;
+
+                .uacf7-single-step-content-wrap {
+                    display: flex;
+                    justify-content: space-around;
+                    align-items: center;
+                    gap: 50px;
+                    @media only screen and (max-width: $x-small-screen) {
+                        display: block;
+                    }
+                }
+                .uacf7-single-step-content-inner {
+                    width: 100%;
+                    min-width: 330px;
+
+                    @media only screen and (max-width: $x-small-screen) {
+                        margin-bottom: 28px;
+                        text-align: center;
+                    }
+                    img {
+                        width: 100%;
+                    }
+
+                    .uacf7-setup-widzard-btn {
+                        margin-top: 32px;
+                    }
+
+                    .uacf7-ai-codeblock {
+                        position: relative;
+                        .uacf7-ai-navigation {
+                            position: absolute;
+                            left: 0;
+                            top: 0;
+                            background-color: rgba(52, 53, 65);
+                            width: 100%;
+                            color: rgba(217, 217, 227);
+                            text-align: right;
+                            border-radius: 4px 4px 0px 0px;
+                        }
+                        .uacf7-ai-navigation span {
+                            padding: 8px 10px;
+                            display: inline-block;
+                            font-weight: 600;
+                            cursor: pointer;
+                        }
+                        #uacf7_ai_code_content {
+                            padding-top: 45px;
+                            height: 320px;
+                            width: auto;
+                            padding: 16px;
+                            min-height: 175px;
+                            width: 100%;
+                            border: 0;
+                            background-color: #000;
+                            color: #b9b7b7;
+                            font-size: 16px;
+                        }
+                    }
+                    // #uacf7-generated-form {
+                    //   width: 100%;
+                    //   padding: 32px;
+                    //   height: 400px !important;
+                    //   border-radius: 16px;
+                    //   background: #161f35;
+                    //   color: #FFF;
+                    //   font-size: 16px;
+                    //   font-weight: 400;
+                    //   line-height: 21px;
+
+                    //   &:active, &:focus {
+                    //     outline: none;
+                    //     box-shadow: none;
+                    //   }
+                    // }
+                    .uacf7-form-generate {
+                        @media only screen and (max-width: $x-small-screen) {
+                            text-align: center;
+                        }
+                        .select2-selection.select2-selection--single {
+                            display: inline-block;
+                            height: auto;
+                            // padding: 11px;
+                            border: none;
+                            min-width: 350px !important;
+                        }
+                        .select2-selection.select2-selection--single > span {
+                            line-height: 1.5 !important;
+                            color: #a6a6a6;
+                            font-size: 20px !important;
+                            font-family: "Inter", sans-serif;
+                        }
+
+                        .select2-selection__clear {
+                            display: none;
+                        }
+
+                        .select2-selection__arrow {
+                            position: absolute !important;
+                            right: 5px !important;
+                            top: 27% !important;
+                        }
+                        h3,
+                        label {
+                            color: #382673;
+                            font-size: 30px;
+                            font-weight: 700;
+                            font-style: normal;
+                            font-weight: 70;
+                            line-height: 32px;
+
+                            @media only screen and (max-width: $x-small-screen) {
+                                font-size: 18px;
+                            }
+                        }
+                        h3 span {
+                            color: #636266;
+                            display: block;
+                            font-size: 16px;
+                            font-weight: 400;
+                            padding-top: 10px;
+                            line-height: 1.7;
+                        }
+                        label select {
+                            color: #a6a6a6;
+                            border: 1px solid #ccc !important;
+                            font-size: 20px;
+                            padding: 12px 14px 5px !important;
+                            border-radius: 3px;
+                            font-style: normal;
+                            font-weight: 700;
+                            line-height: 32px;
+                            @media only screen and (max-width: $x-small-screen) {
+                                width: 100%;
+                                font-size: 18px;
+                            }
+
+                            &:active,
+                            &:focus {
+                                outline: none;
+                                border: none;
+                                box-shadow: none;
+                            }
+
+                            option {
+                                border: none;
+                                padding: 8px 16px;
+                                align-items: center;
+                                gap: 8px;
+                                align-self: stretch;
+                                color: #06040c;
+                                text-align: center;
+                                font-family: "Inter", sans-serif;
+                                font-size: 16px;
+                                font-style: normal;
+                                font-weight: 400;
+                                line-height: 32px;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .uacf7-addon-setting-content {
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr;
+                gap: 32px;
+                margin-top: 35px;
+
+                // Media query for large screens
+                @media only screen and (max-width: $x-large-screen) {
+                    grid-template-columns: 1fr 1fr 1fr;
+                }
+                // Media query for medium screens
+                @media only screen and (max-width: $medium-screen) {
+                    grid-template-columns: 1fr 1fr;
+                }
+
+                @media only screen and (max-width: $x-small-screen) {
+                    grid-template-columns: 1fr;
+                }
+                .uacf7-single-addon-setting {
+                    background-color: #fcfbfe;
+                    border-radius: 5px;
+                    min-height: 75px;
+                    padding: 10px 30px;
+                    transition: 0.4s;
+                    position: relative;
+                    overflow: hidden;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    box-shadow: 0px 4px 30px 0px rgba(6, 4, 12, 0.08);
+
+                    .uacf7-single-addons-wrap {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+
+                        .uacf7-single-addon-title {
+                            margin: 0;
+                            color: #06040c !important;
+                            font-weight: 400 !important;
+                            font-size: 16px;
+                            font-style: normal;
+                            line-height: 20px !important;
+                            max-width: 80%;
+                        }
+
+                        .addon-status {
+                            position: absolute;
+                            left: 0;
+                            top: 0;
+                            font-size: 10px;
+                            text-transform: uppercase;
+                            padding: 2px 10px;
+                            border-radius: 0 0 5px 0;
+                            width: auto;
+                            height: auto;
+                            font-weight: 400;
+                            line-height: 1.8;
+                            text-align: center;
+                            background-color: #00a58c1a;
+                            line-height: 24px;
+                            font-weight: 600;
+                            color: #00a58c;
+
+                            &.pro {
+                                background-color: #f15a9e1a;
+                                color: #f15a9e;
+                            }
+                        }
+                        .uacf7-addon-toggle-wrap {
+                            height: 30px;
+                            width: 50px;
+
+                            .uacf7-addon-toggle-inner {
+                                width: 100%;
+                                height: 100%;
+                                display: block;
+                                border-radius: 25px;
+                                background-color: #d5d0e2;
+                                border: 2px solid #79757f;
+                                position: relative;
+                                transition: 0.4s;
+
+                                .uacf7-addon-toggle-track {
+                                    position: absolute;
+                                    left: 0;
+                                    padding: 4px 6px;
+                                    transition: 0.4s;
+                                }
+                            }
+
+                            .uacf7-addon-input-field {
+                                display: none;
+                                &:checked + .uacf7-addon-toggle-inner {
+                                    background-color: #382673;
+                                    border-color: #382673;
+                                    transition: 0.4s;
+                                    .uacf7-addon-toggle-track {
+                                        transition: 0.4s;
+                                        transform: translateX(20px);
+                                        svg {
+                                            transform: scale(1.2);
+                                            rect {
+                                                fill: #fff;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .uacf7-wizard-footer {
+        position: fixed;
+        left: 0;
+        width: 100%;
+        bottom: 0;
+        background: #fff;
+
+        .uacf7-wizard-footer-inner {
+            padding: 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            .uacf7-wizard-footer-right {
+                .wizard_uacf7_btn_back_addon {
+                    padding: 12px 16px;
+                    justify-content: center;
+                    align-items: center;
+                    gap: 8px;
+                    align-self: stretch;
+                    border-radius: 4px;
+                    border: 1px solid #382673;
+                    background: #382673;
+                    color: #fff !important;
+                    font-size: 16px;
+                    font-style: normal;
+                    font-weight: 600;
+                    line-height: 20px;
+                    text-decoration: none;
+                }
+            }
+
+            .uacf7-wizard-footer-left-link.uacf7-back-dashboard {
+                padding: 12px 16px;
+                justify-content: center;
+                align-items: center;
+                gap: 8px;
+                align-self: stretch;
+                border-radius: 4px;
+                border: 1px solid #382673;
+                background: #06040c !important;
+                color: #fff !important;
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: 20px;
+                text-decoration: none;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: $x-large-screen) {
+    .uacf7-setup-wizard {
+        padding: 16px 25px;
+        .uacf7-step-content-container {
+            .uacf7-single-step-content {
+                &.installation {
+                    .uacf7-single-step-content-wrap {
+                        .uacf7-single-step-content-inner {
+                            h1 {
+                                font-size: 35px;
+                            }
+                            p {
+                                font-size: 14px;
+                            }
+                            .uacf7-step-plugin-required {
+                                p {
+                                    font-size: 18px !important;
+                                    margin: 10px 0;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .uacf7-wizard-footer {
+            .uacf7-wizard-footer-inner {
+                padding: 16px 25px;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: $medium-screen) {
+    .uacf7-setup-wizard {
+        .uacf7-step-content-container {
+            .uacf7-single-step-content {
+                &.installation {
+                    .uacf7-single-step-content-wrap {
+                        .uacf7-single-step-content-inner {
+                            .uacf7-step-plugin-required {
+                                display: inline-block;
+                                padding-top: 0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

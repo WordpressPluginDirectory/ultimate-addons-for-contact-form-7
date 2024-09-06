@@ -1,0 +1,36 @@
+.tf-field-backup {
+    .tf-field-wrap {
+        .tf-fieldset {
+            .tf-export-wrapper {
+                position: relative;
+                cursor: pointer;
+                #copyIndicator {
+                    position: absolute; // Position above the element
+                    top: 50%;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    background: #333;
+                    color: #fff;
+                    padding: 5px;
+                    border-radius: 3px;
+                    white-space: nowrap;
+                    transition: opacity 0.3s ease;
+                    // pointer-events: none; // Prevent interaction
+                    z-index: 10; // Ensure it appears above other elements
+                    margin-top: -28px;
+                    display: none;
+                }
+            }
+        }
+    }
+
+    textarea {
+        width: 100%;
+        margin-top: 10px;
+        padding: 10px;
+    }
+    button.tf-import-btn,
+    a.tf-export-button {
+        margin: 14px 0px !important;
+    }
+}

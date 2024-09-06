@@ -1,0 +1,19 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap");
+//global css
+@import '../../../common/css/variable';
+@import '../../../common/css/mixin';
+@import 'global/global';
+
+//core css
+@import 'core/admin';
+
+//setup wizard css
+@import 'setup-wizard/setup-wizard';
+
+//tf-options css
+@import 'tf-options/tf-options';
+
+//uacf7 Metabox css
+@import 'tf-options/common/uacf7_metabox';
+ 
+

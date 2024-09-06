@@ -1,0 +1,15 @@
+.clear {
+  clear: both;
+}
+
+.tf-single-repeater-uacf7_web_hook_header_request
+  .padding-bottom0
+  .tf-field-wrap {
+  padding-bottom: 0px !important;
+}
+
+.tf-single-repeater-uacf7_web_hook_header_request .padding-top0 .tf-field-wrap {
+  padding-top: 0px !important;
+}
+
+/* uacf7_web_hook_field_group */

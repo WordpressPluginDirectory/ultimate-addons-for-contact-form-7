@@ -1,0 +1,51 @@
+.tf-image-radio-group {
+    display: flex;
+    align-items: initial;
+    flex-wrap: wrap;
+    gap: 1%;
+
+    li {
+        display: inline-block;
+        // margin-right: 20px;
+        cursor: n-resize;
+        border-radius: 5px;
+        width: 31%;
+
+        .tf-image-title{ 
+            display: flex;
+            font-size: 15px;
+            color: #000 !important;
+            font-weight: 700;
+            text-align: match-parent;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+        }
+        .tf-image-checkbox img { 
+            width: 240px;
+            object-fit: cover;
+            object-position: top;
+            height: 180px;
+            transition: object-position 2s ease-in-out, border-color 0.3s ease-in-out;
+
+            &:hover {
+                object-position: bottom;
+            }
+        }
+
+        .tf-image-checkbox > input {
+            display: none
+        }
+
+        .tf-image-checkbox > img {
+            cursor: pointer;
+            border: 3px solid transparent;
+            width: 100%;
+        }
+
+        .tf-image-checkbox > input:checked + img {
+            border-color: #607085;
+            border-radius: 5px;
+        }
+    }
+}

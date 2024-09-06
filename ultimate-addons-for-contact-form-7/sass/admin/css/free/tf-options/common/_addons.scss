@@ -1,0 +1,261 @@
+// Variables for breakpoints
+$xx-small-screen: 375px;
+$x-small-screen: 576px;
+$small-screen: 768px;
+$medium-screen: 1024px;
+$large-screen: 1200px;
+$x-large-screen: 1400px;
+
+.uacf7-addons-settings-page {
+  padding: 24px;
+  background-color: #fff;
+  border-radius: 4px;
+
+  .uacf7-setting-title {
+    margin-bottom: 56px;
+    font-weight: 700;
+    line-height: 32px;
+  }
+
+  .tf-field-notice-inner {
+    font-size: 16px;
+    font-weight: 700;
+    text-align: center;
+  }
+
+  .uacf7-settings-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 50px;
+    margin-bottom: 32px;
+    // Media query for medium screens
+    @media only screen and (max-width: $x-small-screen) {
+      flex-direction: column;
+      gap: 16px;
+    }
+    .uacf7-settings-heading-wrap {
+      width: 50%;
+      @media only screen and (max-width: $x-small-screen) {
+        width: 100%;
+      }
+      .uacf7-addon-filter-search {
+        display: inline-block;
+        width: 100% !important;
+        height: 48px;
+        position: relative;
+
+        .uacf7-addon-filter-icon {
+          position: absolute;
+          left: 0;
+          top: 0;
+          z-index: 1;
+          height: auto;
+          width: auto;
+          padding: 12px;
+        }
+
+        #uacf7-addon-filter {
+          position: absolute;
+          left: 0;
+          top: 0;
+          height: 100%;
+          width: 100% !important;
+          font-size: 16px;
+          padding-left: 45px;
+          color: #d5d0e2;
+          border-radius: 8px;
+          border: 1px solid #d5d0e2;
+          box-shadow: 0px 4px 30px 0px #06040c14;
+          transition: 0.4s;
+
+          &:focus,
+          &:hover {
+            outline: none;
+            border-color: #a9a1d5;
+            box-shadow: 0px 4px 30px 0px #06040c14;
+            color: #000;
+          }
+        }
+      }
+
+      .uacf7-addon-filter-cta {
+        display: flex;
+        justify-content: right;
+        gap: 32px;
+        @media only screen and (max-width: $x-small-screen) {
+          justify-content: center;
+        }
+        .uacf7-addon-filter-button {
+          background-color: transparent;
+          border: none;
+          box-shadow: 0px 4px 30px 0px #06040c14;
+          padding: 8px 16px;
+          font-size: 16px;
+          line-height: 26px;
+          font-weight: 600;
+          border-radius: 6px;
+          cursor: pointer;
+
+          // Media query for medium screens
+          @media only screen and (max-width: $medium-screen) {
+            padding: 10px 10px;
+            font-size: 14px;
+          }
+          // Media query for medium screens
+          @media only screen and (max-width: $small-screen) {
+            padding: 6px 4px;
+            font-size: 12px;
+          }
+          @media only screen and (max-width: $x-small-screen) {
+            padding: 6px 4px;
+            font-size: 12px;
+          }
+          &.active {
+            background-color: #382673;
+            color: #fff;
+          }
+        }
+      }
+    }
+  }
+
+  .uacf7-addon-setting-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 32px;
+
+    // Media query for large screens
+    @media only screen and (max-width: $x-large-screen) {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+    // Media query for medium screens
+    @media only screen and (max-width: $medium-screen) {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    @media only screen and (max-width: $x-small-screen) {
+      grid-template-columns: 1fr;
+    }
+    .uacf7-single-addon-setting {
+      background-color: #fcfbfe;
+      padding: 32px;
+      border-radius: 16px;
+      transition: 0.4s;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      img {
+        height: 48px;
+        border-radius: 3px;
+      }
+
+      &:hover {
+        box-shadow: 0px 4px 30px 0px #06040c14;
+      }
+
+      .addon-status {
+        position: absolute;
+        right: -30px;
+        top: 15px;
+        height: 26px;
+        width: 120px;
+        text-align: center;
+        background-color: #00A58C1A;
+        font-size: 14px;
+        line-height: 24px;
+        font-weight: 600;
+        color: #00A58C;
+        transform: rotate(45deg);
+
+        &.pro {
+          background-color: #F15A9E1A;
+          color: #F15A9E;
+        }
+      }
+
+      .uacf7-single-addon-desc {
+        color: #4f4e52;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 24px; /* 150% */
+
+        a {
+          color: #382673;
+          font-size: 16px;
+          font-style: normal;
+          font-weight: 600;
+          line-height: 24px;
+          text-decoration-line: underline;
+        }
+      }
+    }
+
+    .uacf7-single-addon-cta {
+      margin-top: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .uacf7-single-addon-btn {
+        color: #382673;
+        padding: 12px 16px;
+        text-decoration: none;
+        border: 1px solid #382673;
+        border-radius: 4px;
+        font-size: 16px;
+        font-weight: 700;
+        transition: 0.4s;
+        &:hover {
+          background-color: #382673;
+          color: #fff;
+        }
+      }
+
+      .uacf7-addon-toggle-wrap {
+        height: 32px;
+        width: 52px;
+
+        .uacf7-addon-toggle-inner {
+          width: 100%;
+          height: 100%;
+          display: block;
+          border-radius: 100px;
+          background-color: #d5d0e2;
+          border: 2px solid #79757f;
+          position: relative;
+          transition: 0.4s;
+
+          .uacf7-addon-toggle-track {
+            position: absolute;
+            left: 0;
+            padding: 8px;
+            transition: 0.4s;
+          }
+        }
+
+        .uacf7-addon-input-field {
+          display: none;
+          &:checked + .uacf7-addon-toggle-inner {
+            background-color: #382673;
+            border-color: #382673;
+            transition: 0.4s;
+            .uacf7-addon-toggle-track {
+              transition: 0.4s;
+              transform: translateX(20px);
+              svg {
+                transform: scale(1.2);
+                rect {
+                  fill: #fff;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

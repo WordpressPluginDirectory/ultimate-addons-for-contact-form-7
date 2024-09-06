@@ -1,0 +1,17 @@
+
+#signature-pad #signature-canvas{
+  cursor: crosshair;
+
+}
+
+#clear-button {
+  margin-top: 10px;
+}
+
+#uploadedImage{
+  display: none!important;
+}
+
+#img_id_special{
+  display: none!important;
+}

@@ -1,0 +1,149 @@
+/* PopUp */
+.uacf7_popup_preview {
+  display: none;
+}
+
+.uacf7_popup_preview {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  text-align: center;
+  z-index: 999999;
+}
+
+.uacf7_popup_preview_content {
+  width: 100%;
+  overflow: auto;
+  background: rgba(0, 0, 0, 0.59);
+  color: #000;
+  position: relative;
+  box-sizing: border-box;
+  border-radius: 0;
+  height: 100%;
+}
+
+#uacf7_popup_wrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.uacf7_popup_preview .close {
+  position: absolute;
+  right: 0;
+  top: 0;
+  display: block;
+  padding: 25px;
+  line-height: 0;
+  color: red;
+  cursor: pointer;
+  transition: 0.5s;
+  z-index: 2;
+  font-weight: 700;
+}
+
+.uacf7_popup_preview .close:hover {
+  color: #ff1212;
+}
+
+#uacf7_popup_wrap .uacf7-twentytwenty-container {
+  margin: 0 auto;
+}
+
+#uacf7_popup_wrap table {
+  background-color: #fff;
+}
+
+.db-view-wrap {
+  max-width: 620px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 5px;
+  max-height: 500px;
+  overflow: auto;
+}
+
+.db-view-wrap .signature_view_pops {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: #382673b5;
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.db-view-wrap .signature_view_pops span {
+  color: #fff;
+}
+
+img.signature_view_pops_img {
+  width: auto;
+  height: auto;
+}
+
+.signature_download_btn,
+button#signature_view_btn {
+  padding: 5px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  background-color: #382673;
+  color: #fff;
+  border-radius: 5px;
+}
+
+.db-view-wrap table td {
+  text-align: left;
+}
+
+.db-view-wrap table th {
+  background-color: #dddddd;
+  font-weight: 7000 !important;
+}
+
+.db-view-wrap table th,
+.db-view-wrap table td {
+  border: 1px solid #ececec;
+}
+
+.db-view-wrap span {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.db-view-wrap h3 {
+  margin: 5px;
+  text-align: le;
+}
+
+.button-primary.uacf7-db-view,
+.button-primary.uacf7-db-pdf {
+  line-height: 1.1;
+}
+
+.button-primary.uacf7-db-view img,
+.button-primary.uacf7-db-pdf img {
+  height: 20px;
+}
+
+.unread {
+  font-weight: 700;
+}
+
+.db_popup_view {
+  width: 600px;
+  margin: 0 auto;
+  position: relative;
+}
+.uacf7-db-view,
+.uacf7-db-pdf {
+  margin-right: 10px !important;
+}

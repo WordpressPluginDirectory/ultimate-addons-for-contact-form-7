@@ -1,0 +1,164 @@
+.uacf7-metabox {
+  .tf-field-callback .tf-field-notice-inner.tf-notice-info {
+    background-color: #ebf2ff;
+    border: 1px solid #ebf2ff;
+    padding: 17px;
+  }
+
+  .tf-tab-wrapper {
+    max-width: calc(100% - 280px) !important;
+  }
+
+  .tf-field-heading.heading-inner {
+    background: #fff !important;
+    margin: 0 !important;
+    border-bottom: none !important;
+  }
+
+  .tf-field-heading.heading-inner .tf-field-heading-inner .tf-field-heading-content {
+    font-weight: 400 !important;
+    color: #87888b;
+  }
+
+  .heading-inner .tf-field-wrap h3 {
+    font-size: 16px !important;
+    margin-bottom: 5px !important;
+  }
+
+  .heading-inner .tf-field-wrap {
+    padding-bottom: 0 !important;
+    padding-left: 5px !important;
+  }
+
+  .tf-option-wrapper {
+    margin: 20px 20px 0 0 !important;
+  }
+
+  .uacf7-metabox {
+    padding: 0;
+  }
+
+  .tf-option-wrapper .tf-metabox-title {
+    margin-left: 20px;
+    margin-bottom: 20px;
+  }
+
+  .tf-field-notice-inner.tf-notice-info {
+    padding: 10px 25px;
+    border-radius: 4px;
+  }
+
+  .tf-setting-wrapper .tf-option-form .tf-option .tf-tab-wrapper .tf-tab-content {
+    padding: 0;
+    background: #fff;
+    border-radius: 0;
+  }
+
+  .tf-setting-wrapper .tf-option-form .tf-option .tf-admin-tab a.tf-tablinks {
+    padding: 15px 20px;
+  }
+
+  .tf-setting-wrapper .tf-option-form .tf-option .tf-admin-tab a.tf-tablinks.active .tf-sec-icon {
+    color: #fff;
+  }
+  .tf-setting-wrapper .tf-option-form .tf-option .tf-admin-tab a.tf-tablinks{
+    position: relative;
+     
+    .tf-metabox-option-checked {
+      position: absolute;
+      left: 6px;
+      height: 10px;
+      width: 10px;
+      background-color: #00a58c;
+      border-radius: 50%;
+    }
+  }
+  .tf-setting-wrapper .tf-option-form .tf-option .tf-admin-tab a.tf-tablinks.active {
+    .tf-metabox-option-checked {
+      display: none;
+    }
+    background-color: #382673;
+    color: #fff;
+    border-radius: 0;
+  }
+
+  .tf-setting-wrapper .tf-option-form .tf-option .tf-admin-tab a.tf-tablinks.active::before {
+    height: 10px;
+    width: 10px;
+    background: #fff;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    transform: rotate(45deg);
+    right: -5px;
+    top: 50%;
+    margin-top: -5px;
+    content: "";
+  }
+
+  .tf-setting-wrapper .tf-option-form .tf-option .tf-admin-tab a.tf-tablinks.active::after {
+    content: none;
+  }
+
+  .tf-field-heading {
+    margin: 0 -22px !important;
+    border-radius: 0 !important;
+    padding: 0 11px;
+    background-color: #f0f2f4 !important;
+    border-bottom: 1px solid #e1e5ea !important;
+  }
+
+  .tf-setting-wrapper .tf-option-form .tf-option .tf-tab-wrapper .tf-tab-content>.tf-field .tf-field-wrap {
+    padding: 20px 13px;
+  }
+
+  .tf-field.tf-field-notice .tf-fieldset {
+    margin-top: 0;
+  }
+
+  .tf-field.tf-field-notice .tf-field-wrap {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    padding-bottom: 5px !important;
+  }
+
+  #redirection .tf-field:nth-child(5) .tf-field-wrap {
+    padding-bottom: 0;
+  }
+
+  #redirection .tf-field:nth-child(6) .tf-field-wrap,
+  #redirection .tf-field:nth-child(7) .tf-field-wrap {
+    padding-top: 0;
+  }
+
+  .tf-setting-dashboard .tf-setting-top-bar .other-document .dropdown,
+  .uacf7-metabox .tf-setting-top-bar .other-document .dropdown {
+    top: 30px;
+  }
+}
+
+.tf-admin-btn.tf-btn-secondary,
+.tf-license-activate p.submit input {
+  background-color: #382673 !important;
+  border-color: #382673 !important;
+}
+
+.license-email {
+  margin-top: 20px;
+}
+
+.uacf7-settings-addon-btn {
+  position: absolute;
+  top: 30px;
+  right: 20px;
+}
+
+#form-panel {
+  position: relative;
+}
+
+.uacf7-metabox.uacf7_review {
+  margin: 0;
+  border: none;
+  padding: 0;
+}
