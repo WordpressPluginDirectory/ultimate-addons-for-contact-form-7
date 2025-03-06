@@ -1,48 +1,52 @@
 ;(function ($) { 
     'use strict';  
-      $ ( document ).ready(function() { 
-        $(".wpcf7-submit").click(function(e){ 
-          var form_id = $(this).closest("form").find('input[name="_wpcf7"]').val();
-            jQuery.ajax({
-                url: pre_populate_url.ajaxurl,
-                type: 'post',
-                data: {
-                    action: 'uacf7_ajax_pre_populate_redirect',
-                    form_id: form_id,
-                    ajax_nonce: pre_populate_url.nonce,
-                },
-                success: function (data) {
-                  if(data != false){ 
-                      var count_field = data.pre_populate_passing_field.length; 
-                      var shifting_field = data.pre_populate_passing_field;
-                      // Redirect form parameter
-                      var redirect_data = '?form='+data.pre_populate_form+''; 
-                      var pre_populate_enable = data.pre_populate_enable;
-                      if(pre_populate_enable == 1){
-                          for (var i = 0; i < count_field; i++) {
-                              var type = $("form [name='"+shifting_field[i]+"']").attr('type'); 
-                              var multiple= $("form [name='"+shifting_field[i]+"[]']").attr('type');
-                              if(type == 'radio' || type == 'checkbox'){ 
-                                  var value = $("form [name='"+shifting_field[i]+"']:checked").val();
-                              }else if( multiple == 'checkbox' ){
-                                  var value = $("form [name='"+shifting_field[i]+"[]']:checked").val();
-                              }else{
-                                  var value = $("form [name='"+shifting_field[i]+"']").val();
-                              } 
-                              redirect_data += '&'+shifting_field[i]+'='+value+''; 
-                          }   
-                        document.addEventListener('wpcf7mailsent', function (event) {
-                          if (event.detail.status == 'mail_sent') {
-                            location = data.data_redirect_url+redirect_data; // Redirect final location
+        $(document).ready(function() { 
+          $(".wpcf7-submit").click(function(e){ 
+              var form = $(this).closest("form");
+              var form_id = form.find('input[name="_wpcf7"]').val();
+      
+              jQuery.ajax({
+                  url: pre_populate_url.ajaxurl,
+                  type: 'post',
+                  data: {
+                      action: 'uacf7_ajax_pre_populate_redirect',
+                      form_id: form_id,
+                      ajax_nonce: pre_populate_url.nonce,
+                  },
+                  success: function (data) {
+                      if(data != false){ 
+                          var shifting_field = data.pre_populate_passing_field; 
+                          var redirect_data = '?form=' + encodeURIComponent(data.pre_populate_form); 
+                          var pre_populate_enable = data.pre_populate_enable;
+      
+                          if(pre_populate_enable == 1){
+                              shifting_field.forEach(function(field_name) {
+                                  var input = form.find("[name='" + field_name + "']");
+                                  var value = '';
+      
+                                  if(input.length > 0) {
+                                      if(input.attr('type') === 'radio' || input.attr('type') === 'checkbox') { 
+                                          value = form.find("[name='" + field_name + "']:checked").val();
+                                      } else { 
+                                          value = input.val();
+                                      }
+                                  }
+      
+                                  if (value) {
+                                      redirect_data += '&' + encodeURIComponent(field_name) + '=' + encodeURIComponent(value);
+                                  }
+                              });
+      
+                              document.addEventListener('wpcf7mailsent', function (event) {
+                                  if (event.detail.status == 'mail_sent') {
+                                      location.href = data.data_redirect_url + redirect_data; // Redirect final location
+                                  }
+                              }, false); 
                           }
-                        }, false); 
-                      }
-                      
-                  } 
-                }
-            }); 
-        
-        }); 
+                      } 
+                  }
+              }); 
+          }); 
       });
 
       $ ( document ).ready(function() { 

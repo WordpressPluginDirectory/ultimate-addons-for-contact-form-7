@@ -661,304 +661,304 @@ class UACF7_uacf7style {
 				$btn_margin_left = $form_meta['uacf7_uacf7style_btn_margin_left'];
 				$ua_custom_css = $form_meta['uacf7_uacf7style_ua_custom_css'];
 				?>
-                <style>
-                    .uacf7-uacf7style-<?php esc_attr_e( $cfform->id() ); ?> label {
-                        <?php
-                        // Color
-                        if ( ! empty( $label_color ) ) {
-                            echo 'color: ' . esc_attr( $label_color ) . ';';
-                        }
+				<style>
+					.uacf7-uacf7style-<?php esc_attr_e( $cfform->id() ); ?> label {
+						<?php
+						// Color
+						if ( ! empty( $label_color ) ) {
+							echo 'color: ' . esc_attr( $label_color ) . ';';
+						}
 
-                        // Background color
-                        if ( ! empty( $label_background_color ) ) {
-                            echo 'background-color: ' . esc_attr( $label_background_color ) . ';';
-                        }
+						// Background color
+						if ( ! empty( $label_background_color ) ) {
+							echo 'background-color: ' . esc_attr( $label_background_color ) . ';';
+						}
 
-                        // Font size
-                        if ( ! empty( $label_font_size ) ) {
-                            echo 'font-size: ' . esc_attr( $label_font_size ) . 'px;';
-                        }
+						// Font size
+						if ( ! empty( $label_font_size ) ) {
+							echo 'font-size: ' . esc_attr( $label_font_size ) . 'px;';
+						}
 
-                        // Font family
-                        if ( ! empty( $label_font_family ) ) {
-                            echo 'font-family: ' . esc_attr( $label_font_family ) . ';';
-                        }
+						// Font family
+						if ( ! empty( $label_font_family ) ) {
+							echo 'font-family: ' . esc_attr( $label_font_family ) . ';';
+						}
 
-                        // Font style
-                        if ( ! empty( $label_font_style ) ) {
-                            echo 'font-style: ' . esc_attr( $label_font_style ) . ';';
-                        }
+						// Font style
+						if ( ! empty( $label_font_style ) ) {
+							echo 'font-style: ' . esc_attr( $label_font_style ) . ';';
+						}
 
-                        // Font weight
-                        if ( ! empty( $label_font_weight ) ) {
-                            echo 'font-weight: ' . esc_attr( $label_font_weight ) . ';';
-                        }
+						// Font weight
+						if ( ! empty( $label_font_weight ) ) {
+							echo 'font-weight: ' . esc_attr( $label_font_weight ) . ';';
+						}
 
-                        // Padding
-                        if ( ! empty( $label_padding_top ) ) {
-                            echo 'padding-top: ' . esc_attr( $label_padding_top ) . 'px;';
-                        }
-                        if ( ! empty( $label_padding_right ) ) {
-                            echo 'padding-right: ' . esc_attr( $label_padding_right ) . 'px;';
-                        }
-                        if ( ! empty( $label_padding_bottom ) ) {
-                            echo 'padding-bottom: ' . esc_attr( $label_padding_bottom ) . 'px;';
-                        }
-                        if ( ! empty( $label_padding_left ) ) {
-                            echo 'padding-left: ' . esc_attr( $label_padding_left ) . 'px;';
-                        }
+						// Padding
+						if ( ! empty( $label_padding_top ) ) {
+							echo 'padding-top: ' . esc_attr( $label_padding_top ) . 'px;';
+						}
+						if ( ! empty( $label_padding_right ) ) {
+							echo 'padding-right: ' . esc_attr( $label_padding_right ) . 'px;';
+						}
+						if ( ! empty( $label_padding_bottom ) ) {
+							echo 'padding-bottom: ' . esc_attr( $label_padding_bottom ) . 'px;';
+						}
+						if ( ! empty( $label_padding_left ) ) {
+							echo 'padding-left: ' . esc_attr( $label_padding_left ) . 'px;';
+						}
 
-                        // Margin
-                        if ( ! empty( $label_margin_top ) ) {
-                            echo 'margin-top: ' . esc_attr( $label_margin_top ) . 'px;';
-                        }
-                        if ( ! empty( $label_margin_right ) ) {
-                            echo 'margin-right: ' . esc_attr( $label_margin_right ) . 'px;';
-                        }
-                        if ( ! empty( $label_margin_bottom ) ) {
-                            echo 'margin-bottom: ' . esc_attr( $label_margin_bottom ) . 'px;';
-                        }
-                        if ( ! empty( $label_margin_left ) ) {
-                            echo 'margin-left: ' . esc_attr( $label_margin_left ) . 'px;';
-                        }
-                        ?>
-                    }
+						// Margin
+						if ( ! empty( $label_margin_top ) ) {
+							echo 'margin-top: ' . esc_attr( $label_margin_top ) . 'px;';
+						}
+						if ( ! empty( $label_margin_right ) ) {
+							echo 'margin-right: ' . esc_attr( $label_margin_right ) . 'px;';
+						}
+						if ( ! empty( $label_margin_bottom ) ) {
+							echo 'margin-bottom: ' . esc_attr( $label_margin_bottom ) . 'px;';
+						}
+						if ( ! empty( $label_margin_left ) ) {
+							echo 'margin-left: ' . esc_attr( $label_margin_left ) . 'px;';
+						}
+						?>
+					}
 
-                    .uacf7-uacf7style-<?php esc_attr_e( $cfform->id() ); ?> input[type="email"],
-                    .uacf7-uacf7style-<?php esc_attr_e( $cfform->id() ); ?> input[type="number"],
-                    .uacf7-uacf7style-<?php esc_attr_e( $cfform->id() ); ?> input[type="password"],
-                    .uacf7-uacf7style-<?php esc_attr_e( $cfform->id() ); ?> input[type="search"],
-                    .uacf7-uacf7style-<?php esc_attr_e( $cfform->id() ); ?> input[type="tel"],
-                    .uacf7-uacf7style-<?php esc_attr_e( $cfform->id() ); ?> input[type="text"],
-                    .uacf7-uacf7style-<?php esc_attr_e( $cfform->id() ); ?> input[type="url"],
-                    .uacf7-uacf7style-<?php esc_attr_e( $cfform->id() ); ?> input[type="date"],
-                    .uacf7-uacf7style-<?php esc_attr_e( $cfform->id() ); ?> select,
-                    .uacf7-uacf7style-<?php esc_attr_e( $cfform->id() ); ?> textarea {
-                        <?php
-                        // Color
-                        if ( ! empty( $input_color ) ) {
-                            echo 'color: ' . esc_attr( $input_color ) . ';';
-                        }
+					.uacf7-uacf7style-<?php esc_attr_e( $cfform->id() ); ?> input[type="email"],
+					.uacf7-uacf7style-<?php esc_attr_e( $cfform->id() ); ?> input[type="number"],
+					.uacf7-uacf7style-<?php esc_attr_e( $cfform->id() ); ?> input[type="password"],
+					.uacf7-uacf7style-<?php esc_attr_e( $cfform->id() ); ?> input[type="search"],
+					.uacf7-uacf7style-<?php esc_attr_e( $cfform->id() ); ?> input[type="tel"],
+					.uacf7-uacf7style-<?php esc_attr_e( $cfform->id() ); ?> input[type="text"],
+					.uacf7-uacf7style-<?php esc_attr_e( $cfform->id() ); ?> input[type="url"],
+					.uacf7-uacf7style-<?php esc_attr_e( $cfform->id() ); ?> input[type="date"],
+					.uacf7-uacf7style-<?php esc_attr_e( $cfform->id() ); ?> select,
+					.uacf7-uacf7style-<?php esc_attr_e( $cfform->id() ); ?> textarea {
+						<?php
+						// Color
+						if ( ! empty( $input_color ) ) {
+							echo 'color: ' . esc_attr( $input_color ) . ';';
+						}
 
-                        // Background color
-                        if ( ! empty( $input_background_color ) ) {
-                            echo 'background-color: ' . esc_attr( $input_background_color ) . ';';
-                        }
+						// Background color
+						if ( ! empty( $input_background_color ) ) {
+							echo 'background-color: ' . esc_attr( $input_background_color ) . ';';
+						}
 
-                        // Font size
-                        if ( ! empty( $input_font_size ) ) {
-                            echo 'font-size: ' . esc_attr( $input_font_size ) . 'px;';
-                        }
+						// Font size
+						if ( ! empty( $input_font_size ) ) {
+							echo 'font-size: ' . esc_attr( $input_font_size ) . 'px;';
+						}
 
-                        // Font family
-                        if ( ! empty( $input_font_family ) ) {
-                            echo 'font-family: ' . esc_attr( $input_font_family ) . ';';
-                        }
+						// Font family
+						if ( ! empty( $input_font_family ) ) {
+							echo 'font-family: ' . esc_attr( $input_font_family ) . ';';
+						}
 
-                        // Font style
-                        if ( ! empty( $input_font_style ) ) {
-                            echo 'font-style: ' . esc_attr( $input_font_style ) . ';';
-                        }
+						// Font style
+						if ( ! empty( $input_font_style ) ) {
+							echo 'font-style: ' . esc_attr( $input_font_style ) . ';';
+						}
 
-                        // Font weight
-                        if ( ! empty( $input_font_weight ) ) {
-                            echo 'font-weight: ' . esc_attr( $input_font_weight ) . ';';
-                        }
+						// Font weight
+						if ( ! empty( $input_font_weight ) ) {
+							echo 'font-weight: ' . esc_attr( $input_font_weight ) . ';';
+						}
 
-                        // Height
-                        if ( ! empty( $input_height ) ) {
-                            echo 'height: ' . esc_attr( $input_height ) . 'px;';
-                        }
+						// Height
+						if ( ! empty( $input_height ) ) {
+							echo 'height: ' . esc_attr( $input_height ) . 'px;';
+						}
 
-                        // Border
-                        if ( ! empty( $input_border_width ) ) {
-                            echo 'border-width: ' . esc_attr( $input_border_width ) . 'px;';
-                        }
-                        if ( ! empty( $input_border_color ) ) {
-                            echo 'border-color: ' . esc_attr( $input_border_color ) . ';';
-                        }
-                        if ( ! empty( $input_border_style ) ) {
-                            echo 'border-style: ' . esc_attr( $input_border_style ) . ';';
-                        }
-                        if ( ! empty( $input_border_radius ) ) {
-                            echo 'border-radius: ' . esc_attr( $input_border_radius ) . 'px;';
-                        }
+						// Border
+						if ( ! empty( $input_border_width ) ) {
+							echo 'border-width: ' . esc_attr( $input_border_width ) . 'px;';
+						}
+						if ( ! empty( $input_border_color ) ) {
+							echo 'border-color: ' . esc_attr( $input_border_color ) . ';';
+						}
+						if ( ! empty( $input_border_style ) ) {
+							echo 'border-style: ' . esc_attr( $input_border_style ) . ';';
+						}
+						if ( ! empty( $input_border_radius ) ) {
+							echo 'border-radius: ' . esc_attr( $input_border_radius ) . 'px;';
+						}
 
-                        // Padding
-                        if ( ! empty( $input_padding_top ) ) {
-                            echo 'padding-top: ' . esc_attr( $input_padding_top ) . 'px;';
-                        }
-                        if ( ! empty( $input_padding_right ) ) {
-                            echo 'padding-right: ' . esc_attr( $input_padding_right ) . 'px;';
-                        }
-                        if ( ! empty( $input_padding_bottom ) ) {
-                            echo 'padding-bottom: ' . esc_attr( $input_padding_bottom ) . 'px;';
-                        }
-                        if ( ! empty( $input_padding_left ) ) {
-                            echo 'padding-left: ' . esc_attr( $input_padding_left ) . 'px;';
-                        }
+						// Padding
+						if ( ! empty( $input_padding_top ) ) {
+							echo 'padding-top: ' . esc_attr( $input_padding_top ) . 'px;';
+						}
+						if ( ! empty( $input_padding_right ) ) {
+							echo 'padding-right: ' . esc_attr( $input_padding_right ) . 'px;';
+						}
+						if ( ! empty( $input_padding_bottom ) ) {
+							echo 'padding-bottom: ' . esc_attr( $input_padding_bottom ) . 'px;';
+						}
+						if ( ! empty( $input_padding_left ) ) {
+							echo 'padding-left: ' . esc_attr( $input_padding_left ) . 'px;';
+						}
 
-                        // Margin
-                        if ( ! empty( $input_margin_top ) ) {
-                            echo 'margin-top: ' . esc_attr( $input_margin_top ) . 'px;';
-                        }
-                        if ( ! empty( $input_margin_right ) ) {
-                            echo 'margin-right: ' . esc_attr( $input_margin_right ) . 'px;';
-                        }
-                        if ( ! empty( $input_margin_bottom ) ) {
-                            echo 'margin-bottom: ' . esc_attr( $input_margin_bottom ) . 'px;';
-                        }
-                        if ( ! empty( $input_margin_left ) ) {
-                            echo 'margin-left: ' . esc_attr( $input_margin_left ) . 'px;';
-                        }
-                        ?>
-                    }
+						// Margin
+						if ( ! empty( $input_margin_top ) ) {
+							echo 'margin-top: ' . esc_attr( $input_margin_top ) . 'px;';
+						}
+						if ( ! empty( $input_margin_right ) ) {
+							echo 'margin-right: ' . esc_attr( $input_margin_right ) . 'px;';
+						}
+						if ( ! empty( $input_margin_bottom ) ) {
+							echo 'margin-bottom: ' . esc_attr( $input_margin_bottom ) . 'px;';
+						}
+						if ( ! empty( $input_margin_left ) ) {
+							echo 'margin-left: ' . esc_attr( $input_margin_left ) . 'px;';
+						}
+						?>
+					}
 
-                    .uacf7-uacf7style-<?php esc_attr_e( $cfform->id() ); ?> .wpcf7-radio span,
-                    .uacf7-uacf7style-<?php esc_attr_e( $cfform->id() ); ?> .wpcf7-checkbox span {
-                        <?php
-                        // Color
-                        if ( ! empty( $input_color ) ) {
-                            echo 'color: ' . esc_attr( $input_color ) . ';';
-                        }
+					.uacf7-uacf7style-<?php esc_attr_e( $cfform->id() ); ?> .wpcf7-radio span,
+					.uacf7-uacf7style-<?php esc_attr_e( $cfform->id() ); ?> .wpcf7-checkbox span {
+						<?php
+						// Color
+						if ( ! empty( $input_color ) ) {
+							echo 'color: ' . esc_attr( $input_color ) . ';';
+						}
 
-                        // Font size
-                        if ( ! empty( $input_font_size ) ) {
-                            echo 'font-size: ' . esc_attr( $input_font_size ) . 'px;';
-                        }
+						// Font size
+						if ( ! empty( $input_font_size ) ) {
+							echo 'font-size: ' . esc_attr( $input_font_size ) . 'px;';
+						}
 
-                        // Font family
-                        if ( ! empty( $input_font_family ) ) {
-                            echo 'font-family: ' . esc_attr( $input_font_family ) . ';';
-                        }
+						// Font family
+						if ( ! empty( $input_font_family ) ) {
+							echo 'font-family: ' . esc_attr( $input_font_family ) . ';';
+						}
 
-                        // Font style
-                        if ( ! empty( $input_font_style ) ) {
-                            echo 'font-style: ' . esc_attr( $input_font_style ) . ';';
-                        }
+						// Font style
+						if ( ! empty( $input_font_style ) ) {
+							echo 'font-style: ' . esc_attr( $input_font_style ) . ';';
+						}
 
-                        // Font weight
-                        if ( ! empty( $input_font_weight ) ) {
-                            echo 'font-weight: ' . esc_attr( $input_font_weight ) . ';';
-                        }
-                        ?>
-                    }
+						// Font weight
+						if ( ! empty( $input_font_weight ) ) {
+							echo 'font-weight: ' . esc_attr( $input_font_weight ) . ';';
+						}
+						?>
+					}
 
-                    .uacf7-uacf7style-<?php esc_attr_e( $cfform->id() ); ?> textarea {
-                        <?php
-                        // Height
-                        if ( ! empty( $textarea_input_height ) ) {
-                            echo 'height: ' . esc_attr( $textarea_input_height ) . 'px;';
-                        }
-                        ?>
-                    }
+					.uacf7-uacf7style-<?php esc_attr_e( $cfform->id() ); ?> textarea {
+						<?php
+						// Height
+						if ( ! empty( $textarea_input_height ) ) {
+							echo 'height: ' . esc_attr( $textarea_input_height ) . 'px;';
+						}
+						?>
+					}
 
-                    .wpcf7-form-control-wrap select {
-                        width: 100%;
-                    }
+					.wpcf7-form-control-wrap select {
+						width: 100%;
+					}
 
-                    .uacf7-uacf7style-<?php esc_attr_e( $cfform->id() ); ?> input[type="submit"] {
-                        <?php
-                        // Color
-                        if ( ! empty( $btn_color ) ) {
-                            echo 'color: ' . esc_attr( $btn_color ) . ';';
-                        }
+					.uacf7-uacf7style-<?php esc_attr_e( $cfform->id() ); ?> input[type="submit"] {
+						<?php
+						// Color
+						if ( ! empty( $btn_color ) ) {
+							echo 'color: ' . esc_attr( $btn_color ) . ';';
+						}
 
-                        // Background color
-                        if ( ! empty( $btn_background_color ) ) {
-                            echo 'background-color: ' . esc_attr( $btn_background_color ) . ';';
-                        }
+						// Background color
+						if ( ! empty( $btn_background_color ) ) {
+							echo 'background-color: ' . esc_attr( $btn_background_color ) . ';';
+						}
 
-                        // Font size
-                        if ( ! empty( $btn_font_size ) ) {
-                            echo 'font-size: ' . esc_attr( $btn_font_size ) . 'px;';
-                        }
+						// Font size
+						if ( ! empty( $btn_font_size ) ) {
+							echo 'font-size: ' . esc_attr( $btn_font_size ) . 'px;';
+						}
 
-                        // Font family
-                        if ( ! empty( $input_font_family ) ) {
-                            echo 'font-family: ' . esc_attr( $input_font_family ) . ';';
-                        }
+						// Font family
+						if ( ! empty( $input_font_family ) ) {
+							echo 'font-family: ' . esc_attr( $input_font_family ) . ';';
+						}
 
-                        // Font style
-                        if ( ! empty( $btn_font_style ) ) {
-                            echo 'font-style: ' . esc_attr( $btn_font_style ) . ';';
-                        }
+						// Font style
+						if ( ! empty( $btn_font_style ) ) {
+							echo 'font-style: ' . esc_attr( $btn_font_style ) . ';';
+						}
 
-                        // Font weight
-                        if ( ! empty( $btn_font_weight ) ) {
-                            echo 'font-weight: ' . esc_attr( $btn_font_weight ) . ';';
-                        }
+						// Font weight
+						if ( ! empty( $btn_font_weight ) ) {
+							echo 'font-weight: ' . esc_attr( $btn_font_weight ) . ';';
+						}
 
-                        // Border
-                        if ( ! empty( $btn_border_width ) ) {
-                            echo 'border-width: ' . esc_attr( $btn_border_width ) . 'px;';
-                        }
-                        if ( ! empty( $btn_border_color ) ) {
-                            echo 'border-color: ' . esc_attr( $btn_border_color ) . ';';
-                        }
-                        if ( ! empty( $btn_border_style ) ) {
-                            echo 'border-style: ' . esc_attr( $btn_border_style ) . ';';
-                        }
-                        if ( ! empty( $btn_border_radius ) ) {
-                            echo 'border-radius: ' . esc_attr( $btn_border_radius ) . 'px;';
-                        }
+						// Border
+						if ( ! empty( $btn_border_width ) ) {
+							echo 'border-width: ' . esc_attr( $btn_border_width ) . 'px;';
+						}
+						if ( ! empty( $btn_border_color ) ) {
+							echo 'border-color: ' . esc_attr( $btn_border_color ) . ';';
+						}
+						if ( ! empty( $btn_border_style ) ) {
+							echo 'border-style: ' . esc_attr( $btn_border_style ) . ';';
+						}
+						if ( ! empty( $btn_border_radius ) ) {
+							echo 'border-radius: ' . esc_attr( $btn_border_radius ) . 'px;';
+						}
 
-                        // Width
-                        if ( ! empty( $btn_width ) ) {
-                            echo 'width: ' . esc_attr( $btn_width ) . ';';
-                        }
+						// Width
+						if ( ! empty( $btn_width ) ) {
+							echo 'width: ' . esc_attr( $btn_width ) . ';';
+						}
 
-                        // Padding
-                        if ( ! empty( $btn_padding_top ) ) {
-                            echo 'padding-top: ' . esc_attr( $btn_padding_top ) . 'px;';
-                        }
-                        if ( ! empty( $btn_padding_right ) ) {
-                            echo 'padding-right: ' . esc_attr( $btn_padding_right ) . 'px;';
-                        }
-                        if ( ! empty( $btn_padding_bottom ) ) {
-                            echo 'padding-bottom: ' . esc_attr( $btn_padding_bottom ) . 'px;';
-                        }
-                        if ( ! empty( $btn_padding_left ) ) {
-                            echo 'padding-left: ' . esc_attr( $btn_padding_left ) . 'px;';
-                        }
+						// Padding
+						if ( ! empty( $btn_padding_top ) ) {
+							echo 'padding-top: ' . esc_attr( $btn_padding_top ) . 'px;';
+						}
+						if ( ! empty( $btn_padding_right ) ) {
+							echo 'padding-right: ' . esc_attr( $btn_padding_right ) . 'px;';
+						}
+						if ( ! empty( $btn_padding_bottom ) ) {
+							echo 'padding-bottom: ' . esc_attr( $btn_padding_bottom ) . 'px;';
+						}
+						if ( ! empty( $btn_padding_left ) ) {
+							echo 'padding-left: ' . esc_attr( $btn_padding_left ) . 'px;';
+						}
 
-                        // Margin
-                        if ( ! empty( $btn_margin_top ) ) {
-                            echo 'margin-top: ' . esc_attr( $btn_margin_top ) . 'px;';
-                        }
-                        if ( ! empty( $btn_margin_right ) ) {
-                            echo 'margin-right: ' . esc_attr( $btn_margin_right ) . 'px;';
-                        }
-                        if ( ! empty( $btn_margin_bottom ) ) {
-                            echo 'margin-bottom: ' . esc_attr( $btn_margin_bottom ) . 'px;';
-                        }
-                        if ( ! empty( $btn_margin_left ) ) {
-                            echo 'margin-left: ' . esc_attr( $btn_margin_left ) . 'px;';
-                        }
-                        ?>
-                    }
+						// Margin
+						if ( ! empty( $btn_margin_top ) ) {
+							echo 'margin-top: ' . esc_attr( $btn_margin_top ) . 'px;';
+						}
+						if ( ! empty( $btn_margin_right ) ) {
+							echo 'margin-right: ' . esc_attr( $btn_margin_right ) . 'px;';
+						}
+						if ( ! empty( $btn_margin_bottom ) ) {
+							echo 'margin-bottom: ' . esc_attr( $btn_margin_bottom ) . 'px;';
+						}
+						if ( ! empty( $btn_margin_left ) ) {
+							echo 'margin-left: ' . esc_attr( $btn_margin_left ) . 'px;';
+						}
+						?>
+					}
 
-                    .uacf7-uacf7style-<?php esc_attr_e( $cfform->id() ); ?> input[type="submit"]:hover {
-                        <?php
-                        // Hover color
-                        if ( ! empty( $btn_color_hover ) ) {
-                            echo 'color: ' . esc_attr( $btn_color_hover ) . ';';
-                        }
+					.uacf7-uacf7style-<?php esc_attr_e( $cfform->id() ); ?> input[type="submit"]:hover {
+						<?php
+						// Hover color
+						if ( ! empty( $btn_color_hover ) ) {
+							echo 'color: ' . esc_attr( $btn_color_hover ) . ';';
+						}
 
-                        // Hover background color
-                        if ( ! empty( $btn_background_color_hover ) ) {
-                            echo 'background-color: ' . esc_attr( $btn_background_color_hover ) . ';';
-                        }
+						// Hover background color
+						if ( ! empty( $btn_background_color_hover ) ) {
+							echo 'background-color: ' . esc_attr( $btn_background_color_hover ) . ';';
+						}
 
-                        // Hover border color
-                        if ( ! empty( $btn_border_color_hover ) ) {
-                            echo 'border-color: ' . esc_attr( $btn_border_color_hover ) . ';';
-                        }
-                        ?>
-                    }
+						// Hover border color
+						if ( ! empty( $btn_border_color_hover ) ) {
+							echo 'border-color: ' . esc_attr( $btn_border_color_hover ) . ';';
+						}
+						?>
+					}
 
-                    <?php echo $ua_custom_css ?>
-                </style>
+					<?php echo $ua_custom_css ?>
+				</style>
 
 				<?php echo '<div class="uacf7-uacf7style uacf7-uacf7style-' . esc_attr( $cfform->id() ) . '">' . $form . '</div>';
 				$properties['form'] = ob_get_clean();
@@ -967,6 +967,127 @@ class UACF7_uacf7style {
 
 		return $properties;
 	}
+
+	public function old_uacf7_properties( $properties, $cfform ) {
+		wp_register_style( 'uacf7-single-form-styler', UACF7_URL . 'addons/styler/css/uacf7-single-form-styler.css', [], null );
+
+		if ( ! is_admin() || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
+			$form = $properties['form'];
+			$form_meta = uacf7_get_form_option( $cfform->id(), 'styler' );
+			$form_styles = $form_meta['uacf7_enable_form_styles'] ?? false;
+			$ua_custom_css = isset($form_meta['uacf7_uacf7style_ua_custom_css']) ? $form_meta['uacf7_uacf7style_ua_custom_css'] : '';
+
+			if ( $form_styles ) {
+				$css = $this->generate_dynamic_css( $cfform->id(), $form_meta );
+
+				// If custom css is added
+				if(!empty($ua_custom_css)) {
+					$com_css = $ua_custom_css . $css;
+				} else {
+					$com_css = $css;
+				}
+
+				wp_add_inline_style( 'uacf7-single-form-styler', $com_css );
+				wp_enqueue_style( 'uacf7-single-form-styler' );
+			}
+		}
+
+		return $properties;
+	}
+
+	/**
+	 * Generate Dynamic CSS based on form meta.
+	 */
+	private function generate_dynamic_css( $form_id, $form_meta ) {
+		$selectors = [ 
+			'label' => [ 
+				'color' => $form_meta['uacf7_uacf7style_label_color_option']['uacf7_uacf7style_label_color'] ?? null,
+				'background-color' => $form_meta['uacf7_uacf7style_label_color_option']['uacf7_uacf7style_label_background_color'] ?? null,
+				'font-size' => $form_meta['uacf7_uacf7style_label_font_size'] ? $form_meta['uacf7_uacf7style_label_font_size'] . 'px' : null,
+				'font-family' => $form_meta['uacf7_uacf7style_label_font_family'] ?? null,
+				'font-style' => $form_meta['uacf7_uacf7style_label_font_style'] ?? null,
+				'font-weight' => $form_meta['uacf7_uacf7style_label_font_weight'] ?? null,
+
+				...array_filter(array_values($this->generate_spacing_css($form_meta, 'label_padding', 'padding'))),
+				...array_filter(array_values($this->generate_spacing_css( $form_meta, 'label_margin', 'margin' ))),
+			],
+			'.wpcf7-form-control:not(.wpcf7-submit)' => [ 
+				'color' => $form_meta['uacf7_uacf7style_input_color_option']['uacf7_uacf7style_input_color'] ?? null,
+				'background-color' => $form_meta['uacf7_uacf7style_input_color_option']['uacf7_uacf7style_input_background_color'] ?? null,
+				'font-size' => $form_meta['uacf7_uacf7style_input_font_size'] ? $form_meta['uacf7_uacf7style_input_font_size'] . 'px' : null,
+				'font-family' => $form_meta['uacf7_uacf7style_input_font_family'] ?? null,
+				'font-style' => $form_meta['uacf7_uacf7style_input_font_style'] ?? null,
+				'font-weight' => $form_meta['uacf7_uacf7style_input_font_weight'] ?? null,
+				'border' => $this->generate_border_css( $form_meta, 'input_border' ),
+				'border-radius' => $form_meta['uacf7_uacf7style_input_border_radius'] ? $form_meta['uacf7_uacf7style_input_border_radius'] . 'px' : null,
+
+				...array_filter(array_values($this->generate_spacing_css( $form_meta, 'input_padding', 'padding' ))),
+				...array_filter(array_values($this->generate_spacing_css( $form_meta, 'input_margin', 'margin' ))),
+			],
+			'.wpcf7-submit' => [ 
+				'color' => $form_meta['uacf7_uacf7style_btn_color_option']['uacf7_uacf7style_btn_color'] ?? null,
+				'background-color' => $form_meta['uacf7_uacf7style_btn_color_option']['uacf7_uacf7style_btn_background_color'] ?? null,
+				'font-size' => $form_meta['uacf7_uacf7style_btn_font_size'] ? $form_meta['uacf7_uacf7style_btn_font_size'] . 'px' : null,
+				'border' => $this->generate_border_css( $form_meta, 'btn_border' ),
+				'border-radius' => $form_meta['uacf7_uacf7style_btn_border_radius'] ? $form_meta['uacf7_uacf7style_btn_border_radius'] . 'px' : null,
+				
+				...array_filter(array_values($this->generate_spacing_css( $form_meta, 'btn_padding', 'padding' ))),
+				...array_filter(array_values($this->generate_spacing_css( $form_meta, 'btn_margin','margin' ))),
+			],
+		];
+
+		$css = '';
+		foreach ( $selectors as $selector => $properties ) {
+			$css .= $this->build_css_rule( ".uacf7-uacf7style-{$form_id} {$selector}", $properties );
+		}
+
+		return $css;
+	}
+
+	/**
+	 * Generate CSS for spacing properties (padding or margin).
+	 */
+	private function generate_spacing_css($form_meta, $key_prefix, $property) {
+		$css = [];
+		$sides = ['top', 'right', 'bottom', 'left'];
+		foreach ($sides as $side) {
+			$value = $form_meta["uacf7_uacf7style_{$key_prefix}_{$side}"] ?? null;
+			if ($value !== null) {
+				$css["{$property}-{$side}"] = "{$value}px";
+			}
+		}
+		return $css;
+	}
+
+	/**
+	 * Build CSS rule from properties.
+	 */
+	private function build_css_rule( $selector, $properties ) {
+		$rules = '';
+		foreach ( $properties as $property => $value ) {
+			if (is_array($value)) {
+				// If $value is an array, convert it to a string
+				$value = implode(' ', $value);
+			}
+			if (!empty($value)) {
+				$rules .= "{$property}: {$value};";
+			}
+		}
+		return $rules ? "{$selector} { {$rules} }" : '';
+	}
+	
+
+	/**
+	 * Generate CSS for border properties.
+	 */
+	private function generate_border_css( $form_meta, $key_prefix ) {
+		$style = $form_meta[ "uacf7_uacf7style_{$key_prefix}_style" ] ?? null;
+		$width = $form_meta[ "uacf7_uacf7style_{$key_prefix}_width" ] ? $form_meta[ "uacf7_uacf7style_{$key_prefix}_width" ] . 'px' : null;
+		$color = $form_meta[ "uacf7_uacf7style_{$key_prefix}_color" ] ?? null;
+
+		return $style && $width && $color ? "{$width} {$style} {$color}" : null;
+	}
+
 
 }
 new UACF7_uacf7style();

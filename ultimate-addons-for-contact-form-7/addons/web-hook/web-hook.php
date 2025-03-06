@@ -256,9 +256,15 @@ class UACF7_WEB_HOOK {
 			}
 		}
 
+		if ( $request_format === 'json' ) {
+			$body_data = json_encode( $body_data);
+		} if ( $request_format === 'formdata' ) {
+			$body_data = http_build_query($body_data);
+		}
+
 		// Set up the request arguments
 		$request_args = array(
-			'body' => json_encode( $body_data ),
+			'body' => $body_data,
 			'headers' => array_merge(
 				//Need loop for additional input
 				[ 'Content-Type' => 'application/json' ],
@@ -273,12 +279,13 @@ class UACF7_WEB_HOOK {
 		// Check if the request was successful
 		if ( is_wp_error( $response ) ) {
 			// Handle error
-			//echo 'Error: ' . $response->get_error_message();
+			// echo 'Error: ' . $response->get_error_message();
 		} else {
 			// Request was successful, and $response contains the API response
-			//$api_response = wp_remote_retrieve_body( $response );
-			//echo 'API Response: ' . $api_response;
+			// $api_response = wp_remote_retrieve_body( $response );
+			// echo 'API Response: ' . $api_response;
 		}
+
 	}
 
 }

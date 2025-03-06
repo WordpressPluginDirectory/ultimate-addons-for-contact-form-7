@@ -14,10 +14,9 @@
             ajax_nonce: submission_id_obj.nonce,
         },
         success: function(data) {
-  
+
          $('.uacf7-form-'+form_id).find('.wpcf7-uacf7_submission_id').attr('value', data.meta_data);
 
-  
         }
       });
     }

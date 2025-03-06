@@ -8,7 +8,6 @@
             var form_id = $this.attr('data-form-id');
             var  id = $this.attr('data-id');
             var old_button_text = $this.html();
-            $this.html('<img src="'+database_admin_url.plugin_dir_url+'assets/images/loader.gif" alt="">');
             jQuery.ajax({
                 url: pdf_settings.ajaxurl,
                 type: 'post',

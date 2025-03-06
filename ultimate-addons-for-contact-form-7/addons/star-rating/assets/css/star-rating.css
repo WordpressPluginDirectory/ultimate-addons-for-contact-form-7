@@ -1,5 +1,5 @@
 .uacf7-rating {
-	display: inline-block;
+	display: flex;
 	position: relative;
 	height: 30px;
 	line-height: 30px;

@@ -13,12 +13,35 @@ class UACF7_PROMO_NOTICE {
     private $uacf7_promo_option = false; 
     private $error_message = ''; 
 
-    private $months = ['January', 'June', 'November', 'December']; 
+    private $months = [
+        'January',  
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December'
+    ];
     private $plugins_existes = ['ins', 'tf', 'beaf', 'ebef'];
 
     public function __construct() {
 
-        if(in_array(date('F'), $this->months) && !class_exists('Ultimate_Addons_CF7_PRO')){ 
+        if(in_array(date('F'), $this->months) && !class_exists('Ultimate_Addons_CF7_PRO')){  
+
+            $uacf7_promo__schudle_start_from = !empty(get_option( 'uacf7_promo__schudle_start_from' )) ? get_option( 'uacf7_promo__schudle_start_from' ) : 0;
+
+            if($uacf7_promo__schudle_start_from == 0){
+                // delete option
+                delete_option('uacf7_promo__schudle_option');
+
+            }elseif($uacf7_promo__schudle_start_from  != 0 && $uacf7_promo__schudle_start_from > time()){
+                return;
+            }  
             add_filter('cron_schedules', array($this, 'uacf7_custom_cron_interval'));
         
             if (!wp_next_scheduled('uacf7_promo__schudle')) {
@@ -32,17 +55,33 @@ class UACF7_PROMO_NOTICE {
             }
 
             $tf_existes = get_option( 'tf_promo_notice_exists' );
-             
-            // Admin Notice 
-            if( ! in_array($tf_existes, $this->plugins_existes) && is_array($this->uacf7_promo_option) && strtotime($this->uacf7_promo_option['end_date']) > time() && strtotime($this->uacf7_promo_option['start_date']) < time()){
-                add_action( 'admin_notices', array( $this, 'tf_black_friday_2023_admin_notice' ) );
+            $dashboard_banner = isset($this->uacf7_promo_option['dashboard_banner']) ? $this->uacf7_promo_option['dashboard_banner'] : '';
+            // Admin Notice  
+            if( ! in_array($tf_existes, $this->plugins_existes) && is_array($dashboard_banner) && strtotime($dashboard_banner['end_date']) > time() && strtotime($dashboard_banner['start_date']) < time() && $dashboard_banner['enable_status'] == true){
+            
+                add_action( 'admin_notices', array( $this, 'tf_promo_dashboard_admin_notice' ) );
                 add_action( 'wp_ajax_tf_black_friday_notice_dismiss_callback', array($this, 'tf_black_friday_notice_dismiss_callback') );
             }
             
             // side Notice 
-            if(is_array($this->uacf7_promo_option) && strtotime($this->uacf7_promo_option['end_date']) > time() && strtotime($this->uacf7_promo_option['start_date']) < time()){ 
-                add_action( 'wpcf7_admin_misc_pub_section', array( $this, 'uacf7_black_friday_2022_callback' ) );
-                add_action( 'wp_ajax_uacf7_black_friday_notice_cf7_dismiss_callback', array($this, 'uacf7_black_friday_notice_cf7_dismiss_callback') ); 
+            $service_banner = isset($this->uacf7_promo_option['service_banner']) ? $this->uacf7_promo_option['service_banner'] : array();
+            $promo_banner = isset($this->uacf7_promo_option['promo_banner']) ? $this->uacf7_promo_option['promo_banner'] : array();
+
+            $current_day = date('l'); 
+            if(isset($service_banner['enable_status']) && $service_banner['enable_status'] == true && in_array($current_day, $service_banner['display_days'])){ 
+             
+                $start_date = isset($service_banner['start_date']) ? $service_banner['start_date'] : '';
+                $end_date = isset($service_banner['end_date']) ? $service_banner['end_date'] : '';
+                $enable_side = isset($service_banner['enable_status']) ? $service_banner['enable_status'] : false;
+            }else{  
+                $start_date = isset($promo_banner['start_date']) ? $promo_banner['start_date'] : '';
+                $end_date = isset($promo_banner['end_date']) ? $promo_banner['end_date'] : '';
+                $enable_side = isset($promo_banner['enable_status']) ? $promo_banner['enable_status'] : false;
+            } 
+            if(is_array($this->uacf7_promo_option) && strtotime($end_date) > time() && strtotime($start_date) < time()  && $enable_side == true){ 
+                
+                add_action( 'wpcf7_admin_misc_pub_section', array( $this, 'uacf7_promo_side_notice_callback' ) );
+                add_action( 'wp_ajax_uacf7_promo_side_notice_cf7_dismiss_callback', array($this, 'uacf7_promo_side_notice_cf7_dismiss_callback') ); 
             } 
 
 
@@ -73,10 +112,13 @@ class UACF7_PROMO_NOTICE {
             $this->responsed = json_decode($data, true); 
 
             $uacf7_promo__schudle_option = get_option( 'uacf7_promo__schudle_option' ); 
-            if(isset($ins_promo__schudle_option['notice_name']) && $uacf7_promo__schudle_option['notice_name'] != $this->responsed['notice_name']){ 
+            if(isset($uacf7_promo__schudle_option['notice_name']) && $uacf7_promo__schudle_option['notice_name'] != $this->responsed['notice_name']){ 
                 // Unset the cookie variable in the current script
                 update_option( 'tf_dismiss_admin_notice', 1);
                 update_option( 'uacf7_dismiss_post_notice', 1); 
+                update_option( 'uacf7_promo__schudle_start_from', time() + 43200);
+            }elseif(empty($uacf7_promo__schudle_option)){
+                update_option( 'uacf7_promo__schudle_start_from', time() + 43200);
             }
             update_option( 'uacf7_promo__schudle_option', $this->responsed);
             
@@ -104,10 +146,11 @@ class UACF7_PROMO_NOTICE {
      * Black Friday Deals 2023
      */
     
-    public function tf_black_friday_2023_admin_notice(){ 
+    public function tf_promo_dashboard_admin_notice(){ 
         
-        $image_url = isset($this->uacf7_promo_option['dasboard_url']) ? esc_url($this->uacf7_promo_option['dasboard_url']) : '';
-        $deal_link = isset($this->uacf7_promo_option['promo_url']) ? esc_url($this->uacf7_promo_option['promo_url']) : ''; 
+        $dashboard_banner = isset($this->uacf7_promo_option['dashboard_banner']) ? $this->uacf7_promo_option['dashboard_banner'] : '';
+        $image_url = isset($dashboard_banner['banner_url']) ? esc_url($dashboard_banner['banner_url']) : '';
+        $deal_link = isset($dashboard_banner['redirect_url']) ? esc_url($dashboard_banner['redirect_url']) : ''; 
 
         $tf_dismiss_admin_notice = get_option( 'tf_dismiss_admin_notice' );
         $get_current_screen = get_current_screen();  
@@ -138,7 +181,7 @@ class UACF7_PROMO_NOTICE {
                 <a href="<?php echo esc_attr( $deal_link ); ?>" style="display: block; line-height: 0;" target="_blank" >
                     <img  style="width: 100%;" src="<?php echo esc_attr($image_url) ?>" alt="">
                 </a> 
-                <?php if( isset($this->uacf7_promo_option['dasboard_dismiss']) && $this->uacf7_promo_option['dasboard_dismiss'] == true): ?>
+                <?php if( isset($dashboard_banner['dismiss_status']) && $dashboard_banner['dismiss_status'] == true): ?>
                 <button type="button" class="notice-dismiss tf_black_friday_notice_dismiss"><span class="screen-reader-text"><?php echo __('Dismiss this notice.', 'ultimate-addons-cf7' ) ?></span></button>
                 <?php  endif; ?>
             </div>
@@ -172,7 +215,7 @@ class UACF7_PROMO_NOTICE {
     public function tf_black_friday_notice_dismiss_callback() {  
 
         $uacf7_promo_option = get_option( 'uacf7_promo__schudle_option' );
-        $restart = isset($uacf7_promo_option['dasboard_restart']) && $uacf7_promo_option['dasboard_restart'] != false ? $uacf7_promo_option['dasboard_restart'] : false; 
+	$restart = isset($uacf7_promo_option['dashboard_banner']['restart']) && $uacf7_promo_option['dashboard_banner']['restart'] != false ? $uacf7_promo_option['dashboard_banner']['restart'] : false;
         if($restart == false){
             update_option( 'tf_dismiss_admin_notice', strtotime($uacf7_promo_option['end_date']) ); 
         }else{
@@ -182,17 +225,32 @@ class UACF7_PROMO_NOTICE {
 	}
 
 
-    public function uacf7_black_friday_2022_callback(){
-        $image_url = isset($this->uacf7_promo_option['side_url']) ? esc_url($this->uacf7_promo_option['side_url']) : '';
-        $deal_link = isset($this->uacf7_promo_option['promo_url']) ? esc_url($this->uacf7_promo_option['promo_url']) : ''; 
+
+
+    public function uacf7_promo_side_notice_callback(){
+        $service_banner = isset($this->uacf7_promo_option['service_banner']) ? $this->uacf7_promo_option['service_banner'] : array();
+        $promo_banner = isset($this->uacf7_promo_option['promo_banner']) ? $this->uacf7_promo_option['promo_banner'] : array();
+        
+
+        $current_day = date('l'); 
+        if( isset($service_banner['enable_status']) && $service_banner['enable_status'] == true && in_array($current_day, $service_banner['display_days'])){ 
+           
+            $image_url = esc_url($service_banner['banner_url']);
+            $deal_link = esc_url($service_banner['redirect_url']);  
+            $dismiss_status = $service_banner['dismiss_status'];
+        }else{
+            $image_url = esc_url($promo_banner['banner_url']);
+            $deal_link = esc_url($promo_banner['redirect_url']); 
+            $dismiss_status = $promo_banner['dismiss_status'];  
+        }  
         $uacf7_dismiss_post_notice = get_option( 'uacf7_dismiss_post_notice' );
         ?> 
          <?php if($uacf7_dismiss_post_notice == 1  || time() >  $uacf7_dismiss_post_notice ): ?>
             <style> 
-                .back_friday_2022_preview a:focus {
+                .uacf7_promo_side_preview a:focus {
                     box-shadow: none;
                 } 
-                .back_friday_2022_preview a {
+                .uacf7_promo_side_preview a {
                     display: inline-block;
                 }
                 #uacf7_black_friday_docs .inside {
@@ -203,10 +261,10 @@ class UACF7_PROMO_NOTICE {
                     display: none;
                     visibility: hidden;
                 }
-                .back_friday_2022_preview {
+                .uacf7_promo_side_preview {
                     position: relative;
                 }
-                .tf_black_friday_cf7_notice_dismiss {
+                .uacf7_promo_side_notice_dismiss {
                     position: ;
                     z-index: 1;
                 }
@@ -214,21 +272,21 @@ class UACF7_PROMO_NOTICE {
             </style>
             
            
-            <div class="back_friday_2022_preview" style="text-align: center; overflow: hidden; margin: 10px;">
+            <div class="uacf7_promo_side_preview" style="text-align: center; overflow: hidden; margin: 10px;">
                 <a href="<?php echo esc_attr($deal_link); ?>" target="_blank" >
                     <img  style="width: 100%;" src="<?php echo esc_attr($image_url); ?>" alt="">
                 </a>  
-                <?php if( isset($this->uacf7_promo_option['side_dismiss']) && $this->uacf7_promo_option['side_dismiss'] == true): ?>
-                    <button type="button" class="notice-dismiss tf_black_friday_cf7_notice_dismiss"><span class="screen-reader-text">Dismiss this notice.</span></button>
+                <?php if( isset($dismiss_status) && $dismiss_status == true): ?>
+                    <button type="button" class="notice-dismiss uacf7_promo_side_notice_dismiss"><span class="screen-reader-text">Dismiss this notice.</span></button>
                 <?php  endif; ?>
                 
             </div>
             <script>
                 jQuery(document).ready(function($) {
-                    $(document).on('click', '.tf_black_friday_cf7_notice_dismiss', function( event ) { 
-                        jQuery('.back_friday_2022_preview').css('display', 'none')
+                    $(document).on('click', '.uacf7_promo_side_notice_dismiss', function( event ) { 
+                        jQuery('.uacf7_promo_side_preview').css('display', 'none')
                         data = {
-                            action : 'uacf7_black_friday_notice_cf7_dismiss_callback', 
+                            action : 'uacf7_promo_side_notice_cf7_dismiss_callback', 
                         };
 
                         $.ajax({
@@ -247,7 +305,7 @@ class UACF7_PROMO_NOTICE {
         <?php
 	}
 
-    public  function uacf7_black_friday_notice_cf7_dismiss_callback() {   
+    public  function uacf7_promo_side_notice_cf7_dismiss_callback() {   
         $uacf7_promo_option = get_option( 'uacf7_promo__schudle_option' );
         $start_date = isset($uacf7_promo_option['start_date']) ? strtotime($uacf7_promo_option['start_date']) : time();
         $restart = isset($uacf7_promo_option['side_restart']) && $uacf7_promo_option['side_restart'] != false ? $uacf7_promo_option['side_restart'] : 5;
@@ -261,6 +319,7 @@ class UACF7_PROMO_NOTICE {
 
         delete_option('uacf7_promo__schudle_option');
         delete_option('tf_promo_notice_exists');
+        delete_option('uacf7_promo__schudle_start_from');
     }
  
 }

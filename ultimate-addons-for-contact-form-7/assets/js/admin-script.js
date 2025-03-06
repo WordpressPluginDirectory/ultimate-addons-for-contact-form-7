@@ -161,9 +161,11 @@ jQuery('.thickbox.button').each(function () {
 jQuery(document).ready(function () {
     uacf7_progressbar_style();
 });
+
 jQuery('#uacf7_progressbar_style').on('change', function () {
     uacf7_progressbar_style();
 });
+
 function uacf7_progressbar_style() {
     if (jQuery('#uacf7_progressbar_style').val() == 'default' || jQuery('#uacf7_progressbar_style').val() == 'style-1') {
         jQuery('.multistep_field_column.show-if-pro').hide();
@@ -189,3 +191,122 @@ function uacf7_progressbar_style() {
         jQuery('.step-title-description').hide();
     }
 }
+
+
+jQuery(document).ready(function ($) {
+
+    let urlParams = new URLSearchParams(window.location.search);
+    let pageSlug = urlParams.get("page");
+
+    let noticeContainer;
+    if (pageSlug === "uacf7_addons") {
+        noticeContainer = $('.tf-setting-dashboard .tf-setting-top-bar');
+    } else if (pageSlug === "uacf7-setup-wizard") {
+        noticeContainer = $('.uacf7-single-step-content.chooes-addon').find('.hydra-installation-notice');
+    } else {
+        return; 
+    }
+
+    $('#uacf7_enable_hydra_booking_form').on('change', function () {
+        if ($(this).is(':checked')) {
+
+            $('.uacf7-notice').remove();
+
+            let notice = $(`
+                <div class="uacf7-notice">
+                    <span class="uacf7-loader"></span> Hydra Booking plugin is installing... Please do not reload the page.
+                </div>
+            `);
+
+            noticeContainer.after(notice);
+            notice.fadeIn(500);
+
+            $.ajax({
+                url: ajaxurl,
+                type: 'POST',
+                data: {
+                    action: 'uacf7_install_hydra_booking',
+                    security: uacf7_admin_nonce
+                },
+                success: function (response) {
+                    if (response.success) {
+                        notice.html(`<span class="uacf7-checkmark"><i class="fa-regular fa-circle-check"></i></span> ${response.data.message}`)
+                              .removeClass('error')
+                              .addClass('success')
+                              .fadeIn(500);
+                    } else {
+                        notice.html(`<span class="uacf7-error"><i class="fa-regular fa-circle-xmark"></i></span> ${response.data.message}`)
+                              .removeClass('success')
+                              .addClass('error')
+                              .fadeIn(500);
+                    }
+                },
+                error: function () {
+                    notice.html('<span class="uacf7-error"><i class="fa-regular fa-circle-xmark"></i></span> An error occurred while installing the plugin.')
+                          .removeClass('success')
+                          .addClass('error')
+                          .fadeIn(500);
+                }
+            });
+        }
+    });
+});
+
+jQuery(document).ready(function($) {
+    $('.plugin-button').not('.pro').on('click', function(e) {
+        e.preventDefault();
+
+        let button = $(this);
+        let action = button.data('action');
+        let pluginSlug = button.data('plugin');
+        let pluginFileName = button.data('plugin_filename');
+
+        if (!action || !pluginSlug) return;
+
+        let loader = button.find('.loader');
+        let originalText = button.clone().children().remove().end().text().trim();
+
+        if (action === 'install') {
+            button.contents().first().replaceWith('Installing..');
+        } else if (action === 'activate') {
+            button.contents().first().replaceWith('Activating..');
+        }
+
+        button.addClass('loading').prop('disabled', true);
+        loader.show();
+
+        $.ajax({
+            url: ajaxurl,
+            type: 'POST',
+            data: {
+                action: 'themefic_manage_plugin',
+                security: themefic_plugin_nonce,
+                plugin_slug: pluginSlug,
+                plugin_filename: pluginFileName,
+                plugin_action: action
+            },
+            success: function(response) {
+                button.removeClass('loading').prop('disabled', false);
+                loader.hide();
+
+                if (response.success) {
+                    if (action === 'install') {
+                        button.contents().first().replaceWith('Activate');
+                        button.data('action', 'activate').removeClass('install').addClass('activate');
+                    } else if (action === 'activate') {
+                        button.replaceWith('<span class="plugin-button plugin-status active">Activated</span>');
+                    }
+                } else {
+                    button.contents().first().replaceWith(originalText);
+                    alert('Error: ' + response.data);
+                }
+            },
+            error: function() {
+                button.contents().first().replaceWith(originalText).removeClass('loading').prop('disabled', false);
+                loader.hide();
+                alert('An error occurred. Please try again.');
+            }
+        });
+    });
+});
+

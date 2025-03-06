@@ -33,7 +33,6 @@
 			var repeater_count = jQuery('.uacf7-repeater-count', this).val();
 			var form = uacf7_cf_object[contactFormId];
 			var $i = 0;
-
 			if (typeof repeater_count === 'undefined') {
 				var repeater_weapper = '.uacf7_conditional';
 			} else {
@@ -267,6 +266,7 @@
 
 								}
 							}
+
 							if ($uacf7_cf_conditions['uacf7_cf_operator'][x] == 'less_than_or_equal_to') {
 
 								if (parseInt(currentValue) <= parseInt($uacf7_cf_conditions['uacf7_cf_val'][x])) {
@@ -278,6 +278,52 @@
 
 								}
 							}
+
+							if ($uacf7_cf_conditions['uacf7_cf_operator'][x] == 'starts_with') {
+								if (currentValue.startsWith($uacf7_cf_conditions['uacf7_cf_val'][x])) {
+
+									$conditions.push('true');
+
+								} else {
+									$conditions.push('false');
+
+								}
+							}
+
+							if ($uacf7_cf_conditions['uacf7_cf_operator'][x] == 'ends_with') {
+								if (currentValue.endsWith($uacf7_cf_conditions['uacf7_cf_val'][x])) {
+
+									$conditions.push('true');
+
+								} else {
+									$conditions.push('false');
+
+								}
+							}
+
+							if ($uacf7_cf_conditions['uacf7_cf_operator'][x] == 'contains') {
+								if (currentValue.includes($uacf7_cf_conditions['uacf7_cf_val'][x])) {
+
+									$conditions.push('true');
+
+								} else {
+									$conditions.push('false');
+
+								}
+							}
+
+							if ($uacf7_cf_conditions['uacf7_cf_operator'][x] == 'does_not_contain') {
+								if (!currentValue.includes($uacf7_cf_conditions['uacf7_cf_val'][x])) {
+
+									$conditions.push('true');
+
+								} else {
+									$conditions.push('false');
+
+								}
+							}
+
+
 						}
 
 					}
@@ -378,3 +424,6 @@
 	}
 
 })(jQuery);
+
+
+

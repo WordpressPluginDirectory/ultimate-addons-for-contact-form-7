@@ -45,5 +45,22 @@
             @include flexbox();
             visibility: visible;
         }
+        .uacf7dp-connection-setting-footer{
+            padding-top: 25px;
+            .uacf7dp-test-connection-status{
+                display: flex;
+                gap: 20px;
+                align-items: center;
+                .uacf7dp-connection-check-btn{
+                    padding: 10px 25px;
+                    font-size: 1rem;
+                    background-color: #382673;
+                    border-color: #382673;
+                    color: #fff;
+                    font-weight: 600;
+                    cursor: pointer;
+                }
+            }
+        }
     }
 }

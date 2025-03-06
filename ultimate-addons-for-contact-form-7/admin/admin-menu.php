@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 class UACF7_Admin_Menu {
 
 	public function __construct() {
-		add_action( 'admin_menu', array( $this, 'uacf7_add_plugin_page' ), 9999 );
+		add_action( 'admin_menu', [ $this, 'uacf7_add_plugin_page' ], 9999 );
 	}
 
 	/*

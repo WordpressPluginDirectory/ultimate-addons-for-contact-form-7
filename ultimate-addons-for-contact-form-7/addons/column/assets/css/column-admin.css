@@ -1,12 +1,10 @@
-.uacf7_code {
-	background: #ddd
-}
 .uacf7-column-select {
 	margin-bottom: 10px !important;
 	display: block;
 	cursor: pointer;
 	border: 1px solid transparent;
 	padding: 5px;
+	background: #ddd
 }
 .uacf7-column-button {
 	border: 1px dotted green !important;
@@ -22,6 +20,8 @@
 	display: none
 }
 .control-box.uacf7-column-control-box {
+	display: block;
+	width: 100% !important;
 	height: 100%;
 	overflow: unset;
 }
@@ -34,4 +34,19 @@
 	color: red;
 	cursor: pointer;
 	font-size: 15px
+}
+
+.uacf7-control-box {
+	overflow: unset !important;
+}
+
+.uacf7-control-box + .insert-box .tag {
+	width: 510px;
+	float: left;
+	background-color: transparent;
+	box-shadow: none;
+}
+
+.uacf7-control-box + .insert-box .submitbox input[type="button"] {
+	float: right;
 }

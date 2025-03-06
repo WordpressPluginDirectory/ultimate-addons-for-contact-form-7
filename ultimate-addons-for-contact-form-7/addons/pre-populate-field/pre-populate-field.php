@@ -145,15 +145,15 @@ class UACF7_PRE_POPULATE {
             $pre_populate_form = isset($pre_populate['pre_populate_form']) ? $pre_populate['pre_populate_form'] : '';
             $field_name = array();
             if(is_array($pre_populate_passing_field)){
-                foreach($pre_populate_passing_field as $key => $value){
-                    $field_name[$key] = $value['field_name'];
+                foreach ($pre_populate_passing_field as $value) {
+                    $field_name[] = $value['field_name'];
                 }
             }
             $data = [
                 'form_id' => $form_id,
                 'pre_populate_enable' => $pre_populate_enable,
                 'data_redirect_url' => $data_redirect_url,
-                'pre_populate_passing_field' => $field_name,
+                'pre_populate_passing_field' => array_values($field_name),
                 'pre_populate_form' => $pre_populate_form,
             ];
             

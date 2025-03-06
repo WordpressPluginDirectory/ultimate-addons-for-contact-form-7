@@ -18,7 +18,7 @@ class UACF7_SUBMISSION_ID {
 		add_action( 'wp_ajax_uacf7_update_submission_id', [ $this, 'uacf7_update_submission_id' ] );
 		add_action( 'wp_ajax_nopriv_uacf7_update_submission_id', [ $this, 'uacf7_update_submission_id' ] );
 
-		add_filter( 'wpcf7_mail_sent', [ $this, 'submission_id_update' ] );
+		// add_filter( 'wpcf7_mail_sent', [ $this, 'submission_id_update' ] );
 		add_filter( 'wpcf7_mail_components', [ $this, 'submission_id_custom_cf7_mail_subject' ], 10, 2 );
 
 		// Submission ID Update into Database free
@@ -92,7 +92,7 @@ class UACF7_SUBMISSION_ID {
 				'uacf7_submission_id_send_to_sub_line' => array(
 					'id' => 'uacf7_submission_id_send_to_sub_line',
 					'type' => 'switch',
-					'label' => __( 'Show Submission ID on the Mail Subject Line dynamic', 'ultimate-addons-cf7' ),
+					'label' => __( 'Show Submission ID in the Mail Subject Line (Dynamic)', 'ultimate-addons-cf7' ),
 					'label_on' => __( 'Yes', 'ultimate-addons-cf7' ),
 					'label_off' => __( 'No', 'ultimate-addons-cf7' ),
 					'default' => false,
@@ -140,6 +140,7 @@ class UACF7_SUBMISSION_ID {
 		] );
 	}
 	/** Ends Loading Essential JS & CSS */
+
 	public function uacf7_submission_check( $form, $abort, $submission ) {
 		$form_id = $form->id();
 		// Get the submitted data
@@ -149,7 +150,7 @@ class UACF7_SUBMISSION_ID {
 		$uacf7_submission_id_enable = isset( $settingData['uacf7_submission_id_enable'] ) ? $settingData['uacf7_submission_id_enable'] : false;
 
 		if ( $submission && $uacf7_submission_id_enable == true ) {
-			$getCurrentData = isset( $settingData['uacf7_submission_id'] ) ? $settingData['uacf7_submission_id'] : 0;
+			$stored_submission_id  = isset( $settingData['uacf7_submission_id'] ) ? $settingData['uacf7_submission_id'] : 0;
 			$step_counter = isset( $settingData['uacf7_submission_id_step'] ) ? $settingData['uacf7_submission_id_step'] : 0;
 
 			// Scan form tags to find the specific field
@@ -160,11 +161,11 @@ class UACF7_SUBMISSION_ID {
 					$field_name = $tag->name;
 
 					// Get the current value of the specific tag
-					$current_value = isset( $submittedData[ $field_name ] ) ? $submittedData[ $field_name ] : '';
+					$submitted_value  = isset( $submittedData[ $field_name ] ) ? $submittedData[ $field_name ] : '';
 
-					if ( $getCurrentData > $current_value ) {
+					if ( $stored_submission_id  > $submitted_value || $submitted_value != $stored_submission_id ) {
 						// Update the value
-						$new_value = ( $step_counter > 0 ) ? ( $getCurrentData + $step_counter ) : ( $getCurrentData + 1 );
+						$new_value = $stored_submission_id ;
 
 						// Override the submitted data
 						$submittedData[ $field_name ] = $new_value;
@@ -175,8 +176,22 @@ class UACF7_SUBMISSION_ID {
 						$posted_data_property->setAccessible( true );
 						$posted_data_property->setValue( $submission, $submittedData );
 
+						// Update the value for setting value updated
+						$new_valueSetting = ( $step_counter > 0 ) ? ( $new_value + $step_counter ) : ( $new_value + 1 );
+
 						$meta = uacf7_get_form_option( $form->id(), '' );
-						$meta['submission_id']['uacf7_submission_id'] = $new_value;
+						$meta['submission_id']['uacf7_submission_id'] = $new_valueSetting;
+						update_post_meta( $form->id(), 'uacf7_form_opt', $meta );
+					} else {
+						$valueIncreasing = '';
+
+						if ( $step_counter > 0 ) {
+							$valueIncreasing .= $stored_submission_id  + $step_counter;
+						} else {
+							$valueIncreasing .= $stored_submission_id  + 1;
+						}
+						$meta = uacf7_get_form_option( $form->id(), '' );
+						$meta['submission_id']['uacf7_submission_id'] = $valueIncreasing;
 						update_post_meta( $form->id(), 'uacf7_form_opt', $meta );
 					}
 				}
@@ -184,11 +199,9 @@ class UACF7_SUBMISSION_ID {
 		}
 	}
 
-
 	/**
 	 * Submission ID Realtime update in the Frontend
 	 */
-
 	public function uacf7_update_submission_id() {
 
 		if ( ! wp_verify_nonce( $_POST['ajax_nonce'], 'uacf7-submission-id-nonce' ) ) {
@@ -204,7 +217,6 @@ class UACF7_SUBMISSION_ID {
 		] );
 
 	}
-
 
 	/**
 	 * Submission ID Update into Database
@@ -246,17 +258,7 @@ class UACF7_SUBMISSION_ID {
 
 
 
-			$valueIncreasing = '';
 
-
-			if ( $step_counter > 0 ) {
-				$valueIncreasing .= $getCurrentData + $step_counter;
-			} else {
-				$valueIncreasing .= $getCurrentData + 1;
-			}
-			$meta = uacf7_get_form_option( $form->id(), '' );
-			$meta['submission_id']['uacf7_submission_id'] = $valueIncreasing;
-			update_post_meta( $form->id(), 'uacf7_form_opt', $meta );
 		}
 
 	}
@@ -322,9 +324,9 @@ class UACF7_SUBMISSION_ID {
 		$default_value = $tag->get_default_option( $value );
 
 
-		$value = isset( $submission['uacf7_submission_id'] ) ? $submission['uacf7_submission_id'] : '';
+		$submission_id = isset( $submission['uacf7_submission_id'] ) ? intval($submission['uacf7_submission_id']) : '';
 
-		$atts['value'] = $value;
+		$atts['value'] = esc_attr($submission_id);
 
 		$atts['name'] = $tag->name;
 
@@ -351,60 +353,82 @@ class UACF7_SUBMISSION_ID {
 	 * Generate tag - Submission ID
 	 */
 	public function submission_tag_generator() {
-		if ( ! function_exists( 'wpcf7_add_tag_generator' ) ) {
-			return;
-		}
 
-		wpcf7_add_tag_generator(
+		$tag_generator = WPCF7_TagGenerator::get_instance();
+
+		$tag_generator->add(
 			'uacf7_submission_id',
 			__( 'Submission ID', 'ultimate-addons-cf7' ),
-			'uacf7-tg-pane-submission-id',
-			array( $this, 'tg_pane_submission_id' )
+			[ $this, 'tg_pane_submission_id' ],
+			array( 'version' => '2' )
 		);
+
 	}
 
-	public static function tg_pane_submission_id( $contact_form, $args = '' ) {
-		$args = wp_parse_args( $args, array() );
-		$uacf7_field_type = 'uacf7_submission_id';
+	public static function tg_pane_submission_id( $contact_form, $options ) {
+
+		$field_types = array(
+			'uacf7_submission_id' => array(
+				'display_name' => __( 'Submission ID', 'ultimate-addons-cf7' ),
+				'heading' => __( 'Generate a Unique Submission ID.', 'ultimate-addons-cf7' ),
+				'description' => __( '', 'ultimate-addons-cf7' ),
+			),
+		);
+
+		$tgg = new WPCF7_TagGeneratorGenerator( $options['content'] );
+
 		?>
-		<div class="control-box">
-			<fieldset>
-				<table class="form-table">
-					<tbody>
-						<div class="uacf7-doc-notice">
-							<?php echo sprintf(
-								__( 'Confused? Check our Documentation on  %1s.', 'ultimate-addons-cf7' ),
-								'<a href="https://themefic.com/docs/uacf7/free-addons/unique-id-for-contact-form-7/" target="_blank">Unique Submission ID</a>'
-							); ?>
-						</div>
-						<tr>
-							<th scope="row"><label
-									for="<?php echo esc_attr( $args['content'] . '-name' ); ?>"><?php echo esc_html( __( 'Name', 'ultimate-addons-cf7' ) ); ?></label>
-							</th>
-							<td><input type="text" name="name" class="tg-name oneline"
-									id="<?php echo esc_attr( $args['content'] . '-name' ); ?>" /></td>
-						</tr>
-						<tr>
-							<th scope="row"><label
-									for="tag-generator-panel-text-class"><?php echo esc_html__( 'Class attribute', 'ultimate-addons-cf7' ); ?></label>
-							</th>
-							<td><input type="text" name="class" class="classvalue oneline option"
-									id="tag-generator-panel-text-class"></td>
-						</tr>
-					</tbody>
-				</table>
-			</fieldset>
-		</div>
 
-		<div class="insert-box">
-			<input type="text" name="<?php echo esc_attr( $uacf7_field_type ); ?>" class="tag code" readonly="readonly"
-				onfocus="this.select()" />
+		<header class="description-box">
+			<h3><?php
+			echo esc_html( $field_types['uacf7_submission_id']['heading'] );
+			?></h3>
 
-			<div class="submitbox">
-				<input type="button" class="button button-primary insert-tag" id="prevent_multiple"
-					value="<?php echo esc_attr( __( 'Insert Tag', 'ultimate-addons-cf7' ) ); ?>" />
+			<p><?php
+			$description = wp_kses(
+				$field_types['uacf7_submission_id']['description'],
+				array(
+					'a' => array( 'href' => true ),
+					'strong' => array(),
+				),
+				array( 'http', 'https' )
+			);
+
+			echo $description;
+			?></p>
+			<div class="uacf7-doc-notice">
+				<?php echo sprintf(
+					__( 'Confused? Check our Documentation on  %1s.', 'ultimate-addons-cf7' ),
+					'<a href="https://themefic.com/docs/uacf7/free-addons/unique-id-for-contact-form-7/" target="_blank">Unique Submission ID</a>'
+				); ?>
 			</div>
+		</header>
+
+		<div class="control-box uacf7-control-box">
+
+			<?php
+
+			$tgg->print( 'field_type', array(
+				'select_options' => array(
+					'uacf7_submission_id' => $field_types['uacf7_submission_id']['display_name'],
+				),
+			) );
+
+			$tgg->print( 'field_name' );
+			$tgg->print( 'class_attr' );
+
+			?>
+
 		</div>
+
+		<footer class="insert-box">
+			<?php
+			$tgg->print( 'insert_box_content' );
+
+			$tgg->print( 'mail_tag_tip' );
+			?>
+		</footer>
+
 		<?php
 	}
 
@@ -412,9 +436,13 @@ class UACF7_SUBMISSION_ID {
 
 		$form_id = $form->id();
 		$submission = uacf7_get_form_option( $form_id, 'submission_id' );
+
 		$meta_data = isset( $submission['uacf7_submission_id'] ) ? $submission['uacf7_submission_id'] : 0;
+
 		$uacf7_submission_id_enable = isset( $submission['uacf7_submission_id_enable'] ) ? $submission['uacf7_submission_id_enable'] : false;
+
 		$uacf7_submission_id_send_to_sub_line = isset( $submission['uacf7_submission_id_send_to_sub_line'] ) ? $submission['uacf7_submission_id_send_to_sub_line'] : false;
+
 		$uacf7_submission_id_place = isset( $submission['uacf7_submission_id_place'] ) ? $submission['uacf7_submission_id_place'] : false;
 
 		if ( $uacf7_submission_id_enable == true && $uacf7_submission_id_send_to_sub_line == true ) {

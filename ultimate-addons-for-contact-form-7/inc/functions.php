@@ -11,9 +11,16 @@ if ( file_exists( UACF7_PATH . 'inc/class-setup-wizard.php' ) ) {
 	require_once UACF7_PATH . 'inc/class-setup-wizard.php';
 }
 
+//Require ultimate Promo Notice
+if ( file_exists( UACF7_PATH . 'inc/class-promo-notice.php' ) ) {
+
+    require_once ( UACF7_PATH .'inc/class-promo-notice.php');
+}
+
 if ( file_exists( UACF7_PATH . 'admin/admin-menu.php' ) ) {
 	require_once UACF7_PATH . 'admin/admin-menu.php';
 }
+
 
 
 
@@ -129,7 +136,7 @@ Return: checked
 */
 if ( ! function_exists( 'uacf7_print_r' ) ) {
 	function uacf7_print_r( $value ) {
-		echo '<pre>';
+		echo '<pre style="padding-left: 180px;">';
 		print_r( $value );
 		echo '</pre>';
 		// exit;
@@ -337,9 +344,26 @@ add_filter( 'wpcf7_contact_form_properties', 'uacf7_add_wrapper_to_cf7_form', 10
 function uacf7_add_wrapper_to_cf7_form( $properties, $cfform ) {
 	if ( ! is_admin() || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
 
+		$auto_cart = uacf7_get_form_option( $cfform->id(), 'auto_cart' );
+        $uacf7_enable_product_auto_cart = isset($auto_cart['uacf7_enable_product_auto_cart']) ? $auto_cart['uacf7_enable_product_auto_cart'] : false;
+
+		$form_meta = uacf7_get_form_option( $cfform->id(), 'styler' );
+		$form_styles = isset( $form_meta['uacf7_enable_form_styles'] ) ? $form_meta['uacf7_enable_form_styles'] : false;
+
+		$auto_cart_class = '';
+		$uacf7_formStyler_class= '';
+
+		if ( $uacf7_enable_product_auto_cart ) {
+			$auto_cart_class = 'uacf7_auto_cart_'.$cfform->id();
+		}
+
+		if ( $form_styles ) {
+			$uacf7_formStyler_class= 'uacf7-uacf7style uacf7-uacf7style-' . esc_attr( $cfform->id() );
+		}
+		
 		$form = $properties['form'];
 		ob_start();
-		echo '<div class="uacf7-form-' . $cfform->id() . '">' . $form . '</div>';
+		echo '<div class="uacf7-form-' . $cfform->id() . ' '.$auto_cart_class.' '.$uacf7_formStyler_class.'">' . $form . '</div>';
 		$properties['form'] = ob_get_clean();
 
 	}
@@ -648,7 +672,6 @@ if ( ! function_exists( 'uacf7_form_option_Migration_callback' ) ) {
 					}
 
 					//  Conditional addon Migration 
-
 					$condition = get_post_meta( get_the_ID(), 'uacf7_conditions', true );
 					if ( is_array( $condition ) ) {
 						$count = 0;
@@ -1229,3 +1252,325 @@ function uacf7_plugin_update_message( $plugin_data, $response ) {
 	return $plugin_data;
 
 }
+
+
+add_action('wp_ajax_uacf7_install_hydra_booking', 'uacf7_install_hydra_booking');
+
+function uacf7_install_hydra_booking() {
+    check_ajax_referer('uacf7_admin_nonce', 'security');
+
+    if (!current_user_can('install_plugins')) {
+        wp_send_json_error(['message' => 'Permission denied']);
+    }
+
+    include_once ABSPATH . 'wp-admin/includes/plugin-install.php';
+    include_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
+    include_once ABSPATH . 'wp-admin/includes/plugin.php';
+
+    $plugin_slug = 'hydra-booking';
+    $plugin_file = 'hydra-booking/hydra-booking.php';
+
+    // Check if already installed
+    if (is_plugin_active($plugin_file)) {
+        wp_send_json_success(['message' => 'Hydra Booking Plugin is already active.']);
+    }
+
+    $api = plugins_api('plugin_information', ['slug' => $plugin_slug]);
+
+    if (is_wp_error($api)) {
+        wp_send_json_error(['message' => 'Plugin info could not be retrieved.']);
+    }
+
+    $upgrader = new Plugin_Upgrader(new WP_Ajax_Upgrader_Skin());
+    $result = $upgrader->install($api->download_link);
+
+    if (is_wp_error($result)) {
+        wp_send_json_error(['message' => 'Hydra Booking Plugin Installation failed.']);
+    }
+
+    // Activate plugin
+    $activate = activate_plugin($plugin_file);
+
+    if (is_wp_error($activate)) {
+        wp_send_json_error(['message' => 'Hydra Booking Plugin Activation failed.']);
+    }
+
+    wp_send_json_success(['message' => 'Hydra Booking Plugin installed and activated successfully.']);
+}
+
+function uacf7_dismiss_booking_pro_notice() {
+    check_ajax_referer('uacf7_admin_nonce', 'security');
+
+    set_transient('uacf7_booking_pro_notice_dismissed', true, 7 * DAY_IN_SECONDS);
+
+    wp_send_json_success();
+}
+
+add_action('wp_ajax_uacf7_dismiss_booking_pro_notice', 'uacf7_dismiss_booking_pro_notice');
+
+function uacf7_booking_pro_admin_notice() {
+    if (get_transient('uacf7_booking_pro_notice_dismissed')) {
+        return;
+    }
+
+    ?>
+    <div class="notice notice-warning notice-danger is-dismissible uacf7-booking-pro-notice" style="border-left-color: #b32d2e;">
+		<p><strong style="display: block; padding-bottom: 4px; font-size: 16px;">Important Notice:</strong> Please be advised that the <strong>Booking/Appointment Form Pro</strong> add-on will be discontinued soon. We are delighted to introduce <strong>Hydra Booking Free</strong> as the superior alternative. <a href="https://themefic.com/uacf7-booking-addon-will-be-discontinued/" target="_blank">Discover the new features</a>.</p>
+    </div>
+
+    <script type="text/javascript">
+        jQuery(document).ready(function ($) {
+            $('.uacf7-booking-pro-notice').on('click', '.notice-dismiss', function () {
+                $.post(ajaxurl, {
+                    action: 'uacf7_dismiss_booking_pro_notice',
+                    security: '<?php echo wp_create_nonce("uacf7_admin_nonce"); ?>'
+                });
+            });
+        });
+    </script>
+    <?php
+}
+add_action('admin_notices', 'uacf7_booking_pro_admin_notice');
+
+/**
+ * Migrate Conditional Fields Data
+ */
+
+add_action('admin_notices',  'uacf7_migration_notice');
+add_action('admin_init',  'uacf7_migrate_conditional_fields_handler');
+add_action('admin_notices',  'uacf7_migration_success_notice');
+add_action('admin_init', 'uacf7_handle_conditional_notice_dismiss');
+
+
+function enable_conditional_field() {
+	$options = uacf7_settings();
+
+	if ( ! isset( $options['uacf7_enable_conditional_field'] ) || ! $options['uacf7_enable_conditional_field'] ) {
+        $options['uacf7_enable_conditional_field'] = true;
+        update_option( 'uacf7_settings', $options );
+    }
+}
+
+function uacf7_migration_notice() {
+	if (is_plugin_active('cf7-conditional-fields/conditional-fields.php')) {
+		$dismiss_time = get_option('uacf7_migration_done', 0);
+
+		if ($dismiss_time && $dismiss_time > time()) {
+			return;
+		}
+
+		echo '<div class="notice notice-warning is-dismissible">
+			<p><strong>Ultimate Addons for Contact Form 7 – Migrate Your Conditional Data:</strong> <br> We\'ve detected conditional data from <strong>Conditional Fields for Contact Form 7</strong>. Easily migrate it with our built-in tool and unlock 40+ powerful addons in one place. Would you like to proceed?</p>
+			<p>
+				<a href="' . esc_url(admin_url('admin.php?action=uacf7_migrate_conditional_fields')) . '" class="button button-primary">Migrate Now</a>
+				<a href="' . esc_url(add_query_arg('uacf7_dismiss_conditional_migration_notice', '1')) . '" class="button button-secondary">Not Now</a>
+			</p>
+		</div>';
+	}
+}
+
+function uacf7_handle_conditional_notice_dismiss() {
+	if (isset($_GET['uacf7_dismiss_conditional_migration_notice']) && $_GET['uacf7_dismiss_conditional_migration_notice'] === '1') {
+		update_option('uacf7_migration_done', time() + (15 * DAY_IN_SECONDS));
+
+		wp_redirect(remove_query_arg('uacf7_dismiss_conditional_migration_notice'));
+		exit;
+	}
+}
+
+function uacf7_migration_success_notice() {
+	if (isset($_GET['uacf7_migration_success']) && $_GET['uacf7_migration_success'] == 1) {
+		echo '<div class="notice notice-success is-dismissible">
+			<p>Migration completed successfully.</p>
+		</div>';
+	}
+}
+
+function uacf7_migrate_conditional_fields_handler() {
+	if (isset($_GET['action']) && $_GET['action'] === 'uacf7_migrate_conditional_fields') {
+		enable_conditional_field();
+		uacf7_migrate_conditional_fields();
+
+		update_option('uacf7_migration_done', true);
+		wp_redirect(admin_url('admin.php?page=wpcf7&uacf7_migration_success=1'));
+		exit;
+	}
+}
+
+function uacf7_migrate_conditional_fields() {
+	$forms = get_posts([
+		'post_type' => 'wpcf7_contact_form',
+		'posts_per_page' => -1,
+	]);
+
+	foreach ($forms as $form) {
+		$post_id = $form->ID;
+
+		// Migrate conditional metadata
+		$conditional_data = get_post_meta($post_id, 'wpcf7cf_options', true);
+		$operator_map = [
+			'equals' => 'equal',
+			'not equals' => 'not_equal',
+			'greater than' => 'greater_than',
+			'greater than or equals' => 'greater_than_or_equal_to',
+			'less than' => 'less_than',
+			'less than or equals' => 'less_than_or_equal_to',
+			'is empty' => 'contains',
+			'not empty' => 'does_not_contain',
+		];
+		
+		if (!empty($conditional_data)) {
+			$migrated_data = [];
+
+			foreach ($conditional_data as $index => $condition) {
+				$then_field = $condition['then_field'];
+				$condition_for = count($condition['and_rules']) > 1 ? 'all' : 'any';
+
+				$uacf7_conditions = [];
+
+				foreach ($condition['and_rules'] as $rule_index => $rule) {
+					$mapped_operator = isset($operator_map[$rule['operator']]) 
+						? $operator_map[$rule['operator']] 
+						: $rule['operator']; 
+				
+					$uacf7_conditions[$rule_index + 1] = [
+						'uacf7_cf_tn' => $rule['if_field'],
+						'uacf7_cf_operator' => $mapped_operator,
+						'uacf7_cf_val' => $rule['if_value'],
+					];
+				}
+
+				$migrated_data[$index + 1] = [
+					'uacf7_cf_group' => $then_field,
+					'uacf7_cf_hs' => 'show',
+					'uacf7_cf_condition_for' => $condition_for,
+					'uacf7_cf_conditions' => $uacf7_conditions,
+				];
+			}
+
+			// Fetch existing form options to maintain other settings
+			$form_options = get_post_meta($post_id, 'uacf7_form_opt', true);
+			if (!is_array($form_options)) {
+				$form_options = [];
+			}
+
+			// Set migrated conditionals under 'conditional' key
+			$form_options['conditional'] = [
+				'conditional_heading' => '',
+				'conditional_field_docs' => '',
+				'conditional_form_options_heading' => '',
+				'conditional_repeater' => $migrated_data,
+			];
+
+			// Save the updated form options back to post meta
+			update_post_meta($post_id, 'uacf7_form_opt', $form_options);
+		}
+
+		// Replace [group] tags with [conditional] in form content
+		$form_content = get_post_meta($post_id, '_form', true);
+
+		if (!empty($form_content)) {
+			$updated_content = preg_replace_callback(
+				'/\[group\s+([^\]]+)\](.*?)\[\/group\]/s',
+				function ($matches) {
+					$group_name = $matches[1];
+					$content_inside = $matches[2];
+					return "[conditional {$group_name}]{$content_inside}[/conditional]";
+				},
+				$form_content
+			);
+
+			// Save updated form content if changed
+			if ($updated_content !== $form_content) {
+				update_post_meta($post_id, '_form', $updated_content);
+			}
+		}
+	}
+}
+
+
+add_action('wpcf7_before_send_mail', 'uacf7_preserve_line_breaks');
+
+function uacf7_preserve_line_breaks($contact_form) {
+    $submission = WPCF7_Submission::get_instance();
+
+    if (!$submission) {
+        return;
+    }
+
+    $properties = $contact_form->get_properties();
+    
+    $is_html = !empty($properties['mail']['use_html']);
+	
+	if($is_html){
+		if (!empty($properties['mail']['body'])) {
+			$properties['mail']['body'] = nl2br($properties['mail']['body']);
+		}
+	
+		if (!empty($properties['mail_2']['body'])) {
+			$properties['mail_2']['body'] = nl2br($properties['mail_2']['body']);
+		}
+	}
+
+	$contact_form->set_properties($properties);
+}
+
+// function uacf7_check_and_install_hydra_booking($upgrader_object, $options) {
+	
+// 	if ($options['action'] !== 'update' || $options['type'] !== 'plugin') {
+// 		return;
+// 	}
+
+// 	$ultimate_addons_slug = 'ultimate-addons-for-contact-form-7/ultimate-addons-for-contact-form-7.php';
+
+// 	if (empty($options['plugins']) || !is_array($options['plugins'])) {
+// 		return;
+// 	}
+
+// 	if (!in_array($ultimate_addons_slug, $options['plugins'])) {
+// 		return;
+// 	}
+
+//     $options = uacf7_settings();
+
+//     if (!isset($options['uacf7_enable_booking_form']) || !$options['uacf7_enable_booking_form']) {
+//         return;
+//     }
+
+//     $hydra_plugin_slug = 'hydra-booking/hydra-booking.php';
+//     if (is_plugin_active($hydra_plugin_slug) || file_exists(WP_PLUGIN_DIR . '/' . $hydra_plugin_slug)) {
+//         return; 
+//     }
+
+//     uacf7_install_hydra_booking_on_plugin_update();
+// }
+
+// add_action('upgrader_process_complete', 'uacf7_check_and_install_hydra_booking', 10, 2);
+
+// function uacf7_install_hydra_booking_on_plugin_update() {
+//     if (!current_user_can('install_plugins')) {
+//         return;
+//     }
+
+//     include_once ABSPATH . 'wp-admin/includes/plugin-install.php';
+//     include_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
+//     include_once ABSPATH . 'wp-admin/includes/plugin.php';
+
+//     $plugin_slug = 'hydra-booking';
+//     $plugin_file = 'hydra-booking/hydra-booking.php';
+
+//     $api = plugins_api('plugin_information', ['slug' => $plugin_slug]);
+
+//     if (is_wp_error($api) || empty($api->download_link)) {
+//         return;
+//     }
+
+//     $upgrader = new Plugin_Upgrader(new WP_Upgrader_Skin());
+//     $result = $upgrader->install($api->download_link);
+
+//     if (is_wp_error($result)) {
+//         return; 
+//     }
+
+//     activate_plugin($plugin_file);
+// }

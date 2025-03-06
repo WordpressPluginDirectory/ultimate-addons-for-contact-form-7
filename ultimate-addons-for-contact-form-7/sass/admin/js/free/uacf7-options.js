@@ -482,8 +482,8 @@
 
 
             var all = $('.uacf7-addon-input-field[type="checkbox"]').length;
-            var activated = $('.uacf7-addon-input-field[type="checkbox"]:checked').length;
-            var deactivate = $('.uacf7-addon-input-field[type="checkbox"]:not(:checked)').length;
+            var activated = $('.addon-status.pro').length;
+            var deactivate = $('.addon-status.free').length;
 
             $('.uacf7-addon-filter-button.all .uacf7-addon-filter-cta-count').text(all);
             $('.uacf7-addon-filter-button.activete .uacf7-addon-filter-cta-count').text(activated);
@@ -513,10 +513,10 @@
                 $('.uacf7-single-addon-setting').css('display', 'block');
             } else if ($(this).hasClass('activete')) {
                 $('.uacf7-single-addon-setting').css('display', 'none');
-                $('.uacf7-single-addon-setting input[type="checkbox"]:checked').closest('.uacf7-single-addon-setting').css('display', 'block');
+                $('.uacf7-single-addon-setting .addon-status.pro').closest('.uacf7-single-addon-setting').css('display', 'block');
             } else if ($(this).hasClass('deactive')) {
                 $('.uacf7-single-addon-setting').css('display', 'none');
-                $('.uacf7-single-addon-setting input[type="checkbox"]:not(:checked)').closest('.uacf7-single-addon-setting').css('display', 'block');
+                $('.uacf7-single-addon-setting .addon-status.free').closest('.uacf7-single-addon-setting').css('display', 'block');
             }
         });
 
@@ -560,17 +560,17 @@
             if (typeof data.get('tf_import_option') !== "undefined" && data.get('tf_import_option') != null && data.get('tf_import_option').trim() != '') {
 
                 //  confirm data before send
-                if (!confirm(tf_options.tf_export_import_msg.import_confirm)) {
+                if (!confirm(uacf7_setting_options.tf_export_import_msg.import_confirm)) {
                     return;
                 }
 
                 tf_import_option = true;
             }
 
-            data.append('action', 'tf_options_save');
+            data.append('action', 'uacf7_options_save');
 
             $.ajax({
-                url: uacf7_options.ajax_url,
+                url: uacf7_setting_options.ajax_url,
                 type: 'POST',
                 data: data,
                 processData: false,
@@ -682,6 +682,8 @@
             var count = $this_parent.find('.tf-repeater-wrap-' + id + ' .tf-single-repeater-' + id + '').length;
             var parent_field = add_value.find(':input[name="tf_parent_field"]').val();
             var current_field = add_value.find(':input[name="tf_current_field"]').val();
+            var maxIndex = parseInt($(this).closest('.tf-repeater').attr("data-max-index")) + 1;
+            $(this).closest('.tf-repeater').attr("data-max-index", maxIndex);
 
             $this_parent.find('.tf-repeater-wrap .tf-field-notice-inner').remove();
             // Chacked maximum repeater
@@ -691,13 +693,8 @@
             }
 
             // Repeater Count Add Value
-            add_value.find(':input[name="tf_repeater_count"]').val(count);
+            add_value.find(':input[name="tf_repeater_count"]').val(maxIndex);
 
-            // Repeater Room Unique ID
-            var room_uniqueid = add_value.find('.unique-id input');
-            if (typeof room_uniqueid !== "undefined") {
-                add_value.find('.unique-id input').val(new Date().valueOf() + count);
-            }
             let repeatDateField = add_value.find('.tf-field-date');
             if (repeatDateField.length > 0) {
                 repeatDateField.find('input').each(function () {
@@ -733,12 +730,12 @@
             if (parent_field == '') {
                 // Update  repeater name And id
                 add_value.find(':input').each(function () {
-                    this.name = this.name.replace('_____', '').replace('[' + current_field + '][00]', '[' + current_field + '][' + count + ']');
-                    this.id = this.id.replace('_____', '').replace('[' + current_field + '][00]', '[' + current_field + '][' + count + ']');
+                    this.name = this.name.replace('_____', '').replace('[' + current_field + '][00]', '[' + current_field + '][' + maxIndex + ']');
+                    this.id = this.id.replace('_____', '').replace('[' + current_field + '][00]', '[' + current_field + '][' + maxIndex + ']');
                 });
                 var update_paren = add_value.find('.tf-repeater input[name="tf_parent_field"]').val();
                 if (typeof update_paren !== "undefined") {
-                    var update_paren = update_paren.replace('[' + current_field + '][00]', '[' + current_field + '][' + count + ']');
+                    var update_paren = update_paren.replace('[' + current_field + '][00]', '[' + current_field + '][' + maxIndex + ']');
                 }
                 add_value.find('.tf-repeater input[name="tf_parent_field"]').val(update_paren);
 
@@ -746,15 +743,15 @@
                 // Update  repeater name And id
                 var update_paren = add_value.find(':input[name="tf_parent_field"]').val();
                 add_value.find(':input').each(function () {
-                    this.name = this.name.replace('_____', '').replace('[' + current_field + '][00]', '[' + current_field + '][' + count + ']');
-                    this.id = this.id.replace('_____', '').replace('[' + current_field + '][00]', '[' + current_field + '][' + count + ']');
+                    this.name = this.name.replace('_____', '').replace('[' + current_field + '][00]', '[' + current_field + '][' + maxIndex + ']');
+                    this.id = this.id.replace('_____', '').replace('[' + current_field + '][00]', '[' + current_field + '][' + maxIndex + ']');
                 });
             }
             // Update Repeaterr label
             add_value.find('label').each(function () {
                 var for_value = $(this).attr("for");
                 if (typeof for_value !== "undefined") {
-                    for_value = for_value.replace('_____', '').replace('[' + current_field + '][00]', '[' + current_field + '][' + count + ']');
+                    for_value = for_value.replace('_____', '').replace('[' + current_field + '][00]', '[' + current_field + '][' + maxIndex + ']');
                     $(this).attr("for", for_value);
                 }
             });
@@ -762,7 +759,7 @@
             add_value.find('.tf-icon-select').each(function (index) {
                 var icon_id = $(this).attr("id");
                 if (typeof icon_id !== "undefined") {
-                    icon_id = icon_id + index + count;
+                    icon_id = icon_id + index + maxIndex;
                     $(this).attr("id", icon_id)
 
                 }
@@ -771,7 +768,7 @@
             add_value.find('[data-depend-id]').each(function () {
                 var data_depend_id = $(this).attr("data-depend-id");
                 if (typeof data_depend_id !== "undefined") {
-                    data_depend_id = data_depend_id.replace('[' + current_field + '][00]', '[' + current_field + '][' + count + ']');
+                    data_depend_id = data_depend_id.replace('[' + current_field + '][00]', '[' + current_field + '][' + maxIndex + ']');
                     $(this).attr("data-depend-id", data_depend_id);
                 }
             });
@@ -779,7 +776,7 @@
             add_value.find('[data-controller]').each(function () {
                 var data_controller = $(this).attr("data-controller");
                 if (typeof data_controller !== "undefined") {
-                    data_controller = data_controller.replace('[' + current_field + '][00]', '[' + current_field + '][' + count + ']');
+                    data_controller = data_controller.replace('[' + current_field + '][00]', '[' + current_field + '][' + maxIndex + ']');
                     $(this).attr("data-controller", data_controller);
                 }
             });
@@ -816,7 +813,7 @@
 
             // replace new Select 2
             add_value.find('select.tf-select2-parent').each(function () {
-                this.id = this.id.replace('' + current_field + '__00', '' + current_field + '__' + count + '');
+                this.id = this.id.replace('' + current_field + '__00', '' + current_field + '__' + maxIndex + '');
                 var parent_repeater_id = $(this).attr('id');
                 var $this = $(this);
                 tfSelect2Int($this);
@@ -855,7 +852,8 @@
             var current_field = clone_value.find('input[name="tf_current_field"]').val();
             var repeater_count = clone_value.find('input[name="tf_repeater_count"]').val();
             var count = $this_parent.find('.tf-single-repeater-' + current_field + '').length;
-
+            var maxIndex = parseInt($(this).closest('.tf-repeater').attr("data-max-index")) + 1;
+            $(this).closest('.tf-repeater').attr("data-max-index", maxIndex);
 
             $this_parent.find('.tf-field-notice-inner').remove();
             // Chacked maximum repeater
@@ -905,13 +903,13 @@
                 // Replace input id and name
                 clone_value.find(':input').each(function () {
                     if ($(this).closest('.tf-single-repeater-clone').length == 0) {
-                        this.name = this.name.replace('_____', '').replace('[' + current_field + '][' + repeater_count + ']', '[' + current_field + '][' + count + ']');
-                        this.id = this.id.replace('_____', '').replace('[' + current_field + '][' + repeater_count + ']', '[' + current_field + '][' + count + ']');
+                        this.name = this.name.replace('_____', '').replace('[' + current_field + '][' + repeater_count + ']', '[' + current_field + '][' + maxIndex + ']');
+                        this.id = this.id.replace('_____', '').replace('[' + current_field + '][' + repeater_count + ']', '[' + current_field + '][' + maxIndex + ']');
                     }
                 });
                 var update_paren = clone_value.find('.tf-repeater input[name="tf_parent_field"]').val();
                 if (typeof update_paren !== "undefined") {
-                    var update_paren = update_paren.replace('[' + current_field + '][' + repeater_count + ']', '[' + current_field + '][' + count + ']');
+                    var update_paren = update_paren.replace('[' + current_field + '][' + repeater_count + ']', '[' + current_field + '][' + maxIndex + ']');
                 }
                 clone_value.find('.tf-repeater input[name="tf_parent_field"]').val(update_paren);
 
@@ -919,15 +917,15 @@
                 // Replace input id and name
                 clone_value.find(':input').each(function () {
                     if ($(this).closest('.tf-single-repeater-clone').length == 0) {
-                        this.name = this.name.replace('_____', '').replace('[' + current_field + '][' + repeater_count + ']', '[' + current_field + '][' + count + ']');
-                        this.id = this.id.replace('_____', '').replace('[' + current_field + '][' + repeater_count + ']', '[' + current_field + '][' + count + ']');
+                        this.name = this.name.replace('_____', '').replace('[' + current_field + '][' + repeater_count + ']', '[' + current_field + '][' + maxIndex + ']');
+                        this.id = this.id.replace('_____', '').replace('[' + current_field + '][' + repeater_count + ']', '[' + current_field + '][' + maxIndex + ']');
                     }
                 });
             }
             clone_value.find('label').each(function () {
                 var for_value = $(this).attr("for");
                 if (typeof for_value !== "undefined") {
-                    for_value = for_value.replace('_____', '').replace('[' + current_field + '][' + repeater_count + ']', '[' + current_field + '][' + count + ']');
+                    for_value = for_value.replace('_____', '').replace('[' + current_field + '][' + repeater_count + ']', '[' + current_field + '][' + maxIndex + ']');
                     var for_value = $(this).attr("for", for_value);
                 }
             });
@@ -935,7 +933,7 @@
             clone_value.find('.tf-icon-select').each(function (index) {
                 var icon_id = $(this).attr("id");
                 if (typeof icon_id !== "undefined") {
-                    icon_id = icon_id + index + count;
+                    icon_id = icon_id + index + maxIndex;
                     $(this).attr("id", icon_id)
 
                 }
@@ -944,7 +942,7 @@
             clone_value.find('[data-depend-id]').each(function () {
                 var data_depend_id = $(this).attr("data-depend-id");
                 if (typeof data_depend_id !== "undefined") {
-                    data_depend_id = data_depend_id.replace('[' + current_field + '][' + repeater_count + ']', '[' + current_field + '][' + count + ']');
+                    data_depend_id = data_depend_id.replace('[' + current_field + '][' + repeater_count + ']', '[' + current_field + '][' + maxIndex + ']');
                     $(this).attr("data-depend-id", data_depend_id);
                 }
             });
@@ -952,12 +950,12 @@
             clone_value.find('[data-controller]').each(function () {
                 var data_controller = $(this).attr("data-controller");
                 if (typeof data_controller !== "undefined") {
-                    data_controller = data_controller.replace('[' + current_field + '][' + repeater_count + ']', '[' + current_field + '][' + count + ']');
+                    data_controller = data_controller.replace('[' + current_field + '][' + repeater_count + ']', '[' + current_field + '][' + maxIndex + ']');
                     $(this).attr("data-controller", data_controller);
                 }
             });
             // Replace Data repeter Count id ID
-            clone_value.find('input[name="tf_repeater_count"]').val(count)
+            clone_value.find('input[name="tf_repeater_count"]').val(maxIndex)
 
             // Replace Old editor
             clone_value.find('.wp-editor-wrap').each(function () {
@@ -1004,7 +1002,7 @@
 
             // Clone Select 2
             clone_value.find('select.tf-select2-parent, select.tf-select2').each(function () {
-                this.id = this.id.replace('' + current_field + '__' + repeater_count, '' + current_field + '__' + count + '');
+                this.id = this.id.replace('' + current_field + '__' + repeater_count, '' + current_field + '__' + maxIndex + '');
                 var $this = $(this);
                 tfSelect2Int($this);
             });
@@ -1066,7 +1064,7 @@
             var form_id = textarea.attr('data-form-id');
             var importData = textarea.val().trim();
             if (importData == '') {
-                alert(tf_options.tf_export_import_msg.import_empty);
+                alert(uacf7_setting_options.tf_export_import_msg.import_empty);
                 let importField = $('textarea[name="tf_import_option"]');
                 importField.focus();
                 importField.css('border', '1px solid red');
@@ -1078,17 +1076,17 @@
                 $(".tf-option-form.tf-ajax-save").submit();
             } else {
                 //confirm data before send
-                if (!confirm(tf_options.tf_export_import_msg.import_confirm)) {
+                if (!confirm(uacf7_setting_options.tf_export_import_msg.import_confirm)) {
                     return;
                 }
                 $.ajax({
-                    url: tf_options.ajax_url,
+                    url: uacf7_setting_options.ajax_url,
                     method: 'POST',
                     data: {
                         action: 'uacf7_option_import',
                         tf_import_option: importData,
                         form_id: form_id,
-                        ajax_nonce: tf_options.nonce,
+                        ajax_nonce: uacf7_setting_options.nonce,
                     },
                     beforeSend: function () {
                         $('.tf-import-btn').html('Importing...');
@@ -1096,7 +1094,7 @@
                     },
                     success: function (response) {
                         if (response.data.status == 'success') {
-                            // alert(tf_options.tf_export_import_msg.imported);
+                            // alert(uacf7_setting_options.tf_export_import_msg.imported);
                             $('.tf-import-btn').html('Imported');
                             notyf.success(response.data.message);
                             window.location.reload();
@@ -1119,25 +1117,25 @@
         //     var form_id = textarea.attr('data-form-id');
         //     var importData = textarea.val().trim();
         //     if (importData == '') {
-        //         alert(tf_options.tf_export_import_msg.import_empty);
+        //         alert(uacf7_setting_options.tf_export_import_msg.import_empty);
         //         let importField = $('textarea[name="tf_import_option"]');
         //         importField.focus();
         //         importField.css('border', '1px solid red');
         //         return;
         //     } else {
         //         //confirm data before send
-        //         if (!confirm(tf_options.tf_export_import_msg.import_confirm)) {
+        //         if (!confirm(uacf7_setting_options.tf_export_import_msg.import_confirm)) {
         //             return;
         //         }
 
         //         $.ajax({
-        //             url: tf_options.ajax_url,
+        //             url: uacf7_setting_options.ajax_url,
         //             method: 'POST',
         //             data: {
         //                 action: 'uacf7_option_import',
         //                 tf_import_option: importData,
         //                 form_id: form_id,
-        //                 ajax_nonce: tf_options.nonce,
+        //                 ajax_nonce: uacf7_setting_options.nonce,
         //             },
         //             beforeSend: function () {
         //                 $('.tf-import-btn').html('Importing...');
@@ -1145,7 +1143,7 @@
         //             },
         //             success: function (response) {
         //                 if (response.success) {
-        //                     alert(tf_options.tf_export_import_msg.imported);
+        //                     alert(uacf7_setting_options.tf_export_import_msg.imported);
         //                     $('.tf-import-btn').html('Imported');
         //                     window.location.reload();
         //                 } else {

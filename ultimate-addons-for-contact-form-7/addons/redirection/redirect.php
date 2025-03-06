@@ -1,4 +1,7 @@
 <?php
+
+use phpDocumentor\Reflection\Types\This;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -12,7 +15,12 @@ class UACF7_Redirection {
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_redirect_script' ) );  
 		// add_action( 'wpcf7_after_save', array( $this, 'uacf7_save_meta' ) );
 		add_action( 'wpcf7_submit', array( $this, 'uacf7_non_ajax_redirection' ) );
-		add_filter( 'uacf7_post_meta_options', array( $this, 'uacf7_post_meta_options_redirection' ), 10, 2 );  
+		add_filter( 'uacf7_post_meta_options', array( $this, 'uacf7_post_meta_options_redirection' ), 10, 2 );
+
+		add_action('admin_notices', array($this, 'uacf7_redirection_migration_notice'));
+		add_action('admin_init', array($this, 'uacf7_migrate_redirection_handler'));
+		add_action('admin_notices', array($this, 'uacf7_redirection_migration_success_notice'));
+		add_action('admin_init', array($this, 'uacf7_handle_dismiss_notice'));
     }
     
     public function enqueue_redirect_script() {
@@ -244,9 +252,7 @@ class UACF7_Redirection {
 		}
 	}
     
-    /*
- 
-    
+
     /*
     * Fields array
     */
@@ -271,7 +277,125 @@ class UACF7_Redirection {
         );
         return $fields;
     }
+
+	/**
+	 * Show the migration notice if "Redirection for Contact Form 7" is active.
+	 */
+	public function uacf7_redirection_migration_notice() {
+		if (is_plugin_active('wpcf7-redirect/wpcf7-redirect.php')) {
+			$dismiss_time = get_option('uacf7_redirection_migration_done', 0);
+	
+			if ($dismiss_time && $dismiss_time > time()) {
+				return;
+			}
+	
+			echo '<div class="notice notice-warning is-dismissible">
+				<p><strong>Ultimate Addons for Contact Form 7 – Migrate Your Redirection Settings:</strong><br> We\'ve detected redirection settings from <strong>Redirection for Contact Form 7</strong>. Easily migrate them with our built-in tool—no need for multiple plugins! Plus, access 40+ powerful addons in one place. Would you like to proceed?</p>
+				<p>
+					<a href="' . esc_url(admin_url('admin.php?action=uacf7_migrate_redirection')) . '" class="button button-primary">Migrate Now</a>
+					<a href="' . esc_url(add_query_arg('uacf7_dismiss_redirection_notice', '1')) . '" class="button button-secondary">Not Now</a>
+				</p>
+			</div>';
+		}
+	}
+
+	/**
+	 * Show success notice after successful migration.
+	 */
+	public function uacf7_redirection_migration_success_notice() {
+		if (isset($_GET['uacf7_redirection_migration_success']) && $_GET['uacf7_redirection_migration_success'] == 1) {
+			echo '<div class="notice notice-success is-dismissible">
+				<p>Redirection migration completed successfully.</p>
+			</div>';
+		}
+	}
+
+	public function uacf7_handle_dismiss_notice() {
+		if (isset($_GET['uacf7_dismiss_redirection_notice']) && $_GET['uacf7_dismiss_redirection_notice'] === '1') {
+			update_option('uacf7_redirection_migration_done', time() + (15 * DAY_IN_SECONDS));
+			wp_redirect(remove_query_arg('uacf7_dismiss_redirection_notice'));
+			exit;
+		}
+	}
+
+	/**
+	 * Handle the migration process when "Migrate Now" button is clicked.
+	 */
+	public function uacf7_migrate_redirection_handler() {
+		if (isset($_GET['action']) && $_GET['action'] === 'uacf7_migrate_redirection') {
+			$this->migrate_redirection_data_to_uacf7();
+
+			update_option('uacf7_redirection_migration_done', true);
+			wp_redirect(admin_url('admin.php?page=wpcf7&uacf7_redirection_migration_success=1'));
+			exit;
+		}
+	}
+
     
+	public function migrate_redirection_data_to_uacf7() {
+
+		$redirect_actions = get_posts([
+			'post_type' => 'wpcf7r_action',
+			'post_status' => 'private',
+			'posts_per_page' => -1,
+		]);
+		
+		foreach ($redirect_actions as $action) {
+			$action_id = $action->ID;
+			$meta_data = get_post_custom($action_id, true);
+
+			if (empty($meta_data['wpcf7_id'][0])) {
+				continue;
+			}
+	
+			$wpcf7_id = $meta_data['wpcf7_id'][0];
+	
+			$action_type = isset($meta_data['action_type'][0]) ? $meta_data['action_type'][0] : '';
+			if ($action_type !== 'redirect') {
+				continue;
+			}
+
+			unset($meta_data['uacf7_form_opt']);
+			
+			$redirect_data = [
+				'redirect_enabled' => ($meta_data['action_status'][0] === 'on') ? 1 : 0,
+				'external_url' => !empty($meta_data['use_external_url'][0]) == 'on' ? $meta_data['external_url'][0] : '',
+				'redirect_delay' => !empty($meta_data['delay_redirect_seconds'][0]) ? intval($meta_data['delay_redirect_seconds'][0]) : 0,
+				'redirection_heading' => '',
+				'redirection_docs' => '',
+				'uacf7_redirect_enable' => ($meta_data['action_status'][0] === 'on') ? 1 : 0,
+				'uacf7_redirect_form_options_heading' => '',
+				'uacf7_redirect_to_type' => !empty($meta_data['use_external_url'][0]) == 'on' ? 'to_url' : 'to_page',
+				'page_id' => !empty($meta_data['page_id'][0]) ? intval($meta_data['page_id'][0]) : 0,
+				'uacf7_redirect_type' => '',
+				'target' => !empty($meta_data['open_in_new_tab'][0]) && $meta_data['open_in_new_tab'][0] === 'on' ? 1 : 0,
+				'uacf7_redirect_tag_support' => '',
+			];
+	
+			if (!empty($meta_data['http_build_query_selectively_fields'][0])) {
+				$redirect_data['conditional_redirect'] = [
+					1 => [
+						'uacf7_cr_tn' => '0',
+						'uacf7_cr_field_val' => 'Example',
+						'uacf7_cr_redirect_to_url' => 'https://example.com',
+					],
+				];
+			}
+
+			$form_options = get_post_meta($wpcf7_id, 'uacf7_form_opt', true);
+			if (!is_array($form_options)) {
+				$form_options = [];
+			}
+
+			$form_options['redirection'] = $redirect_data;
+	
+			update_post_meta($wpcf7_id, 'uacf7_form_opt', $form_options);
+
+		}
+
+	}
+
+	
  
     /*
     Enable conditional redirect
@@ -294,9 +418,10 @@ class UACF7_Redirection {
                 
                 // $uacf7_redirect = get_post_meta( get_the_ID(), 'uacf7_redirect_enable', true );
 				$post_meta = uacf7_get_form_option(get_the_ID(), 'redirection');
+				// beaf_print_r($post_meta);
 				if($post_meta != false){
 					$uacf7_redirect = $post_meta['uacf7_redirect_enable']; 
-
+					
 					if( !empty($uacf7_redirect) && $uacf7_redirect == true ) {
 						
 						$forms[ $post_id ] = $uacf7_redirect;
@@ -306,7 +431,7 @@ class UACF7_Redirection {
     		endwhile;
     		wp_reset_postdata();
     	endif;
-    
+		// beaf_print_r($forms);
     	return $forms;
     }
 }

@@ -14,7 +14,7 @@ class UACF7_DATABASE {
 	public function __construct() {
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'wp_enqueue_admin_script' ) );
-		add_action( 'wpcf7_before_send_mail', array( $this, 'uacf7_save_to_database' ) );
+		add_action( 'wpcf7_before_send_mail', array( $this, 'uacf7_save_to_database' ), 20, 4 );
 		add_action( 'admin_menu', array( $this, 'uacf7_add_db_menu' ), 11, 2 );
 		add_action( 'wp_ajax_uacf7_ajax_database_popup', array( $this, 'uacf7_ajax_database_popup' ) );
 		add_action( 'wp_ajax_uacf7_ajax_database_export_csv', array( $this, 'uacf7_ajax_database_export_csv' ) );
@@ -93,30 +93,30 @@ class UACF7_DATABASE {
 			$uacf7_ListTable = new uacf7_form_List_Table();
 			$uacf7_ListTable->prepare_items();
 			?>
-						<div class="wrap">
-							<div id="icon-users" class="icon32"></div>
-							<h2>
-								<?php echo esc_html__( 'Ultimate Database', 'ultimate-addons-cf7' ); ?>
-							</h2>
-							<?php settings_errors(); ?>
-							<form method="post" action="">
-								<input type="hidden" name="page" value="<?php echo esc_attr( $_REQUEST['page'] ); ?>" />
-								<?php $uacf7_ListTable->search_box( 'Search', 'search' ); ?>
-								<?php $uacf7_ListTable->display(); ?>
-							</form>
-						</div>
-						<section class="uacf7_popup_preview">
-							<div class="uacf7_popup_preview_content">
-								<div id="uacf7_popup_wrap">
-									<div class="db_popup_view">
-										<div class="close" title="Exit Full Screen">╳</div>
-										<div id="db_view_wrap">
-										</div>
-									</div>
-								</div>
+			<div class="wrap">
+				<div id="icon-users" class="icon32"></div>
+				<h2>
+					<?php echo esc_html__( 'Ultimate Database', 'ultimate-addons-cf7' ); ?>
+				</h2>
+				<?php settings_errors(); ?>
+				<form method="post" action="">
+					<input type="hidden" name="page" value="<?php echo esc_attr( $_REQUEST['page'] ); ?>" />
+					<?php $uacf7_ListTable->search_box( 'Search', 'search' ); ?>
+					<?php $uacf7_ListTable->display(); ?>
+				</form>
+			</div>
+			<section class="uacf7_popup_preview">
+				<div class="uacf7_popup_preview_content">
+					<div id="uacf7_popup_wrap">
+						<div class="db_popup_view">
+							<div class="close" title="Exit Full Screen">╳</div>
+							<div id="db_view_wrap">
 							</div>
-						</section>
-						<?php
+						</div>
+					</div>
+				</div>
+			</section>
+			<?php
 		} else {
 
 			global $wpdb;
@@ -128,57 +128,57 @@ class UACF7_DATABASE {
 			);
 			?>
 
-						<div class="wrap uacf7-admin-cont">
-							<h1>
-								<?php echo esc_html__( 'Ultimate Database Addon', 'ultimate-addons-cf7' ); ?>
-							</h1>
-							<p>
-								<?php echo esc_html__( 'The Database addon helps store form data, view data in the admin backend, and export data in CSV format.', 'ultimate-addons-cf7' ); ?>
-							</p>
-							<br>
-							<?php settings_errors(); ?>
+			<div class="wrap uacf7-admin-cont">
+				<h1>
+					<?php echo esc_html__( 'Ultimate Database Addon', 'ultimate-addons-cf7' ); ?>
+				</h1>
+				<p>
+					<?php echo esc_html__( 'The Database addon helps store form data, view data in the admin backend, and export data in CSV format.', 'ultimate-addons-cf7' ); ?>
+				</p>
+				<br>
+				<?php settings_errors(); ?>
 
-							<!--Tab buttons start-->
-							<div class="uacf7-tab">
-								<a class="tablinks active" onclick="uacf7_settings_tab(event, 'uacf7_addons')">
-									<?php echo esc_html__( 'Contact Form 7 Database', 'ultimate-addons-cf7' ); ?>
-								</a>
-							</div>
-							<!--Tab buttons end-->
+				<!--Tab buttons start-->
+				<div class="uacf7-tab">
+					<a class="tablinks active" onclick="uacf7_settings_tab(event, 'uacf7_addons')">
+						<?php echo esc_html__( 'Contact Form 7 Database', 'ultimate-addons-cf7' ); ?>
+					</a>
+				</div>
+				<!--Tab buttons end-->
 
-							<!--Tab Addons start-->
-							<div id="uacf7_addons" class="uacf7-tabcontent" style="display:block">
-								<table>
-									<tr>
-										<td>
-											<h3>
-												<?php echo esc_html__( 'Select Form :', 'ultimate-addons-cf7' ); ?>
-												</h4>
-										</td>
-										<td>
-											<select name="form-id" id="form-id">
-												<option value="0">
-													<?php echo esc_html__( 'Select Form', 'ultimate-addons-cf7' ); ?>
-												</option>
-												<?php
-												foreach ( $list_forms as $form ) {
-													$count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM " . $wpdb->prefix . "uacf7_form WHERE form_id = %d", $form->ID ) );  // count number of data
-													echo '<option value="' . esc_attr( $form->ID ) . '">' . esc_attr( $form->post_title ) . ' ( ' . $count . ' )</option>';
-												}
-												?>
-											</select>
-										</td>
-										<td>
-											<button type="submit" class="button-primary" id="database_submit">
-												<?php echo esc_html__( 'Submit', 'ultimate-addons-cf7' ); ?>
-											</button>
-										</td>
-									</tr>
-								</table>
-							</div>
-							<!--Tab Addons end-->
-						</div>
-						<?php
+				<!--Tab Addons start-->
+				<div id="uacf7_addons" class="uacf7-tabcontent" style="display:block">
+					<table>
+						<tr>
+							<td>
+								<h3>
+									<?php echo esc_html__( 'Select Form :', 'ultimate-addons-cf7' ); ?>
+									</h4>
+							</td>
+							<td>
+								<select name="form-id" id="form-id">
+									<option value="0">
+										<?php echo esc_html__( 'Select Form', 'ultimate-addons-cf7' ); ?>
+									</option>
+									<?php
+									foreach ( $list_forms as $form ) {
+										$count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM " . $wpdb->prefix . "uacf7_form WHERE form_id = %d", $form->ID ) );  // count number of data
+										echo '<option value="' . esc_attr( $form->ID ) . '">' . esc_attr( $form->post_title ) . ' ( ' . $count . ' )</option>';
+									}
+									?>
+								</select>
+							</td>
+							<td>
+								<button type="submit" class="button-primary" id="database_submit">
+									<?php echo esc_html__( 'Submit', 'ultimate-addons-cf7' ); ?>
+								</button>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<!--Tab Addons end-->
+			</div>
+			<?php
 		}
 		// echo ob_get_clean();
 	}
@@ -239,7 +239,7 @@ class UACF7_DATABASE {
 			} else {
 				// Handle the case when the pro plugin is not active and the constant is not defined
 				// You can add an error log, a fallback, or any other necessary action here
-				error_log( 'UACF7_PRO_PATH_ADDONS is not defined. Pro plugin might not be installed or active.' );
+				// error_log( 'UACF7_PRO_PATH_ADDONS is not defined. Pro plugin might not be installed or active.' );
 			}
 		}
 		global $wpdb;

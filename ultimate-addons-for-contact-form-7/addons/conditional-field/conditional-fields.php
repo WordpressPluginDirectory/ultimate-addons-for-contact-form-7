@@ -6,6 +6,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 class UACF7_CF {
 
 	private $hidden_fields = array();
+
+	public $invalid_field_key = null;
+
 	/*
 	 * Construct function
 	 */
@@ -29,6 +32,8 @@ class UACF7_CF {
 		add_filter( 'wpcf7_posted_data', array( $this, 'remove_hidden_post_data' ) );
 		add_filter( 'wpcf7_validate', array( $this, 'skip_validation_for_hidden_fields' ), 2, 2 );
 
+		add_action( 'wpcf7_validate_checkbox*', array($this, 'skip_hidden_checkbox_required') , 10, 2 );
+
 		add_filter( 'wpcf7_validate_file*', array( $this, 'skip_validation_for_hidden_file_field' ), 30, 3 );
 		add_filter( 'wpcf7_validate_multifile*', array( $this, 'skip_validation_for_hidden_file_field' ), 30, 3 );
 
@@ -39,8 +44,7 @@ class UACF7_CF {
 		add_filter( 'uacf7_post_meta_options', array( $this, 'uacf7_post_meta_options_conditional_field' ), 11, 2 );
 		add_filter( 'uacf7_pdf_generator_replace_condition_data', array( $this, 'uacf7_condition_replace_pdf' ), 11, 3 );
 
-		//    add_filter( 'wpcf7_load_js', '__return_false' );
-
+		// add_filter( 'wpcf7_load_js', '__return_false' );
 
 	}
 
@@ -52,7 +56,6 @@ class UACF7_CF {
 		wp_enqueue_script( 'uacf7-cf-script', UACF7_ADDONS . '/conditional-field/js/uacf7-cf-script.js', array( 'jquery' ), UACF7_VERSION, true );
 		wp_localize_script( 'uacf7-cf-script', 'uacf7_cf_object', $this->get_forms() );
 	}
-
 
 	public function uacf7_post_meta_options_conditional_field( $value, $post_id ) {
 
@@ -161,6 +164,10 @@ class UACF7_CF {
 										'less_than' => 'Less than',
 										'greater_than_or_equal_to' => 'Greater than or equal to',
 										'less_than_or_equal_to' => 'Less than or equal to',
+										'starts_with' => 'Starts with',
+										'ends_with' => 'Ends With',
+										'contains' => 'Contains',
+										'does_not_contain' => 'Does not contain'
 									),
 									'field_width' => '50',
 								),
@@ -207,59 +214,77 @@ class UACF7_CF {
 	 * Generate tag - conditional
 	 */
 	public function tag_generator() {
-		if ( ! function_exists( 'wpcf7_add_tag_generator' ) )
-			return;
+		$tag_generator = WPCF7_TagGenerator::get_instance();
 
-		wpcf7_add_tag_generator( 'conditional',
+		$tag_generator->add(
+			'conditional',
 			__( 'Conditional Wraper', 'ultimate-addons-cf7' ),
-			'uacf7-tg-pane-conditional',
-			array( $this, 'tg_pane_conditional' )
+			[ $this, 'tg_pane_conditional' ],
+			array( 'version' => '2' )
+		);
+	}
+
+	static function tg_pane_conditional( $contact_form, $options ) {
+		$field_types = array(
+			'conditional' => array(
+				'display_name' => __( 'conditional area', 'contact-form-7' ),
+				'heading' => __( 'Generate a conditional tag to wrap the elements that can be shown conditionally.', 'ultimate-addons-cf7' ),
+				'description' => __( 'Check "Conditional Fields" tab located under the Ultimate Addons for CF7 Options for additional settings. Make sure to set those, otherwise the conditions may not work correctly.', 'ultimate-addons-cf7' ),
+			),
 		);
 
-	}
-
-	static function tg_pane_conditional( $contact_form, $args = '' ) {
-		$args = wp_parse_args( $args, array() );
-		$uacf7_field_type = 'conditional';
+		$tgg = new WPCF7_TagGeneratorGenerator( $options['content'] );
+		// $uacf7_field_type = 'conditional';
 		?>
-		<div class="control-box">
-			<fieldset>
 
-				<legend>
-					<?php echo esc_html__( "Generate a conditional tag to wrap the elements that can be shown conditionally.", "ultimate-addons-cf7" ); ?>
-				</legend>
-				<table class="form-table">
-					<tbody>
-						<tr>
-							<th scope="row"><label for="<?php echo esc_attr( $args['content'] . '-name' ); ?>">
-									<?php echo esc_html( __( 'Name', 'ultimate-addons-cf7' ) ); ?>
-								</label></th>
-							<td><input type="text" name="name" class="tg-name oneline"
-									id="<?php echo esc_attr( $args['content'] . '-name' ); ?>" /></td>
-						</tr>
-					</tbody>
-				</table>
-				<div class="uacf7-doc-notice uacf7-guide">
-					<?php echo esc_html__( 'Check "Conditional Fields" tab located under the Ultimate Addons for CF7 Options for additional settings. Make sure to set those, otherwise the conditions may not work correctly.', "ultimate-addons-cf7" ); ?>
+		<header class="description-box">
+			<h3>
+				<?php echo esc_html( $field_types['conditional']['heading'] ); ?>
+			</h3>
 
-				</div>
-				<div class="uacf7-doc-notice">Confused? Check our Documentation on <a
-						href="https://themefic.com/docs/uacf7/free-addons/contact-form-7-conditional-fields/"
-						target="_blank">Conditional Fields</a>.</div>
-			</fieldset>
-		</div>
+			<p><?php
+			$description = wp_kses(
+				$field_types['conditional']['description'],
+				array(
+					'a' => array( 'href' => true ),
+					'strong' => array(),
+				),
+				array( 'http', 'https' )
+			);
 
-		<div class="insert-box">
-			<input type="text" name="<?php echo esc_attr( $uacf7_field_type ); ?>" class="tag code" readonly="readonly"
-				onfocus="this.select()" />
-
-			<div class="submitbox">
-				<input type="button" class="button button-primary insert-tag"
-					value="<?php echo esc_attr( __( 'Insert Tag', 'ultimate-addons-cf7' ) ); ?>" />
+			echo $description;
+			?></p>
+			<div class="uacf7-doc-notice">
+				Confused? Check our Documentation on
+				<a href="https://themefic.com/docs/uacf7/free-addons/contact-form-7-conditional-fields/" target="_blank">
+					Conditional Fields
+				</a>.
 			</div>
+		</header>
+
+		<div class="control-box uacf7-control-box version2">
+			<?php
+
+			$tgg->print( 'field_type', array(
+				'select_options' => array(
+					'conditional' => $field_types['conditional']['display_name'],
+				),
+			) );
+
+			$tgg->print( 'field_name' );
+			?>
 		</div>
+
+		<footer class="insert-box">
+			<?php
+			$tgg->print( 'insert_box_content' );
+
+			$tgg->print( 'mail_tag_tip' );
+			?>
+		</footer>
 		<?php
 	}
+
 
 	public function get_forms() {
 		$args = array(
@@ -280,12 +305,13 @@ class UACF7_CF {
 				// if($post_id != 128) continue;
 
 				$conditional = uacf7_get_form_option( $post_id, 'conditional' );
+
 				if ( $conditional != false ) {
 					$conditional_repeater = $conditional['conditional_repeater'];
 					if ( $conditional_repeater != false ) {
 						$count = 0;
 						$data = [];
-
+						// beaf_print_r($conditional_repeater);
 						foreach ( $conditional_repeater as $item ) {
 							$newItem = [ 
 								'uacf7_cf_hs' => $item['uacf7_cf_hs'],
@@ -358,29 +384,40 @@ class UACF7_CF {
 		}
 		return $properties;
 	}
+	
 
 	function skip_validation_for_hidden_fields( $result, $tags ) {
-
 		if ( isset( $_POST ) ) {
 			$this->set_hidden_fields_arrays( $_POST );
 		}
-
+	
 		$invalid_fields = $result->get_invalid_fields();
 		$return_result = new WPCF7_Validation();
 
 		if ( count( $this->hidden_fields ) == 0 || ! is_array( $invalid_fields ) || count( $invalid_fields ) == 0 ) {
-			$return_result = $result;
-		} else {
-			foreach ( $invalid_fields as $invalid_field_key => $invalid_field_data ) {
-				if ( ! in_array( $invalid_field_key, $this->hidden_fields ) ) {
-					$return_result->invalidate( $invalid_field_key, $invalid_field_data['reason'] );
+			return $result;
+		}
+	
+		foreach ( $invalid_fields as $invalid_field_key => $invalid_field_data ) {
+			if ( ! in_array( $invalid_field_key, $this->hidden_fields ) ) {
+				
+				foreach($tags as $key => $tag){
+					if($tag->basetype == 'checkbox' && $tag->is_required()){
+						$is_hidden = in_array($invalid_field_key . '[]', $this->hidden_fields);
+						// uacf7_print_r('hidden');
+						if($is_hidden){
+							$this->invalid_field_key = $invalid_field_key;
+						}
+					}
 				}
+				
+				$return_result->invalidate( $invalid_field_key, $invalid_field_data['reason'] );
 			}
 		}
-
+		
 		return apply_filters( 'uacf7_validate', $return_result, $tags );
-
 	}
+	
 
 	public function uacf7_form_hidden_fields( $hidden_fields ) {
 
@@ -420,6 +457,25 @@ class UACF7_CF {
 				$this->hidden_fields[] = $field;
 			}
 		}
+
+	}
+
+	public function skip_hidden_checkbox_required($result, $tag){
+
+		if ( ! count( $result->get_invalid_fields() ) ) {
+			return $result;
+		}
+		if ( isset( $_POST ) ) {
+			$this->set_hidden_fields_arrays( $_POST );
+		}
+
+		$invalid_field_keys = array_keys( $result->get_invalid_fields() );
+		if ( isset( $this->hidden_fields ) && is_array( $this->hidden_fields ) && in_array( $tag->name. '[]', $this->hidden_fields ) ) {
+
+			return new WPCF7_Validation();
+		}
+
+		return $result;
 
 	}
 
@@ -490,7 +546,7 @@ class UACF7_CF {
 		$properties = $submission->get_contact_form()->get_properties();
 
 		// Get the email body
-		$mail_body = $properties['mail']['body'];
+		$mail_body   = $properties['mail']['body'];
 		$mail_body_2 = $properties['mail_2']['body'];
 
 
@@ -498,21 +554,20 @@ class UACF7_CF {
 
 			// Loop through the conditional fields
 			foreach ( $conditional_repeater as $key => $condition ) {
-
 				$uacf7_cf_hs = $condition['uacf7_cf_hs'];
 				$uacf7_cf_group = $condition['uacf7_cf_group'];
 				$uacf7_cf_conditions_for = $condition['uacf7_cf_condition_for'];
 				$uacf7_cf_conditions = $condition['uacf7_cf_conditions'];
 				$condition_status = [];
-
+				
 				// Check if the conditional field is hidden or shown
 				foreach ( $uacf7_cf_conditions as $key => $value ) {
 					$uacf7_cf_val = $value['uacf7_cf_val'];
 					$uacf7_cf_operator = $value['uacf7_cf_operator'];
-					$uacf7_cf_tn = $value['uacf7_cf_tn'];
-
+					$uacf7_cf_tn = rtrim($value['uacf7_cf_tn'], '[]');
+					
 					$posted_value = is_array( $posted_data[ $uacf7_cf_tn ] ) && in_array( $uacf7_cf_val, $posted_data[ $uacf7_cf_tn ] ) ? $uacf7_cf_val : $posted_data[ $uacf7_cf_tn ];
-
+					
 					// Condition for Equal  
 					if ( $uacf7_cf_operator == 'equal' && $posted_value == $uacf7_cf_val ) {
 						$condition_status[] = 'true';
@@ -537,7 +592,23 @@ class UACF7_CF {
 					// Condition for Less than or equal to
 					else if ( $uacf7_cf_operator == 'less_than_or_equal_to' && $posted_value <= $uacf7_cf_val ) {
 						$condition_status[] = 'true';
-					} else {
+					}
+					// Condition for Starts With
+					else if ( $uacf7_cf_operator == 'starts_with' && substr( $posted_value, 0, strlen( $uacf7_cf_val ) ) === $uacf7_cf_val ) {
+						$condition_status[] = 'true';
+					} 
+					// Condition for Ends With
+					else if ( $uacf7_cf_operator == 'ends_with' && substr( $posted_value, -strlen( $uacf7_cf_val ) ) === $uacf7_cf_val ) {
+						$condition_status[] = 'true';
+					}     
+					// Condition for Contains
+					else if ( $uacf7_cf_operator == 'contains' && strpos( $posted_value, $uacf7_cf_val ) !== false ) {
+						$condition_status[] = 'true';
+					}     
+					// Condition for Excludes (does not contain)
+					else if ( $uacf7_cf_operator == 'does_not_contain' && strpos( $posted_value, $uacf7_cf_val ) === false ) {
+						$condition_status[] = 'true';
+					}else {
 						$condition_status[] = 'false';
 					}
 				}
@@ -552,15 +623,28 @@ class UACF7_CF {
 							// Mail 2 
 							$mail_body_2 = preg_replace( '/\[' . $uacf7_cf_group . '\]/s', '', $mail_body_2 );
 							$mail_body_2 = preg_replace( '/\[\/' . $uacf7_cf_group . '\]/s', '', $mail_body_2 );
+						}else{
+							$mail_body = preg_replace( '/\[' . $uacf7_cf_group . '\].*?\[\/' . $uacf7_cf_group . '\]/s', '', $mail_body );
+
+							// Mail 2 
+							$mail_body_2 = preg_replace( '/\[' . $uacf7_cf_group . '\].*?\[\/' . $uacf7_cf_group . '\]/s', '', $mail_body_2 );
 						}
-					} else {
+					}else if($uacf7_cf_hs == 'hide' ){
+						$mail_body = preg_replace( '/\[' . $uacf7_cf_group . '\]/s', '', $mail_body );
+						$mail_body = preg_replace( '/\[\/' . $uacf7_cf_group . '\]/s', '', $mail_body );
+
+						// Mail 2 
+						$mail_body_2 = preg_replace( '/\[' . $uacf7_cf_group . '\]/s', '', $mail_body_2 );
+						$mail_body_2 = preg_replace( '/\[\/' . $uacf7_cf_group . '\]/s', '', $mail_body_2 );
+					 }else {
 						$mail_body = preg_replace( '/\[' . $uacf7_cf_group . '\].*?\[\/' . $uacf7_cf_group . '\]/s', '', $mail_body );
 
 						// Mail 2 
 						$mail_body_2 = preg_replace( '/\[' . $uacf7_cf_group . '\].*?\[\/' . $uacf7_cf_group . '\]/s', '', $mail_body_2 );
 					}
 				}
-				// Check if the conditions for all 
+
+				// Check if the conditions for any 
 				if ( $uacf7_cf_conditions_for == 'any' ) {
 					if ( ! in_array( 'false', $condition_status ) ) {
 						if ( $uacf7_cf_hs == 'show' ) {
@@ -570,7 +654,19 @@ class UACF7_CF {
 							// Mail 2 
 							$mail_body_2 = preg_replace( '/\[' . $uacf7_cf_group . '\]/s', '', $mail_body_2 );
 							$mail_body_2 = preg_replace( '/\[\/' . $uacf7_cf_group . '\]/s', '', $mail_body_2 );
+						}else {
+							$mail_body = preg_replace( '/\[' . $uacf7_cf_group . '\].*?\[\/' . $uacf7_cf_group . '\]/s', '', $mail_body );
+	
+							// Mail 2 
+							$mail_body_2 = preg_replace( '/\[' . $uacf7_cf_group . '\].*?\[\/' . $uacf7_cf_group . '\]/s', '', $mail_body_2 );
 						}
+					}else if($uacf7_cf_hs == 'hide' ){
+						$mail_body = preg_replace( '/\[' . $uacf7_cf_group . '\]/s', '', $mail_body );
+						$mail_body = preg_replace( '/\[\/' . $uacf7_cf_group . '\]/s', '', $mail_body );
+
+						// Mail 2 
+						$mail_body_2 = preg_replace( '/\[' . $uacf7_cf_group . '\]/s', '', $mail_body_2 );
+						$mail_body_2 = preg_replace( '/\[\/' . $uacf7_cf_group . '\]/s', '', $mail_body_2 );
 					} else {
 						$mail_body = preg_replace( '/\[' . $uacf7_cf_group . '\].*?\[\/' . $uacf7_cf_group . '\]/s', '', $mail_body );
 
@@ -578,6 +674,7 @@ class UACF7_CF {
 						$mail_body_2 = preg_replace( '/\[' . $uacf7_cf_group . '\].*?\[\/' . $uacf7_cf_group . '\]/s', '', $mail_body_2 );
 					}
 				}
+
 			}
 
 			// Set the email body in the mail properties
@@ -638,7 +735,23 @@ class UACF7_CF {
 					// Condition for Less than or equal to
 					else if ( $uacf7_cf_operator == 'less_than_or_equal_to' && $posted_value <= $uacf7_cf_val ) {
 						$condition_status[] = 'true';
-					} else {
+					} 
+					// Condition for Starts With
+					else if ( $uacf7_cf_operator == 'starts_with' && substr( $posted_value, 0, strlen( $uacf7_cf_val ) ) === $uacf7_cf_val ) {
+						$condition_status[] = 'true';
+					} 
+					// Condition for Ends With
+					else if ( $uacf7_cf_operator == 'ends_with' && substr( $posted_value, -strlen( $uacf7_cf_val ) ) === $uacf7_cf_val ) {
+						$condition_status[] = 'true';
+					}     
+					// Condition for Contains
+					else if ( $uacf7_cf_operator == 'contains' && strpos( $posted_value, $uacf7_cf_val ) !== false ) {
+						$condition_status[] = 'true';
+					}     
+					// Condition for Excludes (does not contain)
+					else if ( $uacf7_cf_operator == 'does_not_contain' && strpos( $posted_value, $uacf7_cf_val ) === false ) {
+						$condition_status[] = 'true';
+					}else {
 						$condition_status[] = 'false';
 					}
 				}

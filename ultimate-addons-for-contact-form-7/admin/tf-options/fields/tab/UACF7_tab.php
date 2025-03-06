@@ -12,6 +12,7 @@ if ( ! class_exists( 'UACF7_tab' ) ) {
 		public function render() {
 			?>
             <div id="<?php echo isset( $this->field['id'] ) ? esc_attr( $this->field['id'] ) : '' ?>" class="tf-tablist">
+				<?php $parent_id = !empty( $this->field['id'] ) ? $this->field['id'] : ''; ?>
 
 				<?php if ( count( $this->field['tabs'] ) > 1 ): ?>
                     <ul class="tf-nav-tabs">
@@ -36,7 +37,7 @@ if ( ! class_exists( 'UACF7_tab' ) ) {
 									
 									$parent  = '[' . $this->field['id'] . ']';
 									$default = isset( $field['default'] ) ? $field['default'] : '';
-									$value   = isset( $tf_meta_box_value[ $field['id'] ] ) ? $tf_meta_box_value[ $field['id'] ] : $default;
+									$value   = $default;
 
 									if ( ! empty( $this->value ) ) {
 										
@@ -58,9 +59,12 @@ if ( ! class_exists( 'UACF7_tab' ) ) {
 									$tf_option->field( $field, $value, $this->settings_id, $parent );
 								}
 								?>
+								
                             </div>
 						<?php endforeach; ?>
 					<?php endif; ?>
+					<?php do_action( $parent_id . '_after_tab_content' );
+					 // do_action('uacf7dp_email_piping_tap_after_tab_content') ?>
                 </div>
             </div>
 			<?php

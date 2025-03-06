@@ -1,15 +1,48 @@
 <?php 
 
 
-// Current url Shortcode
-if(!function_exists('UACF7_URL')){
-    function UACF7_URL($val){ 
-        $data = get_permalink();
-        return $data;
+// // Current url Shortcode
+// if(!function_exists('UACF7_URL')){
+//     function UACF7_URL($val){ 
+//         beaf_print_r($val);
+//         $data = get_permalink();
+//         return $data;
+//     }
+
+//     add_shortcode('UACF7_URL', 'UACF7_URL'); 
+// }
+
+if (!function_exists('UACF7_URL')) {
+    function UACF7_URL($val) {
+        $current_url = "https://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+
+        $part = isset($val['part']) ? trim($val['part'], "'") : '';
+
+        $parsed_url = parse_url($current_url);
+
+        if (isset($parsed_url['query'])) {
+            parse_str($parsed_url['query'], $query_array);
+            $decoded_query = http_build_query($query_array, '', '&', PHP_QUERY_RFC3986);
+        } else {
+            $decoded_query = '';
+        }
+
+        switch ($part) {
+            case 'host':
+                return $parsed_url['host'] ?? $current_url;
+            case 'query':
+                return urldecode($decoded_query);
+            case 'path':
+                return $parsed_url['path'] ?? '/';
+            default:
+                return $current_url;
+        }
     }
 
-    add_shortcode('UACF7_URL', 'UACF7_URL'); 
+    add_shortcode('UACF7_URL', 'UACF7_URL');
 }
+
+
 
 
 // Current url with Perameters Shortcode
