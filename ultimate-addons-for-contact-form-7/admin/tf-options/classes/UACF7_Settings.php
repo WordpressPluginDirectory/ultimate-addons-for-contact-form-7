@@ -446,6 +446,18 @@ if ( ! class_exists( 'UACF7_Settings' ) ) {
 				// 	// ],
 				// ],
 				[
+					'name'       => 'Hydra',
+					'slug'       => 'hydra-booking',
+					'file_name'  => 'hydra-booking',
+					'subtitle'   => 'All in One Appointment Booking System',
+					'image'      => 'https://ps.w.org/hydra-booking/assets/icon-128x128.jpg',
+					// 'pro'        => [
+					// 	'slug'      => 'hydra-booking-pro',
+					// 	'file_name' => 'hydra-booking-pro',
+					// 	'url'       => 'https://hydrabooking.com/',
+					// ],
+				],
+				[
 					'name'       => 'BEAF',
 					'slug'       => 'beaf-before-and-after-gallery',
 					'file_name'  => 'before-and-after-gallery',
@@ -461,7 +473,7 @@ if ( ! class_exists( 'UACF7_Settings' ) ) {
 					'name'       => 'Tourfic',
 					'slug'       => 'tourfic',
 					'file_name'  => 'tourfic',
-					'subtitle'   => 'Ultimate Travel Booking, Hotel Booking & Car Rental WordPress Plugin | WooCommerce Booking',
+					'subtitle'   => 'Travel, Hotel Booking & Car Rental WP Plugin',
 					'image'      => 'https://ps.w.org/tourfic/assets/icon-128x128.gif',
 					// 'pro'        => [
 					// 	'slug'      => 'tourfic-pro',
@@ -473,24 +485,12 @@ if ( ! class_exists( 'UACF7_Settings' ) ) {
 					'name'       => 'Instantio',
 					'slug'       => 'instantio',
 					'file_name'  => 'instantio',
-					'subtitle'   => 'WooCommerce Quick Checkout | Direct Checkout, Floating Cart, Side Cart & Popup Cart',
+					'subtitle'   => 'WooCommerce Quick & Direct Checkout',
 					'image'      => 'https://ps.w.org/instantio/assets/icon-128x128.png',
 					// 'pro'        => [
 					// 	'slug'      => 'wooinstant',
 					// 	'file_name' => 'wooinstant',
 					// 	'url'       => 'https://themefic.com/instantio/',
-					// ],
-				],
-				[
-					'name'       => 'Hydra',
-					'slug'       => 'hydra-booking',
-					'file_name'  => 'hydra-booking',
-					'subtitle'   => 'All in One Appointment Booking System | Appointment Scheduling, Booking Calendar & WooCommerce Bookings',
-					'image'      => 'https://ps.w.org/hydra-booking/assets/icon-128x128.jpg',
-					// 'pro'        => [
-					// 	'slug'      => 'hydra-booking-pro',
-					// 	'file_name' => 'hydra-booking-pro',
-					// 	'url'       => 'https://hydrabooking.com/',
 					// ],
 				],
 				// [
@@ -526,7 +526,7 @@ if ( ! class_exists( 'UACF7_Settings' ) ) {
 
 					?>
 
-					<li class="plugin-item" data-plugin-slug="<?php echo esc_attr($plugin['slug']); ?>">
+					<li class="plugin-item <?php echo esc_attr($plugin['slug'] == 'hydra-booking' ? 'featured' : ''); ?>" data-plugin-slug="<?php echo esc_attr($plugin['slug']); ?>">
 						<div class="plugin-info-wrapper">
 							<div class="plugin-info">
 								<img src="<?php echo esc_url($plugin['image']); ?>" alt="<?php echo esc_attr($plugin['name']); ?>" class="<?php echo esc_attr($plugin['name'] == 'BEAF' ? 'beaf-logo' : ''); ?>" width="40" height="40">

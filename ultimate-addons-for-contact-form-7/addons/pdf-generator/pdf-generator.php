@@ -708,9 +708,8 @@ class UACF7_PDF_GENERATOR {
                     padding-left: 15px;
                     text-align: left;
 					border-bottom: 1px solid #F0EEF6;
-					display: flex;
-					justify-content: flex-start;
-					align-items: center;
+					display: table-cell !important;  
+    				vertical-align: middle !important;
                 } 
 				pdf-content tr td:first-child{
 					min-width: 25%;
@@ -819,7 +818,7 @@ class UACF7_PDF_GENERATOR {
 			$mpdf->WriteHTML( $pdf_style, \Mpdf\HTMLParserMode::HEADER_CSS );
 			
 			// PDF Footer Content
-			$mpdf->WriteHTML( '<div class="pdf-content">' . nl2br( $this->makeLinksClickable($pdf_content)) . '   </div>' );
+			$mpdf->WriteHTML( '<div class="pdf-content">' . nl2br( $pdf_content) . '   </div>' );
 
 			$pdf_dir = $dir . '/uacf7-uploads/' . $uacf7_pdf_name . '.pdf';
 			$pdf_url = $url . '/uacf7-uploads/' . $uacf7_pdf_name . '.pdf';

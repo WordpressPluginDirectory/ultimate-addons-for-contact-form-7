@@ -566,8 +566,9 @@ class UACF7_CF {
 					$uacf7_cf_operator = $value['uacf7_cf_operator'];
 					$uacf7_cf_tn = rtrim($value['uacf7_cf_tn'], '[]');
 					
-					$posted_value = is_array( $posted_data[ $uacf7_cf_tn ] ) && in_array( $uacf7_cf_val, $posted_data[ $uacf7_cf_tn ] ) ? $uacf7_cf_val : $posted_data[ $uacf7_cf_tn ];
-					
+					// $posted_value = is_array( $posted_data[ $uacf7_cf_tn ] ) && in_array( $uacf7_cf_val, $posted_data[ $uacf7_cf_tn ] ) ? $uacf7_cf_val : $posted_data[ $uacf7_cf_tn ];
+					$posted_value = is_array($posted_data[$uacf7_cf_tn]) ? implode(',', $posted_data[$uacf7_cf_tn]) : $posted_data[$uacf7_cf_tn];
+				
 					// Condition for Equal  
 					if ( $uacf7_cf_operator == 'equal' && $posted_value == $uacf7_cf_val ) {
 						$condition_status[] = 'true';

@@ -3,7 +3,7 @@
  * Plugin Name: Ultimate Addons for Contact Form 7
  * Plugin URI: https://cf7addons.com/
  * Description: 40+ Essential Addons for Contact Form 7 - Conditional Fields, Multi Step Forms, Redirection, Form Templates, Columns, WooCommerce, Mailchimp and more, all in one.
- * Version: 3.5.4
+ * Version: 3.5.8
  * Author: Themefic
  * Author URI: https://themefic.com/
  * License: GPL-2.0+
@@ -28,7 +28,8 @@ class Ultimate_Addons_CF7 {
 		define( 'UACF7_URL', plugin_dir_url( __FILE__ ) );
 		define( 'UACF7_ADDONS', UACF7_URL . 'addons' );
 		define( 'UACF7_PATH', plugin_dir_path( __FILE__ ) );
-		define( 'UACF7_VERSION', '3.5.4' );
+
+		define( 'UACF7_VERSION', '3.5.8' );
 
 		if ( ! class_exists( 'Appsero\Client' ) ) {
 			require_once( __DIR__ . '/inc/app/src/Client.php' );
@@ -40,6 +41,8 @@ class Ultimate_Addons_CF7 {
 		if ( defined( 'WPCF7_VERSION' ) && WPCF7_VERSION >= 5.7 ) {
 			add_filter( 'wpcf7_autop_or_not', '__return_false' );
 		}
+
+		register_activation_hook(__FILE__, array($this,'uacf7_plugin_activation'));
 
 		//enqueue scripts
 		add_action( 'admin_enqueue_scripts', [ $this, 'tf_tourfic_admin_denqueue_script' ], 20 );
@@ -77,6 +80,10 @@ class Ultimate_Addons_CF7 {
 		if ( file_exists( UACF7_PATH . 'admin/tf-options/TF_Options.php' ) ) {
 			require_once UACF7_PATH . 'admin/tf-options/TF_Options.php';
 		}
+	}
+
+	function uacf7_plugin_activation() {
+		update_option('uacf7_plugin_last_updated', time());
 	}
 
 	/*

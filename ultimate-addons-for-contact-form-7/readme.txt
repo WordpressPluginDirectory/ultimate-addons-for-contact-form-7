@@ -4,7 +4,7 @@ Tags: contact form, contact form 7, forms, custom form, form builder
 Requires at least: 4.2
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 3.5.4
+Stable tag: 3.5.8
 License: GPL-2.0+
 License URI: http://www.gnu.org/licenses/gpl-2.0.txt
 
@@ -76,25 +76,23 @@ Equipped with over 40 essential features, **Ultimate Addons For Contact Form 7**
 
 ### How It works:
 
+[youtube https://youtu.be/FkQJ-REIMTk]
+
 = How to set up Conditional Fields for Contact Form 7 =
 
-[youtube https://www.youtube.com/watch?v=A24jfVDEAQE]
+[youtube https://www.youtube.com/watch?v=canveIpBSLY]
 
 = How to Style Contact Form 7 Forms without CSS/Coding =
 
-[youtube https://www.youtube.com/watch?v=X7M2Wj5cd-s]
+[youtube https://www.youtube.com/watch?v=auKK0JQzrsc]
 
 = How to Use Contact Form 7 Fields With Columns / Grid =
 
-[youtube https://www.youtube.com/watch?v=6WbN87nSKsE]
-
-= How to Create a Booking Form with Contact Form 7 =
-
-[youtube https://www.youtube.com/watch?v=MA_hu3sy-vM]
+[youtube https://www.youtube.com/watch?v=cSRnUbrKN4s]
 
 = How to Connect Contact Form 7 with WooCommerce =
 
-[youtube https://www.youtube.com/watch?v=cHDVPrFFUxw]
+[youtube https://www.youtube.com/watch?v=avpgcp1DfS8]
 
 **Find more videos on our [Youtube Channel](https://www.youtube.com/playlist?list=PLY0rtvOwg0ylGspzo7TcT-8x0FH_O5XVV)**
 
@@ -458,6 +456,36 @@ Just install our plugin, and you'll get access to a variety of free templates!
 
 == Changelog ==
 
+= 3.5.8 - 22/03/2025 =
+
+- Fixed: Conditional field selection issue.
+- Improved: Optimized multi-step preview images.
+- Improved: System stability for enhanced performance.
+- Improved: The translatable Text updated on save and continue addon.
+
+= 3.5.7 - 18/03/2025 =
+
+- Added: Updated readme.txt info
+
+= 3.5.6 - 18/03/2025 =
+
+- Added: Introduced new booking addon for Booking/Appointment.
+- Added: 4 new Multistep form templates added (Pro).
+- Fixed: Multisite Pro addons activation issue.
+- Fixed: PDF generator image URL issue.
+- Fixed: Form Save and continue link Copy button icon not showing.
+- Fixed: Global Form Styler color not saving.
+- Improved: System stability for better performance.
+
+= 3.5.5 - 08/03/2025 =
+
+- Fixed: Mailchimp acceptance checkbox design issue.
+- Fixed: Responsive issues on the add-on page have been resolved.
+- Fixed: WooCommerce product dropdown multi-select issue.
+- Improved: Added country flags for dynamic country selection.
+- Improved: Mailchimp API connection notice.
+- Improved: System stability for better performance.
+
 = 3.5.4 - 06/03/2025 =
 
 - Introduced: "PDF Generate Pro" addon to download a PDF immediately after submitting a form.
@@ -471,50 +499,6 @@ Just install our plugin, and you'll get access to a variety of free templates!
 - Improved: Added guest posts and specified the post publish author settings on "Frontend Post Submission" addon.
 - Added: A showcase of our other plugins on the UACF7 All Addon Page.
 - Fixed: Resolved an issue with pre-populated redirection in the "Pre-populated" addon.
-
-= 3.5.3 - 24/02/2025 =
-
-- Introduced: Email Piping to Database Pro.
-- Fixed: HTML line break issue in emails.
-- Improved: Weekly Email Summary.
-- Notice: Transitioning the Booking add-on to legacy status and introducing a new booking feature soon.
-
-= 3.5.2 - 15/02/2025 =
-
-- Updated: Readme.txt file and plugin information.
-- Compatibility: Fully compatible with Contact Form 7 version 6.0.3.
-
-= 3.5.1 - 25/01/2025 =
-
-- Introduced: "Save and Continue Later" Addon (Pro).
-- Introduced: Weekly Email Summary Addon (Pro).
-- Improved: Added four new conditions for conditional fields Addon (Pro).
-- Improved: Specific email blocking in the Spam Protection Addon (Pro).
-- Fixed: Spacing issue on the second page of the PDF generator.
-
-= 3.5.0 - 15/01/2025 =
-
-- Introduced: Form Submission Preview Addon (Pro).
-- Improved: WebHook functionality.
-- Fixed: Conditional checkbox and "Hide All Conditional" issues in email templates.
-- Fixed: Required checkboxes not working with hidden conditional fields.
-- Updated: Handling of required checkboxes in hidden fields.
-
-= 3.4.18 - 12/01/2025 =
-
-- Compatibility: Fully compatible with WooCommerce (v9.5.2).
-- System stability improved
-
-= 3.4.17 - 31/12/2024 =
-
-- Compatibility: Fully compatible with Contact Form 7 version 6.0.2.
-- Updated: Readme.txt file and plugin information.
-
-= 3.4.16 - 23/12/2024 =
-
-- Fixed: Resolved post-submission issues.
-- Fixed: Fixed the star review functionality.
-- Fixed: Addressed repeater field issues.
 
 **Old Changelog can be found [here](https://cf7addons.com/changelog/)**.
 

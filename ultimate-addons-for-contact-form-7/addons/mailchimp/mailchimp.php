@@ -112,8 +112,8 @@ class UACF7_MAILCHIMP {
 	function uacf7_settings_options_mailchimp( $value ) {
 		$status = $this->connection_status();
 		$value['mailchimp']['fields']['uacf7_mailchimp_api_status'] = array(
-			'id' => 'uacf7_mailchimp_api_status',
-			'type' => 'callback',
+			'id'       => 'uacf7_mailchimp_api_status',
+			'type'     => 'callback',
 			'function' => 'uacf7_mailchimp_api_status_callback',
 			'argument' => $status,
 
@@ -419,7 +419,7 @@ class UACF7_MAILCHIMP {
 				$status .= '<span class="status-details status-error">' . esc_html( $response->detail, 'ultimate-addons-cf7' ) . '</span>';
 			}
 		} else {
-			$status .= '<span class="status-details">' . esc_html( '', 'ultimate-addons-cf7' ) . '</span>';
+			$status .= '<span class="status-details status-error">' . esc_html( 'Please configure your Mailchimp API Key from', 'ultimate-addons-cf7' ) . ' <strong>' . esc_html( 'Ultimate Addons -> Settings -> Mailchimp API', 'ultimate-addons-cf7' ) . ' </strong>' . '</span>';
 		}
 
 		return $status;
