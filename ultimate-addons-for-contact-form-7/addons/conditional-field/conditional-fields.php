@@ -647,7 +647,10 @@ class UACF7_CF {
 
 				// Check if the conditions for any 
 				if ( $uacf7_cf_conditions_for == 'any' ) {
-					if ( ! in_array( 'false', $condition_status ) ) {
+					
+					$normalized_conditions = array_map(fn($v) => $v === 'true', (array) $condition_status);
+
+					if ( in_array(true, $normalized_conditions, true) ) {
 						if ( $uacf7_cf_hs == 'show' ) {
 							$mail_body = preg_replace( '/\[' . $uacf7_cf_group . '\]/s', '', $mail_body );
 							$mail_body = preg_replace( '/\[\/' . $uacf7_cf_group . '\]/s', '', $mail_body );
