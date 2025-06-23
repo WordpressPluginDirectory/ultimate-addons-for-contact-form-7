@@ -326,7 +326,8 @@ form.tag-generator-panel[data-version="2"] .control-box{
 #tag-generator-list button[data-target="tag-generator-panel-uacf7_product_dropdown"],
 #tag-generator-list button[data-target="tag-generator-panel-uacf7_range_slider"],
 #tag-generator-list button[data-target="tag-generator-panel-uacf7_star_rating"],
-#tag-generator-list button[data-target="tag-generator-panel-uacf7_country_dropdown"] {
+#tag-generator-list button[data-target="tag-generator-panel-uacf7_country_dropdown"],
+#tag-generator-list button[data-target="tag-generator-panel-dragdropfile"] {
     background-color: #473080 !important;
     color: #fff !important;
     border-color: transparent;
@@ -843,13 +844,13 @@ form.tag-generator-panel[data-version="2"] .control-box{
 	padding: 15px;
 	padding: 0px;
 	border-radius: 6px;
-	position: sticky;
+	/* position: sticky; */
 	top: 30px;
 	align-self: start;
-	max-height: 100vh;
-	overflow-y: auto;
+	/* max-height: 100vh; */
+	/* overflow-y: auto; */
 }
-.plugin-item { 
+.uacf7-plugin-item { 
     border-bottom: 1px solid #eee;
     background-color: #fff;
     padding: 24px;
@@ -858,60 +859,61 @@ form.tag-generator-panel[data-version="2"] .control-box{
     margin-bottom: 0;
     position: relative;
 }
-.plugin-item:hover { 
+.uacf7-plugin-item:hover { 
     box-shadow: 0px 4px 30px 0px rgba(6,4,12,.0784313725); 
 }
-.plugin-btn{
+.uacf7-plugin-btn{
     font-weight: 600;
 }
-.plugin-item h4 {
+.uacf7-plugin-item h4 {
     font-size: 16px;
     margin: 5px 0;
     font-weight: 600;
+    color: #1d2327;
 }
 
-.plugin-item p {
+.uacf7-plugin-item p {
     font-size: 13px;
-    color: #555;
+    color: #4f4e52;
     margin: 0;
 }
-.plugin-info-wrapper{
+.uacf7-plugin-info-wrapper{
     display: flex; 
     gap: 10px; 
     flex-direction: column;
     position: relative;
 }
-.plugin-info-wrapper img {
+.uacf7-plugin-info-wrapper img {
 	width: 32px;
 	height: 32px;
 	border: 1px solid #bebcfd;
 	border-radius: 50%;
 }
-.plugin-info-wrapper img.beaf-logo{
+.uacf7-plugin-info-wrapper img.beaf-logo{
     border-radius: 0;
 }
-.plugin-info {
+.uacf7-plugin-info {
 	display: flex;
 	gap: 10px;
 	justify-content: space-between;
 	align-items: flex-start;
 }
-.plugin-button { 
+.uacf7-plugin-button { 
     padding: 5px; 
     border-radius: 4px; 
     font-size: 14px; 
     text-decoration: none;
     position: relative;
 }
-.plugin-button.install { 
+.uacf7-plugin-button.install { 
     /* background: #007cba;  */
-    color: #6411FF; 
+    color: #382673; 
 }
-.plugin-button.activate { 
+.uacf7-plugin-button.activate { 
     /* background: #382673;  */
     color: #382673; 
 }
-.plugin-button.pro, .plugin-button.activate-pro { 
+.uacf7-plugin-button.pro, .uacf7-plugin-button.activate-pro { 
     /* background: #ff9800; */
     color: #ff9800; 
 }
@@ -925,7 +927,7 @@ form.tag-generator-panel[data-version="2"] .control-box{
     color: #ff5722; 
     opacity: 0.8; 
 }
-.plugin-button.activate-pro{
+.uacf7-plugin-button.activate-pro{
     color: #ff5722;
 }
 .uacf7-sidebar-content {
@@ -938,18 +940,18 @@ form.tag-generator-panel[data-version="2"] .control-box{
     gap: 5px;
 }
 .badge.free {
-	background: #E8F5E9;
-	color: #34A853;
+	background: rgba(0,165,140,.1019607843);
+	color: #00a58c;
 	font-size: 12px;
 	padding: 2px 8px;
 	border-radius: 12px;
 	font-weight: 600;
-	border: 1px solid #8EE695;
+	border: 1px solid #00a58c;
 }
 
 /* Loader */
 
-.plugin-button:not(.active):not(.active-pro) {
+.uacf7-plugin-button:not(.active):not(.active-pro) {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -959,9 +961,10 @@ form.tag-generator-panel[data-version="2"] .control-box{
     transition: background 0.3s;
     position: relative;
     background-color: transparent;
+    flex-direction: column;
 }
 
-.plugin-button.loading {
+.uacf7-plugin-button.loading {
     background: #ccc;
     cursor: not-allowed;
 }
@@ -977,12 +980,51 @@ form.tag-generator-panel[data-version="2"] .control-box{
     margin-left: 8px;
 }
 
-.plugin-button.loading .loader {
+.uacf7-plugin-button.loading .loader {
     display: inline-block;
 }
 
+.uacf7-sidebar-customization-quote{
+    background: #fff;
+    padding: 20px;
+    border-radius: 6px;
+    margin: 20px 0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
 
-.quick-access {
+.uacf7-sidebar-customization-quote .uacf7-quote-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.uacf7-sidebar-customization-quote .uacf7-quote-header a{
+    color: #382673;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.uacf7-sidebar-customization-quote .uacf7-quote-header i {
+	color: #fff;
+	background-color: #ff0000;
+	padding: 5px;
+	border-radius: 50%;
+	width: 24px;
+	height: 24px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.uacf7-sidebar-customization-quote h3 {
+    margin-bottom: 5px;
+    font-size: 16px;
+}
+.uacf7-sidebar-customization-quote p {
+    margin-top: 0;
+}
+
+.uacf7-quick-access {
     background: #fff;
     border-radius: 12px;
     padding: 20px;
@@ -991,7 +1033,7 @@ form.tag-generator-panel[data-version="2"] .control-box{
     margin-bottom: 10px;
 }
 
-.quick-access-wrapper{
+.uacf7-quick-access-wrapper{
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -1001,25 +1043,25 @@ form.tag-generator-panel[data-version="2"] .control-box{
     padding: 5px;
 }
 
-.quick-access h3 {
+.uacf7-quick-access h3 {
     font-size: 16px;
     font-weight: 600;
     margin-bottom: 15px;
     margin-top: 0px;
 }
 
-.access-item {
+.uacf7-access-item {
     background: #fff;
     border-radius: 8px;
     transition: all ease-in-out 0.3s;
     width: 100%;
 }
 
-.access-item:hover {
+.uacf7-access-item:hover {
 	box-shadow: 0px 4px 30px 0px rgba(6,4,12,.0784313725);
 }
 
-.access-item a {
+.uacf7-access-item a {
     display: flex;
     align-items: center;
     padding: 12px;
@@ -1029,7 +1071,7 @@ form.tag-generator-panel[data-version="2"] .control-box{
     color: #333;
 }
 
-.access-item .icon {
+.uacf7-access-item .icon {
     font-size: 18px;
     margin-right: 10px;
 }
@@ -1178,7 +1220,7 @@ form.tag-generator-panel[data-version="2"] .control-box{
 	display: none;
 }
 
-.plugin-item.featured {
+.uacf7-plugin-item.featured {
     border-radius: 6px;
     border: 4px solid transparent;
     background: linear-gradient(white, white) padding-box, 
@@ -1297,7 +1339,7 @@ form.tag-generator-panel[data-version="2"] .control-box{
 }
 
 .loader {
-    display: inline-block;
+    /* display: inline-block; */
     width: 12px;
     height: 12px;
     border: 2px solid #fff;
@@ -1327,6 +1369,269 @@ form.tag-generator-panel[data-version="2"] .control-box{
     }
 }
 
+
+.uacf7-addons-settings-page h1.uacf7-sidebar-title {
+	margin-bottom: 30px;
+	font-size: 2em;
+	font-weight: 700;
+	line-height: 32px;
+}
+
+
+/**
+ * Promo Banner CSS
+ */
+
+ .uacf7-sidebar-promo {
+	display: flex;
+	padding: 16px;
+	align-items: center;
+	align-content: center;
+	gap: 16px;
+	flex-direction: row;
+	border-radius: 8px;
+	border: 1px solid #7820F3;
+	background: radial-gradient(46.48% 49.91% at 50.09% 87%, rgba(255, 125, 125, 0.16) 0%, rgba(120, 32, 243, 0.00) 100%), linear-gradient(180deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 0, 0, 0.16) 100%), linear-gradient(0deg, #7820F3 0%, #7820F3 100%), #382673;
+    margin-bottom: 16px;
+}
+
+.uacf7-sidebar-promo .promo-discount {
+	display: flex;
+	padding: 16px;
+	justify-content: center;
+	align-items: flex-start;
+	border-radius: 8px;
+	background: radial-gradient(81.34% 87.34% at 50% 87.34%, rgba(255, 125, 125, 0.16) 0%, rgba(120, 32, 243, 0.00) 100%), linear-gradient(180deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 0, 0, 0.16) 100%), linear-gradient(0deg, #7820F3 0%, #7820F3 100%), linear-gradient(0deg, #382673 0%, #382673 100%), #473080;
+	box-shadow: 0px 3px 3px 0px rgba(44, 39, 63, 0.03), 0px 1px 6px 0px rgba(44, 39, 63, 0.03), 0px 0px 0px 1px rgba(44, 39, 63, 0.12), -8px 9.5px 24px 0px rgba(24, 14, 56, 0.32);
+	color: #fff;
+    flex-direction: column;
+}
+
+.uacf7-sidebar-promo .promo-discount span {
+	color: #FFF;
+	text-align: left;
+	font-family: Inter;
+	font-size: 25px;
+	font-style: normal;
+	font-weight: 600;
+	line-height: 120%;
+	letter-spacing: -0.25px;
+}
+
+.uacf7-sidebar-promo .promo-discount span.promo-discount-percent{
+    color: #FFF;
+    text-align: center;
+    font-family: inherit;
+    font-size: 52px;
+    font-style: normal;
+    font-weight: 700;
+}
+.uacf7-sidebar-promo .promo-discount span.promo-discount-text{
+   color:  #FFF;
+    text-align: center;
+    font-family: Inter;
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 600;
+    letter-spacing: -0.25px;
+    text-transform: uppercase;
+}
+
+.uacf7-sidebar-promo .promo-description {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 16px;
+}
+
+.uacf7-sidebar-promo .promo-description p {
+	color: #FFF;
+	font-family: Inter;
+	font-size: 17px;
+	font-style: normal;
+	font-weight: 600;
+	line-height: 150%;
+    margin: 0;
+}
+
+.uacf7-sidebar-promo .promo-description .dicount-timer {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 8px;
+	width: 100%;
+}
+
+.uacf7-sidebar-promo .promo-description .countdown {
+	color: #FFF;
+    font-family: Inter;
+    font-size: 19px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 32px; /* 133.333% */
+    letter-spacing: -0.75px;
+}
+.uacf7-sidebar-promo .promo-description .countdown span {
+    font-weight: 400;
+}
+
+.uacf7-sidebar-promo .promo-description .discount-btn {
+	display: flex;
+	padding: 8px 12px;
+	justify-content: space-between;
+	align-items: center;
+	border-radius: 8px;
+	gap: 8px;
+	background: #F61A39;
+	color: #FFF;
+	font-family: Inter;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 600;
+	line-height: 150%;
+	text-decoration: none;
+}
+
+.uacf7-sidebar-promo .promo-description .discount-btn:hover {
+    background: #F61A39;
+}
+
+@media screen and (max-width: 1860px) {
+    .uacf7-sidebar-promo .promo-description {
+        gap: 8px;
+    }
+    .uacf7-sidebar-promo .promo-description .dicount-timer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+    .uacf7-sidebar-promo .promo-description .countdown {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 1700px) {
+    .uacf7-plugin-item {
+        padding: 18px;
+    }
+}
+
+@media screen and (max-width: 1650px) {
+
+    .uacf7-addons-settings-page {
+        grid-template-columns: 3fr 2fr;
+    }
+    .uacf7-addons-settings-page .uacf7-addon-setting-content {
+        grid-template-columns: 1fr 1fr;
+        gap: 32px;
+    }
+    .uacf7-addons-settings-page .uacf7-settings-heading .uacf7-settings-heading-wrap .uacf7-addon-filter-cta .uacf7-addon-filter-button {
+        padding: 8px 12px;
+    }
+}
+
+@media screen and (max-width: 1530px) {
+    .uacf7-addons-settings-page .uacf7-settings-heading .uacf7-settings-heading-wrap .uacf7-addon-filter-cta {
+        gap: 12px;
+    }
+}
+
+@media screen and (max-width: 1450px) { 
+    .uacf7-sidebar-promo {
+        align-items: flex-start;
+    }
+}
+
+@media screen and (max-width: 1400px) {
+    .uacf7-addons-settings-page {
+        grid-template-columns: 4fr 2fr;
+    }
+    .uacf7-sidebar-content ul {
+        grid-template-columns: 1fr;
+    }
+    .uacf7-addons-settings-page .uacf7-setting-title,
+    .uacf7-addons-settings-page h1.uacf7-sidebar-title {
+        margin-bottom: 30px;
+        font-size: 1.7em;
+    }
+    .uacf7-addons-settings-page .uacf7-settings-heading {
+        gap: 20px;
+    }
+    .uacf7-addons-settings-page .uacf7-settings-heading .uacf7-settings-heading-wrap .uacf7-addon-filter-cta .uacf7-addon-filter-button {
+        padding: 8px 10px;
+        font-size: 14px;
+    }
+    .uacf7-addons-settings-page .uacf7-addon-setting-content {
+        gap: 24px;
+    }
+    .uacf7-sidebar-promo {
+        flex-direction: column;
+    }
+}
+
+
+
+@media screen and (max-width: 1280px) {
+
+    /* Your styles for screens up to 1200px wide */
+    .uacf7_new_updated_anno .uacf7_new_updated_anno_banner_url {
+        padding: 40px 12px;
+    }
+
+    .uacf7-addons-settings-page .uacf7-settings-heading {
+        
+        justify-content: left;
+        flex-wrap: wrap;
+    }
+
+    .uacf7-addons-settings-page .uacf7-settings-heading .uacf7-settings-heading-wrap {
+        width: 100%;
+    }
+
+    .uacf7-addons-settings-page .uacf7-settings-heading .uacf7-settings-heading-wrap .uacf7-addon-filter-cta {
+        justify-content: left;
+    }
+    .uacf7-addons-settings-page .uacf7-addon-setting-content {
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+    }
+    .uacf7-addons-settings-page {
+        gap: 20px;
+    }
+
+    .uacf7-addons-settings-page .uacf7-sidebar-title {
+        margin-bottom: 30px;
+        font-size: 1.7em;
+        font-weight: 700;
+        line-height: 32px;
+    }
+
+}
+
+
+@media screen and (max-width: 1080px) {
+
+    /* Your styles for screens up to 1069px wide */
+    .uacf7_new_updated_anno .uacf7_new_updated_anno_banner_url {
+        padding: 40px 12px;
+    }
+
+    .uacf7_new_updated_anno .uacf7_new_updated_anno_banner_url .uacf7_new_updated_anno_button {
+        padding: 16px 20px;
+    }
+    .uacf7-addons-settings-page .uacf7-addon-setting-content .uacf7-single-addon-setting {
+        padding: 16px;
+    }
+    .uacf7-addons-settings-page .uacf7-addon-setting-content {
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+    }
+    .uacf7-plugin-item {
+        padding: 16px;
+    }
+}
+
 /* Media query for responsive */
 @media screen and (max-width: 991px) {
 
@@ -1346,63 +1651,79 @@ form.tag-generator-panel[data-version="2"] .control-box{
     }
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 882px) {
+    .uacf7-single-addon-title {
+        font-size: 16px;
+        margin: 8px 0;
+    }
+    .uacf7-addons-settings-page .uacf7-sidebar-title ,
+    .uacf7-addons-settings-page .uacf7-setting-title {
+        margin-bottom: 30px;
+        font-size: 1.5em !important;
+        font-weight: 700;
+        line-height: 28px;
+    }
+    .uacf7-sidebar-content {
+        padding: 10px 14px;
+    }
 
-    /* Your styles for screens up to 1200px wide */
-    .uacf7_new_updated_anno .uacf7_new_updated_anno_banner_url {
-        padding: 40px 12px;
+    .uacf7-quick-access {
+        padding: 14px;
+    }
+
+    .uacf7-sidebar-promo .promo-discount span.promo-discount-percent {
+        font-size: 48px;
+    }
+    .uacf7-sidebar-promo .promo-discount span {
+        font-size: 22px;
+    }
+    .uacf7-sidebar-promo .promo-discount span.promo-discount-text,
+    .uacf7-sidebar-promo .promo-description p {
+        font-size: 16px;
+    }
+    .uacf7-sidebar-promo .promo-description .discount-btn {
+        font-size: 14px;
     }
 }
 
-@media screen and (max-width: 1069px) {
-
-    /* Your styles for screens up to 1069px wide */
-    .uacf7_new_updated_anno .uacf7_new_updated_anno_banner_url {
-        padding: 40px 12px;
-    }
-
-    .uacf7_new_updated_anno .uacf7_new_updated_anno_banner_url .uacf7_new_updated_anno_button {
-        padding: 16px 20px;
-    }
-}
-
-@media screen and (max-width: 1530px) {
-    .uacf7-addons-settings-page .uacf7-settings-heading .uacf7-settings-heading-wrap .uacf7-addon-filter-cta {
-        gap: 12px;
-    }
-}
-
-@media screen and (max-width: 1650px) {
-
+@media screen and (max-width: 760px) { 
     .uacf7-addons-settings-page {
         grid-template-columns: 3fr 2fr;
     }
     .uacf7-addons-settings-page .uacf7-addon-setting-content {
-        grid-template-columns: 1fr 1fr;
-        gap: 32px;
+        grid-template-columns: 1fr;
+        gap: 16px;
     }
 }
 
-@media screen and (max-width: 1400px) {
+@media screen and (max-width: 645px) { 
     .uacf7-addons-settings-page {
-        grid-template-columns: 4fr 2fr;
-    }
-    .uacf7-sidebar-content ul {
         grid-template-columns: 1fr;
     }
-    .uacf7-addons-settings-page .uacf7-setting-title {
-        margin-bottom: 30px;
-        font-size: 1.7em;
+}
+
+@media screen and (min-width:961px) and (max-width:1024px){ 
+    .uacf7-sidebar-promo .promo-description .discount-btn {
+        padding: 8px 8px;
+        gap: 4px;
     }
-    .uacf7-addons-settings-page .uacf7-settings-heading {
-        gap: 20px;
-    }
-    .uacf7-addons-settings-page .uacf7-settings-heading .uacf7-settings-heading-wrap .uacf7-addon-filter-cta .uacf7-addon-filter-button {
-        padding: 8px 10px;
-        font-size: 14px;
-    }
-    .uacf7-addons-settings-page .uacf7-addon-setting-content {
-        gap: 24px;
+    .uacf7-sidebar-promo {
+        padding: 13px;
     }
 }
+
+@media screen and (min-width:768px) and (max-width:960px){ 
+    .uacf7-sidebar-promo .promo-description .discount-btn {
+        padding: 8px 8px;
+        gap: 4px;
+    }
+    .uacf7-sidebar-promo {
+        padding: 13px;
+    }
+    .uacf7-sidebar-promo .promo-description .discount-btn {
+        padding: 8px 8px;
+        gap: 4px;
+    }
+}
+
 

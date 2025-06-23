@@ -114,13 +114,27 @@ if(!function_exists('UACF7_USERINFO')){
 if(!function_exists('UACF7_CUSTOM_FIELDS')){
     function UACF7_CUSTOM_FIELDS($val){    
         $data ='';
-        $value = explode("/",$val['attr']); 
-        $id = $value[0];
-        $custom_fields = $value[1];
-        $data = '';
-        if($id > 0){
-            $data = get_post_meta($id, $custom_fields, true);
+
+        if ( empty( $val['attr'] ) ) {
+            return $data;
         }
+
+        $value = explode("/",$val['attr']); 
+
+        if ( count( $value ) === 2 ) {
+            // Passed both ID and custom field
+            $id = absint( $value[0] );
+            $custom_field = sanitize_key( $value[1] );
+        } else {
+            // Only field name passed, get current post ID
+            $id = get_the_ID();
+            $custom_field = sanitize_key( $value[0] );
+        }
+        
+        if ( $id > 0 && ! empty( $custom_field ) ) {
+            $data = get_post_meta( $id, $custom_field, true );
+        }
+
         return $data;
     }
     add_shortcode('UACF7_CUSTOM_FIELDS', 'UACF7_CUSTOM_FIELDS');

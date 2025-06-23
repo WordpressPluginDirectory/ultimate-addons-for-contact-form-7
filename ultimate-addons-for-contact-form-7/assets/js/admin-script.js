@@ -226,7 +226,7 @@ jQuery(document).ready(function ($) {
                 type: 'POST',
                 data: {
                     action: 'uacf7_install_hydra_booking',
-                    security: uacf7_admin_nonce
+                    security: uacf7_admin_data.uacf7_nonce
                 },
                 success: function (response) {
                     if (response.success) {
@@ -253,7 +253,7 @@ jQuery(document).ready(function ($) {
 });
 
 jQuery(document).ready(function($) {
-    $('.plugin-button').not('.pro').on('click', function(e) {
+    $('.uacf7-plugin-button').not('.pro').on('click', function(e) {
         e.preventDefault();
 
         let button = $(this);
@@ -279,8 +279,8 @@ jQuery(document).ready(function($) {
             url: ajaxurl,
             type: 'POST',
             data: {
-                action: 'themefic_manage_plugin',
-                security: themefic_plugin_nonce,
+                action: 'uacf7_themefic_manage_plugin',
+                security: uacf7_admin_data.themefic_nonce,
                 plugin_slug: pluginSlug,
                 plugin_filename: pluginFileName,
                 plugin_action: action
@@ -294,7 +294,7 @@ jQuery(document).ready(function($) {
                         button.contents().first().replaceWith('Activate');
                         button.data('action', 'activate').removeClass('install').addClass('activate');
                     } else if (action === 'activate') {
-                        button.replaceWith('<span class="plugin-button plugin-status active">Activated</span>');
+                        button.replaceWith('<span class="uacf7-plugin-button plugin-status active">Activated</span>');
                     }
                 } else {
                     button.contents().first().replaceWith(originalText);

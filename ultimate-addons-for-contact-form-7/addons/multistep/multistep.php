@@ -488,7 +488,7 @@ class UACF7_MULTISTEP {
 
 		<fieldset>
 			<div class="uacf7-doc-notice uacf7-guide">
-				<?php echo esc_html( __( 'To activate the form, enable it from the "Multi-step Form" tab located under the Ultimate Addons for CF7 Options. This tab also contains additional settings.', 'ultimate-addons-cf7' ) ); ?>
+				<?php echo esc_html( __( 'To activate the form, enable it from the "Multi-step Form" tab located under the Addons for CF7 Options. This tab also contains additional settings.', 'ultimate-addons-cf7' ) ); ?>
 			</div>
 		</fieldset>
 			
@@ -940,7 +940,7 @@ class UACF7_MULTISTEP {
 		}
 
 		$current_step_fields = explode( ',', $_REQUEST['current_fields_to_check'] );
-
+		
 		// Validation with Repeater 
 		$validation_fields = explode( ',', $_REQUEST['validation_fields'] );
 		$tag_name = [];
@@ -958,6 +958,7 @@ class UACF7_MULTISTEP {
 			$tag_type[] = $field[0];
 			$count++;
 		}
+
 		$form = wpcf7_contact_form( $_REQUEST['form_id'] );
 		$all_form_tags = $form->scan_form_tags();
 		$invalid_fields = false;
@@ -1018,6 +1019,7 @@ class UACF7_MULTISTEP {
 			}
 
 		}
+
 		// $result = apply_filters('wpcf7_validate', $result, $tags); 
 		$is_valid = $result->is_valid();
 		if ( ! $is_valid ) {

@@ -12,7 +12,7 @@ if ( file_exists( UACF7_PATH . 'admin/tf-options/options/tf-menu-icon.php' ) ) {
 UACF7_Settings::option(
 	'uacf7_settings',
 	array(
-		'title' => __( 'Ultimate Addons', 'ultimate-addons-cf7' ),
+		'title' => __( 'CF7 Addons', 'ultimate-addons-cf7' ),
 		'icon' => $menu_icon,
 		'position' => 30.01,
 		'sections' =>
@@ -159,10 +159,20 @@ UACF7_Settings::option(
 								'documentation_link' => 'https://themefic.com/docs/uacf7/pro-addons/contact-form-7-multi-step-form-pro/',
 								'is_pro' => true,
 							),
+							'uacf7_enable_hydra_booking_form' => array(
+								'id' => 'uacf7_enable_hydra_booking_form',
+								'type' => 'switch',
+								'label' => __( 'Booking/Appointment with Hydra', 'ultimate-addons-cf7' ),
+								'image_url' => UACF7_URL . 'assets/admin/images/addons/Booking-or-Appointment-Form@2x.png',
+								'default' => false,
+								'subtitle' => __( 'Hydra Booking is a separate standalone plugin for advanced booking and appointments. It works with Contact Form 7 and supports calendar, time slots, and payments.', 'ultimate-addons-cf7' ),
+								'demo_link' => 'https://demo.hydrabooking.com/',
+								'documentation_link' => 'https://themefic.com/docs/hydrabooking/',
+							),
 							'uacf7_enable_booking_form' => array(
 								'id' => 'uacf7_enable_booking_form',
 								'type' => 'switch',
-								'label' => __( 'Booking/Appointment', 'ultimate-addons-cf7' ),
+								'label' => __( 'Booking/Appointment (Legacy)', 'ultimate-addons-cf7' ),
 								'image_url' => UACF7_URL . 'assets/admin/images/addons/Booking-or-Appointment-Form@2x.png',
 								'default' => false,
 								'subtitle' => __( 'Create a booking or appointment form using Contact Form 7, including calendar and time options, with payment support.', 'ultimate-addons-cf7' ),
@@ -170,16 +180,17 @@ UACF7_Settings::option(
 								'documentation_link' => 'https://themefic.com/docs/uacf7/pro-addons/contact-form-7-booking-form/',
 								'is_pro' => true,
 							),
-							// 'uacf7_enable_hydra_booking_form' => array(
-							// 	'id' => 'uacf7_enable_hydra_booking_form',
-							// 	'type' => 'switch',
-							// 	'label' => __( 'Hydra Booking/Appointment', 'ultimate-addons-cf7' ),
-							// 	'image_url' => UACF7_URL . 'assets/admin/images/addons/Booking-or-Appointment-Form@2x.png',
-							// 	'default' => false,
-							// 	'subtitle' => __( 'Appointment Booking Plugin with Automated Scheduling - Apple/Outlook/ Google Calendar, WooCommerce, Zoom, Fluent Forms, Zapier, Mailchimp & CRM Integration..', 'ultimate-addons-cf7' ),
-							// 	'demo_link' => 'https://demo.hydrabooking.com/',
-							// 	'documentation_link' => 'https://themefic.com/docs/hydrabooking/',
-							// ),
+							'uacf7_enable_drag_and_drop_file_upload' => array(
+								'id' => 'uacf7_enable_drag_and_drop_file_upload',
+								'type' => 'switch',
+								'label' => __( 'Drag & Drop Multiple File Uploads', 'ultimate-addons-cf7' ),
+								'image_url' => UACF7_URL . 'assets/admin/images/addons/drag-and-drop.png',
+								'default' => false,
+								'subtitle' => __( 'The Drag & Drop File Upload addon brings a smooth and modern way for users to upload multiple files directly through your Contact Form 7 form.', 'ultimate-addons-cf7' ),
+								'demo_link' => 'https://cf7addons.com/preview/drag-and-drop-multiple-file-upload/',
+								'documentation_link' => 'https://themefic.com/docs/uacf7/pro-addons/drag-and-drop-file/',
+								'is_pro' => true,
+							),
 							'uacf7_enable_post_submission' => array(
 								'id' => 'uacf7_enable_post_submission',
 								'type' => 'switch',

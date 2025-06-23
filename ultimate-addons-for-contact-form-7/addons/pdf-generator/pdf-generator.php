@@ -194,7 +194,6 @@ class UACF7_PDF_GENERATOR {
 					'id' => 'pdf_bg_upload_image',
 					'type' => 'image',
 					'label' => __( 'Body Background Image ', 'ultimate-addons-cf7' ),
-
 				),
 				'pdf_content_color' => array(
 					'id' => 'pdf_content_color',
@@ -382,7 +381,7 @@ class UACF7_PDF_GENERATOR {
 		// PDF Style
 		$pdf_style = ' <style>
             body {
-                 ' . esc_attr( $pdf_bg_upload_image ) . '
+                 ' . $pdf_bg_upload_image . '
                 background-repeat:no-repeat;
                 background-image-resize: 6; 
 				background-color: #F8F7FD;
@@ -402,6 +401,10 @@ class UACF7_PDF_GENERATOR {
 				padding: 10px 25px;
             }
             .pdf-content{ 
+			 ' . $pdf_bg_upload_image . '
+                background-repeat:no-repeat;
+                background-image-resize: 6; 
+				background-color: #F8F7FD;
                 background-color: ' . esc_attr( $pdf_content_bg_color ) . ';
                 color : ' . esc_attr( $pdf_content_color ) . ';
                 padding: 20px;
@@ -643,7 +646,7 @@ class UACF7_PDF_GENERATOR {
 			$pdf_footer_bg_color = ! empty( $pdf['pdf_footer_bg_color'] ) ? $pdf['pdf_footer_bg_color'] : '#5D5676';
 			$pdf_bg_upload_image = ! empty( $pdf_bg_upload_image ) ? 'background-image: url("' . esc_attr( $pdf_bg_upload_image ) . '");' : '';
 			$pdf_header_upload_image = ! empty( $pdf_header_upload_image ) ? '<img src="' . esc_attr( $pdf_header_upload_image ) . '" style="height: 60; max-width: 100%; ">' : '';
-			
+		
 			$mpdf = new \Mpdf\Mpdf( [ 
 				'fontdata' => [ // lowercase letters only in font key
 					'dejavuserifcond' => [ 
@@ -664,7 +667,7 @@ class UACF7_PDF_GENERATOR {
 			// PDF Style
 			$pdf_style = ' <style>
                 body {
-                    background:url(' . $pdf_bg_upload_image . ');
+                    ' . $pdf_bg_upload_image . '
                     background-repeat:no-repeat;
                     background-image-resize: 6; 
 					background-color: #F8F7FD;
@@ -684,6 +687,10 @@ class UACF7_PDF_GENERATOR {
 					padding: 10px 25px;
                 }
                 .pdf-content{ 
+				 ' . $pdf_bg_upload_image . '
+					background-repeat:no-repeat;
+					background-image-resize: 6; 
+					background-color: #F8F7FD;
                     background-color: ' . esc_attr( $pdf_content_bg_color ) . ';
                     color : ' . esc_attr( $pdf_content_color ) . ';
                     padding: 20px;
@@ -730,7 +737,6 @@ class UACF7_PDF_GENERATOR {
                 ' . $custom_pdf_css . '
             </style>';
 			$replace_value = [];
-
 			// PDF Header
 			if ( $disable_header != true ) {
 				$mpdf->SetHTMLHeader( '

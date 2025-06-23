@@ -129,7 +129,8 @@
 
 .progressbar-style-1.steps-form .steps-row .steps-step p {
     margin-top: 0.5rem;
-    display: none;
+    /* display: none; */
+    margin-bottom: 0.5rem;
 }
 
 /* .progressbar-style-1.steps-form .steps-row .steps-step .btn-circle {

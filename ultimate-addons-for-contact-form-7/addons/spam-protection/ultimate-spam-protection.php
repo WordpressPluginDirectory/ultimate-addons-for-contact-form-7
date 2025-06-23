@@ -95,6 +95,14 @@ class UACF7_SPAM_PROTECTION {
 					),
 					'default' => 'arithmathic_recognation'
 				),
+				'uacf7_spam_protection_placeholder_text' => array(
+					'id'       => 'uacf7_spam_protection_placeholder_text',
+					'type'     => 'text',
+					'label'    => __( 'Placeholder Text', 'ultimate-addons-cf7' ),
+					'subtitle' => __( 'Set the placeholder text for the CAPTCHA field.', 'ultimate-addons-cf7' ),
+					'is_pro'   => false,
+					'default'  => 'Enter CAPTCHA answer',
+				),
 				'uacf7_minimum_time_limit' => array(
 					'id' => 'uacf7_minimum_time_limit',
 					'type' => 'number',
@@ -274,6 +282,8 @@ class UACF7_SPAM_PROTECTION {
 
 		$uacf7_spam_protection = uacf7_get_form_option( $formid, 'spam_protection' );
 
+		$uacf7_spam_protection_placeholder_text = isset( $uacf7_spam_protection['uacf7_spam_protection_placeholder_text'] ) ? $uacf7_spam_protection['uacf7_spam_protection_placeholder_text'] : '';
+
 		if ( isset( $uacf7_spam_protection['uacf7_spam_protection_enable'] ) && $uacf7_spam_protection['uacf7_spam_protection_enable'] != '1' ) {
 			return;
 		}
@@ -352,7 +362,7 @@ class UACF7_SPAM_PROTECTION {
 								</svg>
 							</button>
 							<input type="number" min="0" id="rtn"
-								placeholder="<?php esc_attr_e( 'Enter CAPTCHA answer', 'ultimate-addons-cf7' ); ?>" value="">
+								placeholder="<?php echo esc_attr( $uacf7_spam_protection_placeholder_text ); ?>" value="">
 						</div>
 						<div>
 
@@ -370,7 +380,7 @@ class UACF7_SPAM_PROTECTION {
 									</svg>
 								</button>
 								<input type="text" id="userInput"
-									placeholder="<?php esc_attr_e( 'Enter CAPTCHA answer', 'ultimate-addons-cf7' ); ?>">
+									placeholder="<?php echo esc_attr( $uacf7_spam_protection_placeholder_text ); ?>">
 
 							</div>
 							<div>

@@ -35,7 +35,7 @@ if ( ! class_exists( 'UACF7_Settings' ) ) {
 			//ajax save options
 			add_action( 'wp_ajax_uacf7_options_save', array( $this, 'uacf7_ajax_save_options' ) );
 			
-			add_action('wp_ajax_themefic_manage_plugin', array( $this, 'themefic_manage_plugin' ) );
+			add_action('wp_ajax_uacf7_themefic_manage_plugin', array( $this, 'uacf7_themefic_manage_plugin' ) );
 		}
 
 		public static function option( $key, $params = array() ) {
@@ -251,7 +251,7 @@ if ( ! class_exists( 'UACF7_Settings' ) ) {
 				<div class="uacf7-addons-settings-page">
 					<div class="uacf7-addons-settings-page-wrapper">
 						<h1 class="uacf7-setting-title">
-							<?php echo _e( 'Ultimate Addons for Contact Form 7 (UACF7) Settings', 'ultimate-addons-cf7' ) ?>
+							<?php echo _e( 'Ultra Addons for Contact Form 7 (UACF7) Settings', 'ultimate-addons-cf7' ) ?>
 						</h1>
 						<form method="post" action="" class="tf-option-form tf-ajax-save" enctype="multipart/form-data">
 							<div class="uacf7-settings-heading">
@@ -381,41 +381,52 @@ if ( ! class_exists( 'UACF7_Settings' ) ) {
 
 			<div class="uacf7-sidebar">
 				<div class="uacf7-sidebar-wrap">
-					<div class="uacf7-sidebar-header">
-						<h1 class="uacf7-sidebar-title"><?php echo _e( 'Extend Your Website', 'ultimate-addons-cf7' ) ?></h1>
-					</div>
+					<!-- promo banner  -->
+					 <?php echo apply_filters('uacf7_dashboard_helper_banner', ''); ?>
+					 
 					<div class="uacf7-sidebar-content">
-						
+
 						<?php echo $this->tf_get_sidebar_plugin_list(); ?>
 
-						<div class="quick-access">
-							<h3>Quick Access</h3>
-							<div class="quick-access-wrapper">
-								<div class="access-item">
+						<div class="uacf7-sidebar-customization-quote">
+							<div class="uacf7-quote-header">
+								<i class="fa-solid fa-code"></i>
+								<a href="<?php echo esc_url('https://portal.themefic.com/hire-us/' ); ?>" target="_blank" ><?php echo __('Get Free Quote', 'ultimate-addons-cf7');  ?></a>
+							</div>
+							<div class="uacf7-quote-content">
+								<h3><?php echo __('Need Help Customizing Your WordPress Site?', 'ultimate-addons-cf7');  ?></h3>
+								<p><?php echo __('Want to tweak a theme, adjust a plugin like Ultra Addons or add custom functionality to your site? Our expert WordPress developers can tailor it just the way you need. We only charge $29/hour.', 'ultimate-addons-cf7');  ?></p>								
+							</div>
+						</div>
+
+						<div class="uacf7-quick-access">
+							<h3><?php echo __('Helpful Resources', 'ultimate-addons-cf7');  ?></h3>
+							<div class="uacf7-quick-access-wrapper">
+								<div class="uacf7-access-item">
 									<a href="https://themefic.com/docs/uacf7/" target="_blank">
 										<span class="icon"><i class="fa-solid fa-folder-open"></i></span>
 										<?php echo _e( 'Documentation', 'ultimate-addons-cf7' ); ?>
 									</a>
 								</div>
-								<div class="access-item">
+								<div class="uacf7-access-item">
 									<a href="https://portal.themefic.com/support/" target="_blank">
 										<span class="icon"><i class="fa-solid fa-headset"></i></span>
 										<?php echo _e( 'Get Support', 'ultimate-addons-cf7' ); ?>
 									</a>
 								</div>
-								<div class="access-item">
+								<div class="uacf7-access-item">
 									<a href="https://www.facebook.com/groups/ultimate.cf7" target="_blank">
 										<span class="icon"><i class="fa-solid fa-users"></i></span>
 										<?php echo _e( 'Join our Community', 'ultimate-addons-cf7' ); ?>
 									</a>
 								</div>
-								<div class="access-item">
+								<div class="uacf7-access-item">
 									<a href="https://app.loopedin.io/ultimate-addons-for-contact-form-7" target="_blank">
 										<span class="icon"><i class="fa-solid fa-road-circle-check"></i></span>
 										<?php echo _e( 'See our Roadmap', 'ultimate-addons-cf7' ); ?>
 									</a>
 								</div>
-								<div class="access-item">
+								<div class="uacf7-access-item">
 									<a href="https://app.loopedin.io/ultimate-addons-for-contact-form-7#/ideas" target="_blank">
 										<span class="icon"><i class="fa-solid fa-lightbulb"></i></span>
 										<?php echo _e( 'Request a Feature', 'ultimate-addons-cf7' ); ?>
@@ -526,33 +537,33 @@ if ( ! class_exists( 'UACF7_Settings' ) ) {
 
 					?>
 
-					<li class="plugin-item <?php echo esc_attr($plugin['slug'] == 'hydra-booking' ? 'featured' : ''); ?>" data-plugin-slug="<?php echo esc_attr($plugin['slug']); ?>">
-						<div class="plugin-info-wrapper">
-							<div class="plugin-info">
+					<li class="uacf7-plugin-item <?php echo esc_attr($plugin['slug'] == 'hydra-booking' ? 'featured' : ''); ?>" data-plugin-slug="<?php echo esc_attr($plugin['slug']); ?>">
+						<div class="uacf7-plugin-info-wrapper">
+							<div class="uacf7-plugin-info">
 								<img src="<?php echo esc_url($plugin['image']); ?>" alt="<?php echo esc_attr($plugin['name']); ?>" class="<?php echo esc_attr($plugin['name'] == 'BEAF' ? 'beaf-logo' : ''); ?>" width="40" height="40">
-								<div class="plugin-btn">
+								<div class="uacf7-plugin-btn">
 									<span class="badge free">Free</span>
 									<?php if (!$installed): ?>
-										<button class="plugin-button install" data-action="install" data-plugin="<?php echo esc_attr($plugin['slug']); ?>" data-plugin_filename="<?php echo esc_attr($plugin['file_name']); ?>">
+										<button class="uacf7-plugin-button install" data-action="install" data-plugin="<?php echo esc_attr($plugin['slug']); ?>" data-plugin_filename="<?php echo esc_attr($plugin['file_name']); ?>">
 											Install <span class="loader"></span>
 										</button>
 									<?php elseif (!$activated): ?>
-										<button class="plugin-button activate" data-action="activate" data-plugin="<?php echo esc_attr($plugin['slug']); ?>" data-plugin_filename="<?php echo esc_attr($plugin['file_name']); ?>" >
+										<button class="uacf7-plugin-button activate" data-action="activate" data-plugin="<?php echo esc_attr($plugin['slug']); ?>" data-plugin_filename="<?php echo esc_attr($plugin['file_name']); ?>" >
 											Activate <span class="loader"></span>
 										</button>
 									<?php else: ?>
-										<span class="plugin-button plugin-status active">Activated</span>
+										<span class="uacf7-plugin-button plugin-status active">Activated</span>
 									<?php endif; ?>
 
 									<?php if (!empty($plugin['pro'])): ?>
 										<?php if (!$pro_installed): ?>
-											<a href="<?php echo esc_url($plugin['pro']['url']); ?>" class="plugin-button pro" target="_blank">Get Pro</a>
+											<a href="<?php echo esc_url($plugin['pro']['url']); ?>" class="uacf7-plugin-button pro" target="_blank">Get Pro</a>
 										<?php elseif (!$pro_activated): ?>
-											<button class="plugin-button activate-pro" data-action="activate" data-plugin="<?php echo esc_attr($plugin['pro']['slug']); ?>" data-plugin_filename="<?php echo esc_attr($plugin['pro']['file_name']); ?>">
+											<button class="uacf7-plugin-button activate-pro" data-action="activate" data-plugin="<?php echo esc_attr($plugin['pro']['slug']); ?>" data-plugin_filename="<?php echo esc_attr($plugin['pro']['file_name']); ?>">
 												Activate Pro <span class="loader"></span>
 											</button>
 										<?php else: ?>
-											<span class="plugin-button plugin-status active-pro">Pro Activated</span>
+											<span class="uacf7-plugin-button plugin-status active-pro">Pro Activated</span>
 										<?php endif; ?>
 									<?php endif; ?>
 								</div>
@@ -572,7 +583,7 @@ if ( ! class_exists( 'UACF7_Settings' ) ) {
 			<?php 
 		}
 
-		public function themefic_manage_plugin() {
+		public function uacf7_themefic_manage_plugin() {
 			check_ajax_referer('themefic_plugin_nonce', 'security');
 
 			if (!current_user_can('install_plugins')) {
@@ -627,8 +638,6 @@ if ( ! class_exists( 'UACF7_Settings' ) ) {
 			wp_send_json_error('Invalid action.');
 		}
 
-
-
 		// Custom comparison function based on 'label' value
 		public function uacf7_setup_wizard_sorting( $a, $b ) {
 			$labelA = $a['label'][0];
@@ -651,7 +660,7 @@ if ( ! class_exists( 'UACF7_Settings' ) ) {
 					<div class="tf-help-center-banner">
 						<div class="tf-help-center-content">
 							<h2><?php _e( "Setup Wizard", "ultimate-addons-cf7" ); ?></h2>
-							<p><?php _e( "Click the button below to run the setup wizard of Ultimate Addons for Contact Form 7. Your existing settings will not change.", "ultimate-addons-cf7" ); ?>
+							<p><?php _e( "Click the button below to run the setup wizard of Ultra Addons for Contact Form 7. Your existing settings will not change.", "ultimate-addons-cf7" ); ?>
 							</p>
 							<a href="<?php echo esc_url( admin_url( 'admin.php?page=tf-setup-wizard' ) ) ?>"
 								class="tf-admin-btn tf-btn-secondary"><?php _e( "Setup Wizard", "ultimate-addons-cf7" ); ?></a>
@@ -998,16 +1007,34 @@ if ( ! class_exists( 'UACF7_Settings' ) ) {
 								}
 								if ( isset( $_FILES ) && ! empty( $_FILES['file'] ) ) {
 									$tf_upload_dir = wp_upload_dir();
+								
 									if ( ! empty( $tf_upload_dir['basedir'] ) ) {
 										$tf_itinerary_fonts = $tf_upload_dir['basedir'] . '/itinerary-fonts';
+								
 										if ( ! file_exists( $tf_itinerary_fonts ) ) {
 											wp_mkdir_p( $tf_itinerary_fonts );
 										}
-										$tf_fonts_extantions = array( 'application/octet-stream' );
+								
+										// Define allowed font extensions and MIME types
+										$allowed_extensions = array( 'ttf', 'otf', 'woff', 'woff2' );
+										$allowed_mime_types = array(
+											'ttf'   => 'font/ttf',
+											'otf'   => 'font/otf',
+											'woff'  => 'font/woff',
+											'woff2' => 'font/woff2'
+										);
+								
 										for ( $i = 0; $i < count( $_FILES['file']['name'] ); $i++ ) {
-											if ( in_array( $_FILES['file']['type'][ $i ], $tf_fonts_extantions ) ) {
-												$tf_font_filename = $_FILES['file']['name'][ $i ];
-												move_uploaded_file( $_FILES['file']['tmp_name'][ $i ], $tf_itinerary_fonts . '/' . $tf_font_filename );
+											$original_name = $_FILES['file']['name'][ $i ];
+											$tmp_name      = $_FILES['file']['tmp_name'][ $i ];
+											$type          = $_FILES['file']['type'][ $i ];
+								
+											$sanitized_name = sanitize_file_name( $original_name );
+											$extension      = strtolower( pathinfo( $sanitized_name, PATHINFO_EXTENSION ) );
+								
+											// Validate file extension and MIME type
+											if ( in_array( $extension, $allowed_extensions, true ) && $type === $allowed_mime_types[ $extension ] ) {
+												move_uploaded_file( $tmp_name, $tf_itinerary_fonts . '/' . $sanitized_name );
 											}
 										}
 									}

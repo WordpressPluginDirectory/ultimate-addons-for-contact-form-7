@@ -124,23 +124,38 @@ class UACF7_MAILCHIMP {
 	public function uacf7_post_meta_options_mailchimp( $value, $post_id ) {
 		$status = $this->connection_status();
 
-		//get audience
-		$api_key = $this->mailchimp_api;
+		// Get all Mailchimp audiences
+		$api_key  = $this->mailchimp_api;
 		$audience = array();
-		if ( $api_key != '' ) {
 
-			$response = $this->set_config( $api_key, 'lists' );
+		if ( $api_key !== '' ) {
+			$offset = 0;
+			$count  = 100; // Max allowed per request
+			$total_items = null;
 
-			$response = json_decode( $response, true );
-			$x = 0;
-			if ( isset( $response['lists'] ) && $response != null ) {
-				foreach ( $response['lists'] as $list ) {
-					$audience[ $list['id'] ] = $list['name'];
-					$x++;
+			do {
+				// Fetch a page of results
+				$path     = "lists?offset={$offset}&count={$count}";
+				$response = $this->set_config( $api_key, $path );
+
+				$response = json_decode( $response, true );
+
+				if ( isset( $response['lists'] ) && is_array( $response['lists'] ) ) {
+					foreach ( $response['lists'] as $list ) {
+						$audience[ $list['id'] ] = $list['name'];
+					}
 				}
-			}
 
+				// Set total_items on first loop
+				if ( $total_items === null && isset( $response['total_items'] ) ) {
+					$total_items = (int) $response['total_items'];
+				}
+
+				$offset += $count;
+
+			} while ( $offset < $total_items );
 		}
+
 
 		$mailchimp = apply_filters( 'uacf7_post_meta_options_mailchimp_pro', $data = array(
 			'title' => __( 'Mailchimp', 'ultimate-addons-cf7' ),
@@ -419,7 +434,7 @@ class UACF7_MAILCHIMP {
 				$status .= '<span class="status-details status-error">' . esc_html( $response->detail, 'ultimate-addons-cf7' ) . '</span>';
 			}
 		} else {
-			$status .= '<span class="status-details status-error">' . esc_html( 'Please configure your Mailchimp API Key from', 'ultimate-addons-cf7' ) . ' <strong>' . esc_html( 'Ultimate Addons -> Settings -> Mailchimp API', 'ultimate-addons-cf7' ) . ' </strong>' . '</span>';
+			$status .= '<span class="status-details status-error">' . esc_html( 'Please configure your Mailchimp API Key from', 'ultimate-addons-cf7' ) . ' <strong>' . esc_html( 'Addons -> Settings -> Mailchimp API', 'ultimate-addons-cf7' ) . ' </strong>' . '</span>';
 		}
 
 		return $status;
@@ -448,11 +463,19 @@ class UACF7_MAILCHIMP {
 			$subscriber_lname = ! empty( $subscriber_lname ) ? $posted_data[ $subscriber_lname ] : '';
 
 			$extra_fields = isset( $mailchimp['uacf7_mailchimp_merge_fields'] ) && is_array( $mailchimp['uacf7_mailchimp_merge_fields'] ) ? $mailchimp['uacf7_mailchimp_merge_fields'] : array();
-
+			
 			$extra_merge_fields = '';
 			foreach ( $extra_fields as $extra_field ) {
-				$extra_merge_fields .= '"' . $extra_field['mergefield'] . '": "' . $posted_data[ $extra_field['mailtag'] ] . '",';
+				$mailtag = $extra_field['mailtag'];
+				$value = isset( $posted_data[ $mailtag ] ) ? $posted_data[ $mailtag ] : '';
+			
+				if ( is_array( $value ) ) {
+					$value = implode( ', ', $value );
+				}
+			
+				$extra_merge_fields .= '"' . $extra_field['mergefield'] . '": "' . esc_js( $value ) . '",';
 			}
+			
 			$extra_merge_fields = trim( $extra_merge_fields, ',' );
 
 			if ( $extra_merge_fields != '' ) {

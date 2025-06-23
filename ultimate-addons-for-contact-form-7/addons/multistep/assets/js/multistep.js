@@ -48,40 +48,34 @@ jQuery(document).ready(function () {
         /*
         * Cheeck current step fields. Expect Checkbox, Radio button and hidden fields
         */
-        var uacf7_current_step_fields = uacf7_current_step.find('.wpcf7-form-control:not(.uacf7-hidden .wpcf7-form-control, span.wpcf7-form-control)').map(function () {
-            if (typeof this.name !== 'undefined') {
-                var nameIndex = this.name.indexOf('[]');
-                if (nameIndex !== -1) {
-                    var fieldName = this.name.replace('[]', '');
-                } else {
-                    var fieldName = this.name;
-                }
-                return fieldName;
-            }
+        var uacf7_current_step_fields = uacf7_current_step.find('input, select, textarea').filter(function () {
+            return this.offsetParent !== null && this.name;
+        }).map(function () {
+            return this.name.replace(/\[\]$/, '');
         }).get();
 
         /*
         * Cheeck current step fields. Only Checkbox and Radio button
         */
-        if (uacf7_current_step.find('.wpcf7-form-control input').length > 0) {
-            uacf7_current_step.find('.wpcf7-form-control input').each(function () {
+        // if (uacf7_current_step.find('.wpcf7-form-control input').length > 0) {
+        //     uacf7_current_step.find('.wpcf7-form-control input').each(function () {
 
-                var Value = jQuery('.wpcf7-form-control input[name="' + this.name + '"]:checked').val();
+        //         var Value = jQuery('.wpcf7-form-control input[name="' + this.name + '"]:checked').val();
 
-                if (jQuery(this).is("input[type='checkbox']")) {
-                    if (typeof Value == 'undefined') {
-                        var checkboxName = this.name.replace('[]', '');
-                        uacf7_current_step_fields.push(checkboxName);
-                    }
+        //         if (jQuery(this).is("input[type='checkbox']")) {
+        //             if (typeof Value == 'undefined') {
+        //                 var checkboxName = this.name.replace('[]', '');
+        //                 uacf7_current_step_fields.push(checkboxName);
+        //             }
 
-                } else {
-                    if (typeof Value == 'undefined') {
-                        var checkboxName = this.name;
-                        uacf7_current_step_fields.push(checkboxName);
-                    }
-                }
-            });
-        }
+        //         } else {
+        //             if (typeof Value == 'undefined') {
+        //                 var checkboxName = this.name;
+        //                 uacf7_current_step_fields.push(checkboxName);
+        //             }
+        //         }
+        //     });
+        // }
 
         function uacf7_onlyUnique(value, index, self) {
             return self.indexOf(value) === index;
@@ -93,6 +87,31 @@ jQuery(document).ready(function () {
         var uacf7_form_ids = '';
 
         var fields_to_check_serialized = jQuery(uacf7_current_step).find(".wpcf7-form-control").serialize();
+
+        // Manually add selected radio inputs (serialize skips unselected)
+        uacf7_current_step.find('input[type="radio"]').each(function () {
+            var name = this.name;
+            if (fields_to_check_serialized.indexOf(name + '=') === -1) {
+                var checkedVal = jQuery('input[name="' + name + '"]:checked').val();
+                if (typeof checkedVal !== 'undefined') {
+                    fields_to_check_serialized += '&' + encodeURIComponent(name) + '=' + encodeURIComponent(checkedVal);
+                }
+            }
+        });
+
+        // Manually add selected radio and checkbox inputs (serialize skips unselected/multiple)
+        uacf7_current_step.find('input[type="radio"], input[type="checkbox"]').each(function () {
+            var name = this.name;
+            var isChecked = jQuery(this).is(':checked');
+
+            // Skip if already serialized
+            if (fields_to_check_serialized.indexOf(encodeURIComponent(name) + '=') === -1 && isChecked) {
+                var val = jQuery(this).val();
+                fields_to_check_serialized += '&' + encodeURIComponent(name) + '=' + encodeURIComponent(val);
+            }
+        });
+
+        
 
         if (jQuery(uacf7_current_step).find(".wpcf7-form-control[type='file']").length > 0) {
             jQuery(uacf7_current_step).find(".wpcf7-form-control[type='file']").each(function (i, n) {

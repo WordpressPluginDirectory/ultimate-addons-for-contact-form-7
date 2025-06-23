@@ -14,7 +14,7 @@ if ( isset( $_GET['post'] ) && ! is_array( $_GET['post'] ) && $_GET['post'] != '
 	$post_id = 0;
 }
 UACF7_Metabox::metabox( 'uacf7_form_opt', array(
-	'title' => __( 'Ultimate Addons for CF7 Options', 'ultimate-addons-cf7' ),
+	'title' => __( 'Addons for CF7 Options', 'ultimate-addons-cf7' ),
 	'post_type' => 'uacf7',
 
 	'sections' => apply_filters( 'uacf7_post_meta_options', $value = array(), $post_id ),

@@ -353,9 +353,9 @@ if ( ! class_exists( 'UACF7_Setup_Wizard' ) ) {
 							</span>
 
 							<div class="uacf7-single-step-content-inner">
-								<h1><?php echo _e( 'Welcome to Ultimate Addons for Contact Form 7', 'ultimate-addons-cf7' ) ?></h1>
+								<h1><?php echo _e( 'Welcome to Ultra Addons for Contact Form 7', 'ultimate-addons-cf7' ) ?></h1>
 
-								<p><?php echo _e( "The easiest and best Contact Form 7 Addons Plugin for WordPress. With 28+ essential features, this all-in-one plugin includes nearly all the basic to advanced options for your site's contact form.", 'ultimate-addons-cf7' ) ?>
+								<p><?php echo _e( "The easiest and best Contact Form 7 Addons Plugin for WordPress. With 45+ essential features, this all-in-one plugin includes nearly all the basic to advanced options for your site's contact form.", 'ultimate-addons-cf7' ) ?>
 								</p>
 
 								<div class="uacf7-step-plugin-required">

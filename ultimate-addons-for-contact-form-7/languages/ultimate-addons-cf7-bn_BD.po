@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Ultimate Addons for Contact Form 7\n"
+"Project-Id-Version: Ultra Addons for Contact Form 7\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-11-21 09:52+0000\n"
 "PO-Revision-Date: 2023-04-07 18:01+0000\n"
@@ -1140,7 +1140,7 @@ msgstr ""
 
 #: inc/functions.php:173
 msgid ""
-"This is a Pro feature of Ultimate Addons for contact form 7. You can add "
+"This is a Pro feature of Addons for contact form 7. You can add "
 "repeatable field and repeatable fields group with this addon."
 msgstr ""
 
@@ -1205,33 +1205,33 @@ msgstr ""
 #. parent slug
 #. page_title
 #: admin/admin-menu.php:19 admin/admin-menu.php:20
-msgid "Ultimate Addons"
+msgid "CF7 Addons"
 msgstr ""
 
 #. Name of the plugin
-msgid "Ultimate Addons for Contact Form 7"
+msgid "Ultra Addons for Contact Form 7"
 msgstr ""
 
 #: admin/admin-menu.php:33
-msgid "Ultimate Addons for Contact Form 7 (UACF7) Settings"
+msgid "Ultra Addons for Contact Form 7 (UACF7) Settings"
 msgstr ""
 
 #: addons/database/database.php:94 addons/database/database.php:132
-msgid "Ultimate Database"
+msgid "Ultra Database"
 msgstr ""
 
 #: addons/database/database.php:126
-msgid "Ultimate Database Addon"
+msgid "Ultra Database Addon"
 msgstr ""
 
 #. parent slug
 #. page_title
 #: addons/database/database.php:68 addons/database/database.php:69
-msgid "Ultimate DB"
+msgid "Ultra DB"
 msgstr ""
 
 #: inc/functions.php:159
-msgid "Ultimate Repeater (pro)"
+msgid "Ultra Repeater (pro)"
 msgstr ""
 
 #: addons/country-dropdown/country-dropdown.php:184

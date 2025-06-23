@@ -39,7 +39,7 @@ class UACF7_DYNAMIC_TEXT {
 		if ( empty( $tag->name ) ) {
 			return '';
 		}
-		// beaf_print_r($tag, $tag->name);
+		
 		$validation_error = wpcf7_get_validation_error( $tag->name );
 
 		$class = wpcf7_form_controls_class( $tag->type );

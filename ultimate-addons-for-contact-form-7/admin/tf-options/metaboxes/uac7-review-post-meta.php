@@ -10,7 +10,7 @@ if ( isset( $_GET['post'] ) && ! is_array( $_GET['post'] ) && $_GET['post'] != '
 }
 
 UACF7_Metabox::metabox( 'uacf7_review_opt', array(
-	'title' => __( 'Ultimate Addons for CF7 Options', 'ultimate-addons-cf7' ),
+	'title' => __( 'Addons for CF7 Options', 'ultimate-addons-cf7' ),
 	'post_type' => 'uacf7_review',
 	'sections' => apply_filters( 'uacf7_post_meta_review_opt', $value = array(), $post_id ),
 

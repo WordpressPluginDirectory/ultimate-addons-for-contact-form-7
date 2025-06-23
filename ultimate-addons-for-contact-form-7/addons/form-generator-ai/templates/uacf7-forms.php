@@ -1001,7 +1001,7 @@ Write name <strong>"John Doe"</strong> or <strong>"Abul Mia"</strong> to test it
         break;
 
     case "blog":
-        $form = apply_filters('uacf7_post_submission_form_ai_generator', esc_html('To generate this form, please download “Ultimate Post Submission Addon” from our client portal and activate', 'ultimate-addons-cf7'), $uacf7_default);
+        $form = apply_filters('uacf7_post_submission_form_ai_generator', esc_html('To generate this form, please download Post Submission Addon” from our client portal and activate', 'ultimate-addons-cf7'), $uacf7_default);
 
         break;
 
@@ -1169,7 +1169,7 @@ Write name <strong>"John Doe"</strong> or <strong>"Abul Mia"</strong> to test it
     case "service-booking":
     case "appointment-form":
     case "booking":
-        $form = apply_filters('uacf7_booking_form_ai_generator', esc_html('To generate this form, please download “Ultimate booking Addon” from our client portal and activate', 'ultimate-addons-cf7'), $uacf7_default);
+        $form = apply_filters('uacf7_booking_form_ai_generator', esc_html('To generate this form, please download “Booking Addon” from our client portal and activate', 'ultimate-addons-cf7'), $uacf7_default);
 
         break;
 
@@ -1189,7 +1189,7 @@ Write name <strong>"John Doe"</strong> or <strong>"Abul Mia"</strong> to test it
 
 
     case "repeater":
-        $form = apply_filters('uacf7_repeater_form_ai_generator', esc_html('To generate this form, please download “Ultimate Repeater Addon” from our client portal and activate  ultimate repeater Addon first', 'ultimate-addons-cf7'), $uacf7_default);
+        $form = apply_filters('uacf7_repeater_form_ai_generator', esc_html('To generate this form, please download “Repeater Addon” from our client portal and activate  ultimate repeater Addon first', 'ultimate-addons-cf7'), $uacf7_default);
 
         break;
 

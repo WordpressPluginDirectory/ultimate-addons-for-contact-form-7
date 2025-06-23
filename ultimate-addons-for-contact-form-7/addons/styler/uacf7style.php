@@ -742,7 +742,7 @@ class UACF7_uacf7style {
 
 						// Background color
 						if ( ! empty( $input_background_color ) ) {
-							echo 'background-color: ' . esc_attr( $input_background_color ) . ';';
+							echo 'background-color: ' . esc_attr( $input_background_color ) . ' !important;';
 						}
 
 						// Font size

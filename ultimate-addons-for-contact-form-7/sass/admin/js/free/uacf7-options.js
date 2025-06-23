@@ -11,7 +11,7 @@
                 $('#contact-form-editor').append($this_clone);
                 $('#contact-form-editor').find('.uacf7-metabox').css('display', 'block');
                 $(this).remove();
-                $('#form-panel').append('<button class="tf-admin-btn tf-btn-secondary uacf7-settings-addon-btn">Ultimate Addons Settings</button>');
+                $('#form-panel').append('<button class="tf-admin-btn tf-btn-secondary uacf7-settings-addon-btn">Addons Settings</button>');
             });
             // scroll to uacf7-metabox gap 50px
 
@@ -58,7 +58,6 @@
                     if ($this.is(':visible')) {
 
                         var code_editor = CodeMirror.fromTextArea($textarea[0], data_editor);
-                        console.log(code_editor);
                         // load code-mirror theme css.
                         if (data_editor.theme !== 'default' && TF.vars.code_themes.indexOf(data_editor.theme) === -1) {
 

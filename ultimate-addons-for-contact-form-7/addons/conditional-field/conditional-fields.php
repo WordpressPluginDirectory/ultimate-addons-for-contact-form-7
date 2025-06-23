@@ -229,7 +229,7 @@ class UACF7_CF {
 			'conditional' => array(
 				'display_name' => __( 'conditional area', 'contact-form-7' ),
 				'heading' => __( 'Generate a conditional tag to wrap the elements that can be shown conditionally.', 'ultimate-addons-cf7' ),
-				'description' => __( 'Check "Conditional Fields" tab located under the Ultimate Addons for CF7 Options for additional settings. Make sure to set those, otherwise the conditions may not work correctly.', 'ultimate-addons-cf7' ),
+				'description' => __( 'Check "Conditional Fields" tab located under the Addons for CF7 Options for additional settings. Make sure to set those, otherwise the conditions may not work correctly.', 'ultimate-addons-cf7' ),
 			),
 		);
 
