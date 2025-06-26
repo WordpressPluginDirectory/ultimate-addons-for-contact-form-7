@@ -169,13 +169,13 @@
                     columns: [
                         // Add checkbox column
                         {
-                            title: "",
+                            title: `<input type="checkbox" id="select-all">`,
                             data: null,
                             class: 'uacf7dp-database-serial',
                             orderable: true,
                             searchable: false,
                             render: function (data, type, row, meta) {
-                                return '<input type="checkbox">';
+                                return `<input type="checkbox" class="row-select" data-id="${row.id}">`;
                             }
                         },
 
@@ -251,6 +251,60 @@
                             text: `${icons.pdf} PDF`,
                             orientation: 'landscape'
                         },
+                        {
+                            text: `${icons.delete} Delete Selected`,
+                            className: 'btn-danger',
+                            action: function () {
+                                const selectedRowsData = table.rows({ selected: true }).data().toArray();
+
+                                const params     = new URLSearchParams(window.location.search);
+                                const form_id    = params.get('form_id');
+                                const ajax_nonce = uACF7DP_Pram.nonce;
+
+                                if (selectedRowsData.length === 0) {
+                                    alert('No rows selected.');
+                                    return;
+                                }
+
+                                if (!confirm(`Are you sure you want to delete ${selectedRowsData.length} selected row(s)?`)) {
+                                    return;
+                                }
+
+                                // Optional: perform server-side delete using AJAX
+                                // Send selected IDs to backend
+                                const selectedIds = selectedRowsData.map(row => row.id); // adjust this if `row.id` isn't your key
+
+                                $.ajax({
+                                    url: uACF7DP_Pram.ajaxurl,
+                                    method: 'POST',
+                                    data: {
+                                        action    : 'uacf7dp_bulk_deleted_table_datas',
+                                        form_id   : form_id,
+                                        ids       : selectedIds,
+                                        nonce: ajax_nonce
+                                    },
+                                    success: function (response) {
+                                        if (response.success) {
+                                            // Remove from DataTable
+                                            selectedRowsData.forEach(row => {
+                                                table.rows(function (idx, data) {
+                                                    return data.id === row.id;
+                                                }).remove();
+                                            });
+
+                                            table.draw(false);
+                                            alert('Selected rows deleted successfully!');
+                                        } else {
+                                            alert(response.message || 'Bulk delete failed.');
+                                        }
+                                    },
+                                    error: function () {
+                                        alert('AJAX error during bulk delete.');
+                                    }
+                                });
+                            }
+                        }
+
                     ],
 
                     select: true,
@@ -316,7 +370,9 @@
                             single_view_control(rowData);
                         });
 
+                        
                         deleteIcon.on('click', function () {
+                            console.log(rowData);
                             // Ask for confirmation before deleting
                             if (confirm(`Are you sure you want to delete this row?`)) {
                                 console.log(rowData);
@@ -369,6 +425,21 @@
             } else {
                 table.row($checkbox.closest('tr')).deselect();
             }
+        });
+
+        $('#uacf7dp-database-tablePro thead').on('change', '#select-all', function () {
+            const isChecked = $(this).is(':checked');
+            $('#uacf7dp-database-tablePro tbody input[type="checkbox"]').each(function () {
+                const $checkbox = $(this);
+                $checkbox.prop('checked', isChecked);
+                const row = table.row($checkbox.closest('tr'));
+
+                if (isChecked) {
+                    row.select();
+                } else {
+                    row.deselect();
+                }
+            });
         });
 
         // Function to make the AJAX request

@@ -41,6 +41,7 @@ class UACF7_DATABASE {
 		add_action( 'wp_ajax_nopriv_uacf7dp_view_table_data', array( $this, 'uacf7dp_view_table_data' ) );
 
 		add_action( 'wp_ajax_uacf7dp_deleted_table_datas', [ $this, 'uacf7dp_deleted_table_datas' ] );
+		add_action( 'wp_ajax_uacf7dp_bulk_deleted_table_datas', [ $this, 'uacf7_ajax_bulk_delete' ] );
 
 		$option = get_option( 'uacf7_settings' );
 
@@ -455,7 +456,6 @@ class UACF7_DATABASE {
 
 			<section class="uacf7_popup_preview">
 				<div class="uacf7_popup_preview_content">
-
 					<div id="uacf7_popup_wrap">
 						<div class="db_popup_view">
 							<div class="close" title="Exit Full Screen">╳</div>
@@ -872,6 +872,7 @@ class UACF7_DATABASE {
 		if ( $form_id <= 0 || $data_id <= 0 ) {
 			wp_send_json_error( array( 'message' => 'Invalid cf7_form_id or data_id.' ) );
 		}
+
 		$wpdb->delete( "{$wpdb->prefix}uacf7dp_data", array( 'cf7_form_id' => $form_id, 'data_id' => $data_id ) );
 
 		// Delete from wp_uacf7dp_data_entry
@@ -879,6 +880,42 @@ class UACF7_DATABASE {
 
 		wp_send_json_success( array( 'message' => 'Data processed successfully' ) );
 		wp_die();
+	}
+
+	function uacf7_ajax_bulk_delete() {
+
+		uacf7dp_checkNonce();
+		global $wpdb;
+
+		$form_id = isset( $_POST['form_id'] ) && $_POST['form_id'] >= 0 ? intval( $_POST['form_id'] ) : 0;
+		$ids     = isset($_POST['ids']) ? array_map('intval', $_POST['ids']) : [];
+
+		if ( $form_id <= 0 ) {
+			wp_send_json_error( array( 'message' => 'Invalid form id.' ) );
+		}
+
+		if (empty($ids)) {
+			wp_send_json_error(['message' => 'No IDs provided for deletion.']);
+		}
+
+		$data_table  = $wpdb->prefix . 'uacf7dp_data';
+		$entry_table = $wpdb->prefix . 'uacf7dp_data_entry';
+
+		// Loop and delete for each ID
+		foreach ($ids as $data_id) {
+			$wpdb->delete($data_table, array(
+				'cf7_form_id' => $form_id,
+				'data_id'     => $data_id
+			));
+			$wpdb->delete($entry_table, array(
+				'cf7_form_id' => $form_id,
+				'data_id'     => $data_id
+			));
+		}
+
+		wp_send_json_success(['message' => 'Selected rows deleted successfully.']);
+		wp_die();
+		
 	}
 
 

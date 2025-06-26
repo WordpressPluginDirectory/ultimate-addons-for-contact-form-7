@@ -327,6 +327,7 @@ form.tag-generator-panel[data-version="2"] .control-box{
 #tag-generator-list button[data-target="tag-generator-panel-uacf7_range_slider"],
 #tag-generator-list button[data-target="tag-generator-panel-uacf7_star_rating"],
 #tag-generator-list button[data-target="tag-generator-panel-uacf7_country_dropdown"],
+#tag-generator-list button[data-target="tag-generator-panel-uacf7_google_recaptcha"],
 #tag-generator-list button[data-target="tag-generator-panel-dragdropfile"] {
     background-color: #473080 !important;
     color: #fff !important;
