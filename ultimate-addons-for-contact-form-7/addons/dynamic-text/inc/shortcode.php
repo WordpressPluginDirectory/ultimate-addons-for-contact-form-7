@@ -132,7 +132,14 @@ if(!function_exists('UACF7_CUSTOM_FIELDS')){
         }
         
         if ( $id > 0 && ! empty( $custom_field ) ) {
-            $data = get_post_meta( $id, $custom_field, true );
+            $raw = get_post_meta( $id, $custom_field, true );
+            $allowed = array(
+                'a'      => array( 'href' => true, 'title' => true ),
+                'strong' => array(),
+                'em'     => array(),
+                'br'     => array(),
+                );
+            $data = wp_kses( $raw, $allowed );
         }
 
         return $data;

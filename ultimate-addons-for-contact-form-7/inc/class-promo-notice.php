@@ -245,32 +245,9 @@ class UACF7_PROMO_NOTICE {
         }  
         $uacf7_dismiss_post_notice = get_option( 'uacf7_dismiss_post_notice' );
         ?> 
-         <?php if($uacf7_dismiss_post_notice == 1  || time() >  $uacf7_dismiss_post_notice ): ?>
-            <style> 
-                .uacf7_promo_side_preview a:focus {
-                    box-shadow: none;
-                } 
-                .uacf7_promo_side_preview a {
-                    display: inline-block;
-                }
-                #uacf7_black_friday_docs .inside {
-                    padding: 0;
-                    margin-top: 0;
-                }
-                #uacf7_black_friday_docs .postbox-header {
-                    display: none;
-                    visibility: hidden;
-                }
-                .uacf7_promo_side_preview {
-                    position: relative;
-                }
-                .uacf7_promo_side_notice_dismiss {
-                    position: ;
-                    z-index: 1;
-                }
+         <?php if($uacf7_dismiss_post_notice == 1  || time() >  $uacf7_dismiss_post_notice ): 
             
-            </style>
-            
+            ?>
            
             <div class="uacf7_promo_side_preview" style="text-align: center; overflow: hidden; margin: 10px;">
                 <a href="<?php echo esc_attr($deal_link); ?>" target="_blank" >
@@ -282,7 +259,10 @@ class UACF7_PROMO_NOTICE {
                 
             </div>
             <script>
-                jQuery(document).ready(function($) {
+                
+            </script>
+            <?php 
+            $inline_js = "jQuery(document).ready(function($) {
                     $(document).on('click', '.uacf7_promo_side_notice_dismiss', function( event ) { 
                         jQuery('.uacf7_promo_side_preview').css('display', 'none')
                         data = {
@@ -299,9 +279,10 @@ class UACF7_PROMO_NOTICE {
                             }
                         });
                     });
-                });
-            </script>
-            <?php endif; ?>
+                });";
+
+            wp_add_inline_script('uacf7-admin-script', $inline_js);
+         endif; ?>
         <?php
 	}
 

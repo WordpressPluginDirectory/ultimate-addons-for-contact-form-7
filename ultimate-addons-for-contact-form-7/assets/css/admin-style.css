@@ -1498,6 +1498,31 @@ form.tag-generator-panel[data-version="2"] .control-box{
     background: #F61A39;
 }
 
+
+/* sidebar promo banner  */
+
+.uacf7_promo_side_preview a:focus {
+    box-shadow: none;
+} 
+.uacf7_promo_side_preview a {
+    display: inline-block;
+}
+#uacf7_black_friday_docs .inside {
+    padding: 0;
+    margin-top: 0;
+}
+#uacf7_black_friday_docs .postbox-header {
+    display: none;
+    visibility: hidden;
+}
+.uacf7_promo_side_preview {
+    position: relative;
+}
+.uacf7_promo_side_notice_dismiss {
+    z-index: 1;
+}
+
+
 @media screen and (max-width: 1860px) {
     .uacf7-sidebar-promo .promo-description {
         gap: 8px;

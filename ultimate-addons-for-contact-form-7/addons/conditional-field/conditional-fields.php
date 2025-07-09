@@ -36,7 +36,7 @@ class UACF7_CF {
 
 		add_filter( 'wpcf7_validate_file*', array( $this, 'skip_validation_for_hidden_file_field' ), 30, 3 );
 		add_filter( 'wpcf7_validate_multifile*', array( $this, 'skip_validation_for_hidden_file_field' ), 30, 3 );
-
+		
 		add_action( 'wpcf7_config_validator_validate', array( $this, 'uacf7_config_validator_validate' ) );
 
 		add_action( 'wpcf7_before_send_mail', array( $this, 'uacf7_conditional_mail_properties' ) );
@@ -390,7 +390,6 @@ class UACF7_CF {
 		if ( isset( $_POST ) ) {
 			$this->set_hidden_fields_arrays( $_POST );
 		}
-	
 		$invalid_fields = $result->get_invalid_fields();
 		$return_result = new WPCF7_Validation();
 
@@ -402,7 +401,7 @@ class UACF7_CF {
 			if ( ! in_array( $invalid_field_key, $this->hidden_fields ) ) {
 				
 				foreach($tags as $key => $tag){
-					if($tag->basetype == 'checkbox' && $tag->is_required()){
+					if(($tag->basetype == 'checkbox' && $tag->is_required() ) || ( $tag->basetype == 'dragdropfile' && $tag->is_required() ) ){
 						$is_hidden = in_array($invalid_field_key . '[]', $this->hidden_fields);
 						// uacf7_print_r('hidden');
 						if($is_hidden){
@@ -481,7 +480,7 @@ class UACF7_CF {
 
 	/* Skip validation for hidden file field */
 	function skip_validation_for_hidden_file_field( $result, $tag, $args = [] ) {
-
+		
 		if ( ! count( $result->get_invalid_fields() ) ) {
 			return $result;
 		}
@@ -551,13 +550,13 @@ class UACF7_CF {
 
 
 		if ( $submission && is_array( $conditional_repeater ) && ! empty( $conditional_repeater ) ) {
-
+			
 			// Loop through the conditional fields
 			foreach ( $conditional_repeater as $key => $condition ) {
 				$uacf7_cf_hs = $condition['uacf7_cf_hs'];
 				$uacf7_cf_group = $condition['uacf7_cf_group'];
 				$uacf7_cf_conditions_for = $condition['uacf7_cf_condition_for'];
-				$uacf7_cf_conditions = $condition['uacf7_cf_conditions'];
+				$uacf7_cf_conditions = $condition['uacf7_cf_conditions'] ?? [];
 				$condition_status = [];
 				
 				// Check if the conditional field is hidden or shown
@@ -567,7 +566,7 @@ class UACF7_CF {
 					$uacf7_cf_tn = rtrim($value['uacf7_cf_tn'], '[]');
 					
 					// $posted_value = is_array( $posted_data[ $uacf7_cf_tn ] ) && in_array( $uacf7_cf_val, $posted_data[ $uacf7_cf_tn ] ) ? $uacf7_cf_val : $posted_data[ $uacf7_cf_tn ];
-					$posted_value = is_array($posted_data[$uacf7_cf_tn]) ? implode(',', $posted_data[$uacf7_cf_tn]) : $posted_data[$uacf7_cf_tn];
+					@$posted_value = is_array($posted_data[$uacf7_cf_tn]) ? implode(',', $posted_data[$uacf7_cf_tn]) : $posted_data[$uacf7_cf_tn];
 				
 					// Condition for Equal  
 					if ( $uacf7_cf_operator == 'equal' && $posted_value == $uacf7_cf_val ) {

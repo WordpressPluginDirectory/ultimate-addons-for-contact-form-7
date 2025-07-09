@@ -4,7 +4,7 @@ Tags: contact form, contact form 7, forms, custom form, form builder
 Requires at least: 4.2
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 3.5.21
+Stable tag: 3.5.24
 License: GPL-2.0+
 License URI: http://www.gnu.org/licenses/gpl-2.0.txt
 
@@ -75,6 +75,7 @@ Equipped with over 45 essential features, **Ultra Addons For Contact Form 7** is
 * PDF Generate (Pro)
 * Drag & Drop Multiple File Uploads
 * Google reCAPTCHA Integration
+* Google Sheets Integration
 
 ### How It works:
 
@@ -244,7 +245,7 @@ The [Pro version of Range Slider](https://cf7addons.com/preview/range-slider-pro
 
 = Contact form 7 Repeatable Fields =
 
-Our [Contact Form 7 Repeater field](https://cf7addons.com/preview/repeater-field-for-contact-form-7/) addon enables the inclusion of repeatable fields within Contact Form 7, allowing for the duplication of various types of fields including text, files, checkboxes, radio buttons, and textareas.
+Our [Contact Form 7 Repeater field](https://cf7addons.com/preview/repeater-field-for-contact-form-7/) addon enables the inclusion of repeatable fields within Contact Form 7, allowing for the duplication of various types of fields, including text, files, checkboxes, radio buttons, and textareas.
 
 = Contact Form 7 Star Rating Field Pro =
 
@@ -256,25 +257,25 @@ Tag support for CF7 fields allows data to be passed through the redirect URL. Ad
 
 = Contact form 7 WooCommerce Checkout / Auto Add to Cart =
 
-Integrate [WooCommerce Checkout](https://cf7addons.com/preview/contact-form-7-woocommerce-checkout/) with your Contact Form 7 forms. When a customer selects a product and submits the form, they will be automatically redirected to the cart page, with the chosen product already added to their cart. From there, they can proceed to the checkout process and finalize their purchase using WooCommerce's payment system.
+Integrate [WooCommerce Checkout](https://cf7addons.com/preview/contact-form-7-woocommerce-checkout/) with your Contact Form 7. When a customer selects a product and submits the form, they’ll be redirected to the cart page with the product added, allowing them to proceed to checkout and complete their purchase using WooCommerce's payment system.
 
 = Choose Specific / Multiple / Categorize WooCommerce Product =
 
 The Pro version enhances your capability by allowing the addition of [Specific WooCommerce Product](https://cf7addons.com/preview/woocommerce-product-dropdown/) to your Contact Form 7 forms, selectable based on Product ID. It also enables customers to choose [Multiple WooCommerce Products](https://cf7addons.com/preview/multiple-product/) within your forms. Furthermore, the Pro version supports displaying products based on [WooCommerce Category](https://cf7addons.com/preview/categorized-product/). A perfect WooCommerce contact form 7 integration.
 
-= Contact form 7 Product Grid View with Thumbnails =
+= Contact Form 7 Product Grid View with Thumbnails =
 
 Display your products in an impressive [WooCommerce Grid View](https://cf7addons.com/preview/product-grid-view-with-thumbnails/), allowing for addition based on ID, Category, or Tags. This feature enhances the visual appeal and organization of your product listings. 
 
 = Spam protection Contact form 7 (Pro) =
 
-With [Anti Spam Contact form 7 (Pro)](https://cf7addons.com/preview/spam-protection-pro/) addon you can protect your website from frequent form submission by adding a time limit. More protection on top of cf7 reCAPTCHA.
+With [Anti Spam Contact form 7 (Pro)](https://cf7addons.com/preview/spam-protection-pro/) addon you can protect your website from frequent form submissions by adding a time limit. More protection on top of cf7 reCAPTCHA.
 
 = Contact form 7 DB plugin (Pro) =
 
 [Contact form 7 Database plugin](https://cf7addons.com/preview/best-contact-form-7-database-addon/) Pro addon offers an advanced solution for managing and organizing form inquiries more efficiently.
 
-= Mailchimp with contact form 7 (Pro) =
+= Mailchimp with Contact Form 7 (Pro) =
 
 Our [Contact Form 7 Extension for Mailchimp (Pro)](https://cf7addons.com/preview/mailchimp-pro-for-contact-form-7/) allows you to add an acceptance checkbox to your forms. 
 
@@ -301,6 +302,10 @@ Our [PDF Generate Pro](https://cf7addons.com/preview/pdf-generate-pro/) feature 
 = Contact Form 7 Drag & Drop Multiple File Uploads =
 
 Our [Drag & Drop Multiple File Uploads](https://cf7addons.com/preview/drag-and-drop-multiple-file-upload/) feature enables a smooth and modern way to upload multiple files directly through your Contact Form 7.
+
+= Contact Form 7 Google Sheets Integration =
+
+Our [Google Sheets Integration](https://cf7addons.com/preview/google-sheet/) feature connects Contact Form 7 with Google Sheets, allowing you to automatically save form submissions in real time—perfect for organizing leads, inquiries, and more without manual effort.
 
 **More Pro addons are in development and will be available soon.**
 
@@ -348,10 +353,10 @@ Icons source [Iconfinder](https://www.iconfinder.com").
 == Frequently Asked Questions ==
 
 = How can I report security bugs? =
-You can report security bugs through the Patchstack Vulnerability Disclosure Program. The Patchstack team help validate, triage and handle any security vulnerabilities. [Report a security vulnerability](https://patchstack.com/database/vdp/ultimate-addons-for-contact-form-7/).
+You can report security bugs through the Patchstack Vulnerability Disclosure Program. The Patchstack team helps validate, triag,e and handle any security vulnerabilities. [Report a security vulnerability](https://patchstack.com/database/vdp/ultimate-addons-for-contact-form-7/).
 
 = What is Contact Form 7 =
-Contact Form 7 is a popular, and one of the oldest, WordPress plugin that enables users to create and manage multiple contact forms on their website.
+Contact Form 7 is a popular and one of the oldest WordPress plugins that enables users to create and manage multiple contact forms on their website.
 
 = Why do we need a Contact form 7 add on plugin? =
 Addon plugins for Contact Form 7, like Ultra Addons for Contact Form 7, enhance the core functionalities of wpcf7 by introducing additional features such as multi-step forms, address autocomplete, country dropdowns, range sliders, and more. These addons improve user experience, extend the form's capabilities, and integrate seamlessly with other services, making your forms more powerful and versatile.
@@ -365,28 +370,28 @@ Yes! We offer a multi-step addon for both the free and pro versions.
 = How to add address autocomplete (Country, City, State, Zip Fields) to Contact Form 7 =
 Simplify user input and enhance accuracy with address autocomplete features. Learn more through our video [here](https://www.youtube.com/watch?v=MqAxH9IotZQ) and experience it live [here](https://cf7addons.com/preview/contact-form-7-autocomplete/).
 
-= How to add Country Dropdown Field in Contact form 7 =
+= How to add Country Dropdown Field in Contact Form 7 =
 Just install our country & phone field contact form 7 addon for a streamlined user experience. Instructional video available [here](https://www.youtube.com/watch?v=jT6Y-c3eXzk) and a live preview [here](https://cf7addons.com/preview/contact-form-7-country-dropdown/).
 
 = How to create Range Slider Fields in Contact Form 7 =
 Introduce dynamic range sliders for user-friendly input options. Check out our guide [here](https://www.youtube.com/watch?v=P8rvkbG5dM8) and see the feature in action [here](https://cf7addons.com/preview/contact-form-7-range-slider/).
 
-= How to add Contact Form 7 Star Rating with font Awesome for WordPress =
+= How to add Contact Form 7 Star Rating with Font Awesome for WordPress =
 Implement star ratings to gather feedback efficiently. Tutorial video [here](https://www.youtube.com/watch?v=Q5AN9lp2HcY) and a live demo [here](https://cf7addons.com/preview/contact-form-7-star-rating/).
 
-= How can I ensure mailchimp integration with contact form 7? =
-Install our mailchimp addon, and follow the setup instructions provided.
+= How can I ensure Mailchimp integration with Contact Form 7? =
+Install our Mailchimp addon, and follow the setup instructions provided.
 
-= How can I set contact form 7 redirect to thank you page? =
+= How can I set contact form 7 to redirect to thank you page? =
 Simply create a thank you page, install our "Redirection" addon, and follow the setup instructions provided.
 
-= How to add Repeatable Field on Contact Form 7 =
+= How to add a Repeatable Field on Contact Form 7 =
 Enable users to duplicate fields as needed for comprehensive submissions. Learn how [here](https://www.youtube.com/watch?v=nBxLugyJWI8) and view the live example [here](https://cf7addons.com/preview/repeater-field-for-contact-form-7/).
 
 = How can I make my contact form 7 2 columns? =
 Simply install our Contact Form 7 Column Addon, and you're all set!
 
-= How to setup Redirecting to another URL after submissions - Contact Form 7 =
+= How to setup redirecting to another URL after submissions - Contact Form 7 =
 Redirect users to a specific page after form submission for a seamless experience. Detailed instructions [here](https://www.youtube.com/watch?v=tvFPdV_afA8) and a live example [here](https://cf7addons.com/preview/redirection-for-contact-form-7/).
 
 = How to configure Conditional Redirection for Contact Form 7 =
@@ -462,30 +467,21 @@ Just install our plugin, and you'll get access to a variety of free templates!
 
 == Changelog ==
 
-= 3.5.21 - 25/05/2025 =
+= 3.5.24 - 08/07/2025 =
 
-- Introduced: Google reCAPTCHA Integration Addon for "Ultra Addons for Contact Form 7".
-- Improvements: Added Bulk Delete option to the Database addon.
+- Fixed: Issue with bulk selection functionality has been resolved.
 
-= 3.5.20 - 23/05/2025 =
+= 3.5.23 - 03/07/2025 =
 
-- Fixed: Resolved an issue with the radio input field not functioning correctly in multistep forms.
-- Fixed: Wordfence Security Vulnerability report issue has been resolved.
+- Introduced: Google Sheets Integration Addon for "Ultra Addons for Contact Form 7".
+- Improved: System stability enhancements implemented.
+- Fixed: Addressed and resolved the PHP Warning error.
+- Fixed: Drag and drop file upload with conditional fields.
 
-= 3.5.19 - 17/05/2025 =
+= 3.5.22 - 29/06/2025 =
 
-- Fixed: PDF Generator body background image not displaying correctly.
-- Added: Placeholder text for spam protection field.
-- Fixed: Validation issue in multistep forms where hidden required checkboxes were skipped.
-- Fixed: Spacing issue in Star Rating component.
-- Fixed: Background color issue in Form Styler textarea.
-- Fixed: CSV export mistakenly included deleted files.
-- Improved: Save and continue feature settings added to multistep forms.
-
-= 3.5.18 - 06/04/2025 =
-
-- Fixed: cURL error issue has been resolved.
-- Improved: Overall system stability has been enhanced.
+- Fixed: Resolved a content sanitization issue affecting the sidebar display.
+- Fixed: Addressed and resolved the security vulnerability reported by Wordfence.
 
 **Old Changelog can be found [here](https://cf7addons.com/changelog/)**.
 

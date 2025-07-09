@@ -172,7 +172,7 @@
                             title: `<input type="checkbox" id="select-all">`,
                             data: null,
                             class: 'uacf7dp-database-serial',
-                            orderable: true,
+                            orderable: false,
                             searchable: false,
                             render: function (data, type, row, meta) {
                                 return `<input type="checkbox" class="row-select" data-id="${row.id}">`;
@@ -334,6 +334,28 @@
                     // rowReorder: true,
                 });
 
+                // Use delegated event because #select-all is inside the dynamically rendered table header
+                $(document).on('change', '#select-all', function (e) {
+                    e.stopPropagation(); // Prevent header click sort
+                    const isChecked = $(this).is(':checked');
+
+                    // Only affect current page rows
+                    table.rows({ page: 'current' }).every(function () {
+                        const rowNode = this.node();
+                        const $checkbox = $(rowNode).find('input.row-select');
+
+                        $checkbox.prop('checked', isChecked);
+
+                        if (isChecked) {
+                            table.row(rowNode).select();
+                        } else {
+                            table.row(rowNode).deselect();
+                        }
+                    });
+
+                    return false; // 🔒 Prevent DataTable from resetting the page
+                });
+
                 // Event listener for when a row is selected
                 table.on('select', function (e, dt, type, indexes) {
                     if (type === 'row') {
@@ -385,13 +407,19 @@
                     }
                 });
 
-                // Handle row selection events
                 table.on('select deselect', function () {
-                    var selectedRows = table.rows({ selected: true }).nodes();
-                    $('input[type="checkbox"]', selectedRows).prop('checked', true);
-                    var deselectedRows = table.rows({ selected: false }).nodes();
-                    $('input[type="checkbox"]', deselectedRows).prop('checked', false);
+                    // Sync checkboxes with selection
+                    const selectedRows = table.rows({ selected: true }).nodes();
+                    $('input.row-select', selectedRows).prop('checked', true);
 
+                    const deselectedRows = table.rows({ selected: false }).nodes();
+                    $('input.row-select', deselectedRows).prop('checked', false);
+
+                    // Also update #select-all checkbox
+                    const totalVisible = table.rows({ page: 'current' }).count();
+                    const selectedVisible = table.rows({ page: 'current', selected: true }).count();
+
+                    $('#select-all').prop('checked', totalVisible > 0 && totalVisible === selectedVisible);
                 });
 
                 // Event listener for when a row is deselected

@@ -235,6 +235,17 @@ UACF7_Settings::option(
 								'documentation_link' => 'https://themefic.com/docs/uacf7/pro-addons/google-recaptcha/',
 								'is_pro'             => true
 							),
+							'uacf7_enable_google_sheet_pro' => array(
+								'id'                 => 'uacf7_enable_google_sheet_pro',
+								'type'               => 'switch',
+								'label'              => __( 'Google Sheets', 'ultimate-addons-cf7' ),
+								'image_url'          => UACF7_URL . 'assets/admin/images/addons/google-spreadsheet.png',
+								'default'            => false,
+								'subtitle'           => __( 'Connect Contact Form 7 with Google Sheets to save form data automatically and make data entry easier.', 'ultimate-addons-cf7' ),
+								'demo_link'          => 'https://cf7addons.com/preview/google-sheet/',
+								'documentation_link' => 'https://themefic.com/docs/uacf7/pro-addons/google-sheet/',
+								'is_pro'             => true
+							),
 							'uacf7_enable_mailchimp' => array(
 								'id'                 => 'uacf7_enable_mailchimp',
 								'type'               => 'switch',

@@ -1005,7 +1005,14 @@ if ( ! class_exists( 'UACF7_Settings' ) ) {
 										}
 									}
 								}
-								if ( isset( $_FILES ) && ! empty( $_FILES['file'] ) ) {
+
+								if ( isset( $_FILES ) && ! empty( $_FILES['file'] ) && ! isset( $_FILES['uacf7-upload-credentials'] ) ) {
+									
+									//check here if found then return form here.
+									if ( isset( $_FILES['uacf7-upload-credentials'] ) ) {
+										return;
+									}
+
 									$tf_upload_dir = wp_upload_dir();
 								
 									if ( ! empty( $tf_upload_dir['basedir'] ) ) {
