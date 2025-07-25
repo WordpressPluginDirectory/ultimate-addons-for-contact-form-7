@@ -9,6 +9,9 @@ class UACF7_DYNAMIC_TEXT {
 	 * Construct function
 	 */
 	public function __construct() {
+
+		add_action( 'admin_enqueue_scripts', array( $this, 'uacf7_dynamic_text_admin_enqueue_scripts' ), 1 );
+
 		add_action( 'wpcf7_init', array( $this, 'add_shortcodes' ) );
 
 		add_action( 'admin_init', array( $this, 'tag_generator' ) );
@@ -21,6 +24,18 @@ class UACF7_DYNAMIC_TEXT {
 		//Require Shortcode
 		require_once( 'inc/shortcode.php' );
 
+	}
+
+	public function uacf7_dynamic_text_admin_enqueue_scripts($screen){
+
+		$tf_options_screens = array(
+			'toplevel_page_wpcf7',
+			'contact_page_wpcf7-new',
+		);
+
+		if ( in_array( $screen, $tf_options_screens )) {
+			wp_enqueue_script( 'uacf7-dynamic-text', UACF7_URL . 'addons/dynamic-text/assets/js/uacf7-dynamic-text.js', array( 'jquery'), UACF7_VERSION, true );
+		}
 	}
 
 	/*
@@ -228,13 +243,19 @@ class UACF7_DYNAMIC_TEXT {
 				<legend>
 					<?php echo esc_html__( 'Choose Field', 'ultimate-addons-cf7' ); ?>
 				</legend>
-                
-				<select id="uacf7-choose-field" data-tag-part="value">
-					<option value="">
-                        <?php echo esc_html__( 'Select', 'ultimate-addons-cf7' ); ?>
-                    </option>
+
+				<input
+					type="text"
+					id="uacf7-choose-field"
+					list="uacf7-field-options"
+					data-tag-part="value"
+					placeholder="Select a value"
+					autocomplete="off"
+				/>
+
+				<datalist id="uacf7-field-options">
 					<option value="UACF7_URL">
-                        <?php echo esc_html__( 'Current URL', 'ultimate-addons-cf7' ); ?>
+						<?php echo esc_html__( 'Current URL', 'ultimate-addons-cf7' ); ?>
 					</option>
 					<option value="UACF7_URL part=host">
 						<?php echo esc_html__('Current URL Host (Domain)', 'ultimate-addons-cf7'); ?>
@@ -260,7 +281,13 @@ class UACF7_DYNAMIC_TEXT {
 					<option value="UACF7_CUSTOM_FIELDS">
 						<?php echo esc_html__( 'Custom fields', 'ultimate-addons-cf7' ); ?>
 					</option>
-				</select>
+				</datalist>
+			</fieldset>
+
+			<fieldset id="uacf7-dynamic-arg-fieldset" style="display:none;">
+				<legend><?php echo esc_html__( 'Dynamic Arg', 'ultimate-addons-cf7' ); ?></legend>
+				<input type="text" id="uacf7-dynamic-arg" placeholder="e.g. ref" />
+				<input type="hidden" id="uacf7-dynamic-arg-hidden" data-tag-part="value" />
 			</fieldset>
 
 			<fieldset>

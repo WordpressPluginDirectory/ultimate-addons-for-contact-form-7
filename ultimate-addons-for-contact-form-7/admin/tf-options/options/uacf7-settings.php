@@ -246,6 +246,39 @@ UACF7_Settings::option(
 								'documentation_link' => 'https://themefic.com/docs/uacf7/pro-addons/google-sheet/',
 								'is_pro'             => true
 							),
+							'uacf7_enable_slack_integration' => array(
+								'id'                 => 'uacf7_enable_slack_integration',
+								'type'               => 'switch',
+								'label'              => __( 'Slack Integration', 'ultimate-addons-cf7' ),
+								'image_url'          => UACF7_URL . 'assets/admin/images/addons/Slack.png',
+								'default'            => false,
+								'subtitle'           => __( 'Connect Contact Form 7 with slack to get notifications.', 'ultimate-addons-cf7' ),
+								'demo_link'          => 'https://cf7addons.com/preview/slack/',
+								'documentation_link' => 'https://themefic.com/docs/uacf7/pro-addons/slack/',
+								'is_pro'             => true
+							),
+							'uacf7_enable_twilio_integration' => array(
+								'id'                 => 'uacf7_enable_twilio_integration',
+								'type'               => 'switch',
+								'label'              => __( 'Twilio Integration', 'ultimate-addons-cf7' ),
+								'image_url'          => UACF7_URL . 'assets/admin/images/addons/Twilio.png',
+								'default'            => false,
+								'subtitle'           => __( 'Connect Contact Form 7 with Twilio to get notifications on your phone.', 'ultimate-addons-cf7' ),
+								'demo_link'          => 'https://cf7addons.com/preview/twilio/',
+								'documentation_link' => 'https://themefic.com/docs/uacf7/pro-addons/twilio/',
+								'is_pro'             => true
+							),
+							'uacf7_enable_prevent_duplicate_entries' => array(
+								'id'                 => 'uacf7_enable_prevent_duplicate_entries',
+								'type'               => 'switch',
+								'label'              => __( 'Prevent Duplicate Entries', 'ultimate-addons-cf7' ),
+								'image_url'          => UACF7_URL . 'assets/admin/images/addons/prevent-duplicate-entries.png',
+								'default'            => false,
+								'subtitle'           => __( 'Prevent duplicate entries from being submitted.', 'ultimate-addons-cf7' ),
+								'demo_link'          => 'https://cf7addons.com/preview/prevent-duplicate-entries/',
+								'documentation_link' => 'https://themefic.com/docs/uacf7/pro-addons/prevent-duplicate-entries/',
+								'is_pro'             => true
+							),
 							'uacf7_enable_mailchimp' => array(
 								'id'                 => 'uacf7_enable_mailchimp',
 								'type'               => 'switch',

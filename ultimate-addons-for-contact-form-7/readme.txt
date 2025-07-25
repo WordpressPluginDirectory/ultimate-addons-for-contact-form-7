@@ -4,11 +4,11 @@ Tags: contact form, contact form 7, forms, custom form, form builder
 Requires at least: 4.2
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 3.5.24
+Stable tag: 3.5.25
 License: GPL-2.0+
 License URI: http://www.gnu.org/licenses/gpl-2.0.txt
 
-45+ Essential Ultra Addons for Contact Form 7 - Conditional Fields, Multi Step Forms, Redirection, Templates, Columns, WooCommerce, Mailchimp & more
+50+ Essential Ultra Addons for Contact Form 7 - Conditional Fields, Multi Step Forms, Redirection, Templates, Columns, WooCommerce, Mailchimp & more
 
 == Description ==
 
@@ -76,6 +76,9 @@ Equipped with over 45 essential features, **Ultra Addons For Contact Form 7** is
 * Drag & Drop Multiple File Uploads
 * Google reCAPTCHA Integration
 * Google Sheets Integration
+* Slack Integration
+* Twilio Integration
+* Prevent Duplicate Entries
 
 ### How It works:
 
@@ -307,6 +310,18 @@ Our [Drag & Drop Multiple File Uploads](https://cf7addons.com/preview/drag-and-d
 
 Our [Google Sheets Integration](https://cf7addons.com/preview/google-sheet/) feature connects Contact Form 7 with Google Sheets, allowing you to automatically save form submissions in real time—perfect for organizing leads, inquiries, and more without manual effort.
 
+= Contact Form 7 Slack Integration =
+
+Our [Google Sheets Integration](https://cf7addons.com/preview/twilio/) links Contact Form 7 with Twilio to send SMS or WhatsApp notifications upon form submission. Get instant alerts to stay connected with users or your team.
+
+= Contact Form 7 Prevent Duplicate Entries =
+
+Our [Google Sheets Integration](https://cf7addons.com/preview/prevent-duplicate-entries/) feature for Contact Form 7 blocks duplicate form submissions. Ensure clean data by monitoring specific fields or the entire form, with customizable time limits and messages.
+
+= Contact Form 7 Twilio Integration =
+
+Our [Google Sheets Integration](https://cf7addons.com/preview/slack/) connects Contact Form 7 with Slack, enabling real-time form submission notifications to your Slack channels. Keep your team informed instantly with no manual effort.
+
 **More Pro addons are in development and will be available soon.**
 
 ### Join our Community to stay updated
@@ -467,21 +482,18 @@ Just install our plugin, and you'll get access to a variety of free templates!
 
 == Changelog ==
 
-= 3.5.24 - 08/07/2025 =
+= 3.5.25 - 24/07/2025 =
 
-- Fixed: Issue with bulk selection functionality has been resolved.
-
-= 3.5.23 - 03/07/2025 =
-
-- Introduced: Google Sheets Integration Addon for "Ultra Addons for Contact Form 7".
-- Improved: System stability enhancements implemented.
-- Fixed: Addressed and resolved the PHP Warning error.
-- Fixed: Drag and drop file upload with conditional fields.
-
-= 3.5.22 - 29/06/2025 =
-
-- Fixed: Resolved a content sanitization issue affecting the sidebar display.
-- Fixed: Addressed and resolved the security vulnerability reported by Wordfence.
+- New Addons: Prevent Duplicate Entries Addon has been introduced.
+- New Addons: Twilio Integration Addon has been introduced.
+- New Addons: Slack Integration Addon has been introduced.
+- Improvements: Google reCAPTCHA v3 integration has been added.
+- Fixed: Mailchimp checkbox issue has been resolved.
+- Fixed: Redirection deprecated warning issue has been resolved.
+- Fixed: HTML email template broken issue has been resolved.
+- Fixed: Dynamic text tag generator and URL query parameters key selection.
+- Fixed: Dynamic text URL query parameter logic.
+- Fixed: Hidden field drag-and-drop file upload issue.
 
 **Old Changelog can be found [here](https://cf7addons.com/changelog/)**.
 

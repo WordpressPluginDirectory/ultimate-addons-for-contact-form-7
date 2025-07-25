@@ -331,12 +331,12 @@ if ( ! class_exists( 'UACF7_Settings' ) ) {
 											<h2 class="uacf7-single-addon-title"><?php echo esc_html( $field['label'] ) ?></h2>
 											<p class="uacf7-single-addon-desc">
 												<?php echo isset( $field['subtitle'] ) ? $field['subtitle'] : ''; ?>
-												<?php echo '<a href="' . sanitize_url( $documentation_link ) . '" target="_blank">' . __( 'Documentation', 'ultimate-addons-cf7' ) . '</a>' ?>
+												<?php echo '<a href="' . sanitize_url(uacf7_utm_generator( $documentation_link, array( 'utm_medium' => 'all_addons_doc_button') ) ) . '" target="_blank">' . __( 'Documentation', 'ultimate-addons-cf7' ) . '</a>' ?>
 											</p>
 
 										</div>
 										<div class="uacf7-single-addon-cta">
-											<a href="<?php echo sanitize_url( $demo_link ); ?>" target="_blank"
+											<a href="<?php echo sanitize_url(uacf7_utm_generator( $demo_link, array( 'utm_medium' => 'all_addons_preview_button' ) ) ); ?>" target="_blank"
 												class="uacf7-single-addon-btn">View Demo</a>
 
 											<div class="uacf7-addon-toggle-wrap">
@@ -391,7 +391,7 @@ if ( ! class_exists( 'UACF7_Settings' ) ) {
 						<div class="uacf7-sidebar-customization-quote">
 							<div class="uacf7-quote-header">
 								<i class="fa-solid fa-code"></i>
-								<a href="<?php echo esc_url('https://portal.themefic.com/hire-us/' ); ?>" target="_blank" ><?php echo __('Get Free Quote', 'ultimate-addons-cf7');  ?></a>
+								<a href="<?php echo esc_url(uacf7_utm_generator( 'https://portal.themefic.com/hire-us/', array( 'utm_medium' => 'dashboard_customization_quote') ) ); ?>" target="_blank" ><?php echo __('Get Free Quote', 'ultimate-addons-cf7');  ?></a>
 							</div>
 							<div class="uacf7-quote-content">
 								<h3><?php echo __('Need Help Customizing Your WordPress Site?', 'ultimate-addons-cf7');  ?></h3>
@@ -403,13 +403,13 @@ if ( ! class_exists( 'UACF7_Settings' ) ) {
 							<h3><?php echo __('Helpful Resources', 'ultimate-addons-cf7');  ?></h3>
 							<div class="uacf7-quick-access-wrapper">
 								<div class="uacf7-access-item">
-									<a href="https://themefic.com/docs/uacf7/" target="_blank">
+									<a href="<?php echo esc_url(uacf7_utm_generator( 'https://themefic.com/docs/uacf7/', array( 'utm_medium' => 'dashboard_doc_link') ) ); ?>" target="_blank">
 										<span class="icon"><i class="fa-solid fa-folder-open"></i></span>
 										<?php echo _e( 'Documentation', 'ultimate-addons-cf7' ); ?>
 									</a>
 								</div>
 								<div class="uacf7-access-item">
-									<a href="https://portal.themefic.com/support/" target="_blank">
+									<a href="<?php echo esc_url(uacf7_utm_generator( 'https://portal.themefic.com/support/', array( 'utm_medium' => 'dashboard_support_link') ) ); ?>" target="_blank">
 										<span class="icon"><i class="fa-solid fa-headset"></i></span>
 										<?php echo _e( 'Get Support', 'ultimate-addons-cf7' ); ?>
 									</a>

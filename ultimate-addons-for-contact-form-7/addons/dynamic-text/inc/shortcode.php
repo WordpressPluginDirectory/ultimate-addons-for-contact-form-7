@@ -15,34 +15,35 @@
 if (!function_exists('UACF7_URL')) {
     function UACF7_URL($val) {
         $current_url = "https://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-
-        $part = isset($val['part']) ? trim($val['part'], "'") : '';
-
         $parsed_url = parse_url($current_url);
+        $part = isset($val['part']) ? trim($val['part'], "'") : '';
+        $key = isset($val['key']) ? trim($val['key'], "'") : '';
 
-        if (isset($parsed_url['query'])) {
-            parse_str($parsed_url['query'], $query_array);
-            $decoded_query = http_build_query($query_array, '', '&', PHP_QUERY_RFC3986);
-        } else {
-            $decoded_query = '';
-        }
+        parse_str($parsed_url['query'] ?? '', $query_array);
 
         switch ($part) {
             case 'host':
-                return $parsed_url['host'] ?? $current_url;
-            case 'query':
-                return urldecode($decoded_query);
+                return $parsed_url['host'] ?? '';
             case 'path':
-                return $parsed_url['path'] ?? '/';
+                return $parsed_url['path'] ?? '';
+            case 'query':
+                // If a key is provided, return its value
+                if (!empty($key) && isset($query_array[$key])) {
+                    return sanitize_text_field($query_array[$key]);
+                }
+                // Otherwise, return full query string
+                return urldecode(http_build_query($query_array, '', '&', PHP_QUERY_RFC3986));
             default:
-                return $current_url;
+                // Return only base URL (no query string)
+                $scheme = 'https';
+                $host = $parsed_url['host'] ?? $_SERVER['HTTP_HOST'];
+                $path = $parsed_url['path'] ?? '';
+                return "$scheme://$host$path";
         }
     }
 
     add_shortcode('UACF7_URL', 'UACF7_URL');
 }
-
-
 
 
 // Current url with Perameters Shortcode

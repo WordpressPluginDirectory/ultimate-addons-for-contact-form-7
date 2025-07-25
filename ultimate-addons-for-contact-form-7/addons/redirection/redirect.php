@@ -8,6 +8,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class UACF7_Redirection {
     
+	/**
+	 * Store redirection fields.
+	 *
+	 * @var array
+	 */
+	public $fields = [];
+
     /*
     * Construct function
     */

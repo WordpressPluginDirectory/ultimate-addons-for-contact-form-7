@@ -466,7 +466,7 @@ class UACF7_MAILCHIMP {
 			
 			$extra_merge_fields = '';
 			foreach ( $extra_fields as $extra_field ) {
-				$mailtag = $extra_field['mailtag'];
+				$mailtag = str_replace( '[]', '', $extra_field['mailtag'] );
 				$value = isset( $posted_data[ $mailtag ] ) ? $posted_data[ $mailtag ] : '';
 			
 				if ( is_array( $value ) ) {

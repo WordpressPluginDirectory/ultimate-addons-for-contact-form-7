@@ -1640,21 +1640,27 @@ function uacf7_preserve_line_breaks($contact_form) {
     }
 
     $properties = $contact_form->get_properties();
-    
-    $is_html = !empty($properties['mail']['use_html']);
-	
-	if($is_html){
-		if (!empty($properties['mail']['body'])) {
-			$properties['mail']['body'] = wpautop($properties['mail']['body']);
-		}
-	
-		if (!empty($properties['mail_2']['body'])) {
-			$properties['mail_2']['body'] = wpautop($properties['mail_2']['body']);
-		}
-	}
+    $is_html_mail = !empty($properties['mail']['use_html']);
+    $is_html_mail_2 = !empty($properties['mail_2']['use_html']);
 
-	$contact_form->set_properties($properties);
+    // Detects structural HTML tags
+    $html_tags_pattern = '/<\s*(html|head|body|table|tr|td|th|style|div|p)\b/i';
+
+    if ($is_html_mail && !empty($properties['mail']['body'])) {
+        if (!preg_match($html_tags_pattern, $properties['mail']['body'])) {
+            $properties['mail']['body'] = wpautop($properties['mail']['body']);
+        }
+    }
+
+    if ($is_html_mail_2 && !empty($properties['mail_2']['body'])) {
+        if (!preg_match($html_tags_pattern, $properties['mail_2']['body'])) {
+            $properties['mail_2']['body'] = wpautop($properties['mail_2']['body']);
+        }
+    }
+
+    $contact_form->set_properties($properties);
 }
+
 
 
 add_action('admin_footer', 'uacf7_show_hydra_modal');
@@ -1971,6 +1977,17 @@ function migrate_redirection_data_to_uacf7() {
 
 }
 
+function uacf7_utm_generator( $url, $utm_params = array() ) {
+	$host_url = parse_url( get_site_url(), PHP_URL_HOST );
+	$utm_params = array_merge( array(
+		'utm_source'   => 'uacf7_' . $host_url,
+		'utm_medium'   => 'plugin',
+		'utm_campaign' => 'uacf7_plugin_installation',
+	), $utm_params );
+
+	$query_string = http_build_query( $utm_params );
+	return esc_url( $url . ( strpos( $url, '?' ) === false ? '?' : '&' ) . $query_string );
+}
 
 
 // function uacf7_check_and_install_hydra_booking($upgrader_object, $options) {

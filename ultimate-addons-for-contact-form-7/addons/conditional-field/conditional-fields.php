@@ -390,30 +390,40 @@ class UACF7_CF {
 		if ( isset( $_POST ) ) {
 			$this->set_hidden_fields_arrays( $_POST );
 		}
+
 		$invalid_fields = $result->get_invalid_fields();
 		$return_result = new WPCF7_Validation();
 
 		if ( count( $this->hidden_fields ) == 0 || ! is_array( $invalid_fields ) || count( $invalid_fields ) == 0 ) {
 			return $result;
 		}
-	
+
+		// Normalize hidden field names (strip [] if exists)
+		$normalized_hidden_fields = array_map(function($field) {
+			return rtrim($field, '[]');
+		}, $this->hidden_fields);
+
 		foreach ( $invalid_fields as $invalid_field_key => $invalid_field_data ) {
-			if ( ! in_array( $invalid_field_key, $this->hidden_fields ) ) {
-				
-				foreach($tags as $key => $tag){
-					if(($tag->basetype == 'checkbox' && $tag->is_required() ) || ( $tag->basetype == 'dragdropfile' && $tag->is_required() ) ){
-						$is_hidden = in_array($invalid_field_key . '[]', $this->hidden_fields);
-						// uacf7_print_r('hidden');
-						if($is_hidden){
+			$normalized_key = rtrim($invalid_field_key, '[]');
+
+			if ( ! in_array( $normalized_key, $normalized_hidden_fields ) ) {
+
+				foreach ( $tags as $tag ) {
+					if ( ($tag->basetype == 'checkbox' && $tag->is_required()) || 
+						($tag->basetype == 'dragdropfile' && $tag->is_required()) ) {
+
+						$tag_name = rtrim($tag->name, '[]');
+						if ( $tag_name === $normalized_key && in_array($tag_name, $normalized_hidden_fields) ) {
 							$this->invalid_field_key = $invalid_field_key;
+							continue 2; // skip invalidation
 						}
 					}
 				}
-				
+
 				$return_result->invalidate( $invalid_field_key, $invalid_field_data['reason'] );
 			}
 		}
-		
+
 		return apply_filters( 'uacf7_validate', $return_result, $tags );
 	}
 	
