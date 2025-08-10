@@ -371,7 +371,7 @@ function uacf7_add_wrapper_to_cf7_form( $properties, $cfform ) {
 		
 		$form = $properties['form'];
 		ob_start();
-		echo '<div class="uacf7-form-' . $cfform->id() . ' '.$auto_cart_class.' '.$uacf7_formStyler_class.'">' . $form . '</div>';
+		echo '<div class="uacf7-form-wrapper-container uacf7-form-' . $cfform->id() . ' '.$auto_cart_class.' '.$uacf7_formStyler_class.'">' . $form . '</div>';
 		$properties['form'] = ob_get_clean();
 
 	}
