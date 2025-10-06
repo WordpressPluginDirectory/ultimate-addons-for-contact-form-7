@@ -1,43 +1,45 @@
-jQuery(document).ready(function () {
+(function($){
 
-    jQuery('.wpcf7-form').each(function () {
-        // Is Repeater Use in form
-        var repeater_count = jQuery(this).find('.uacf7-repeater-count').val();
+    function initUACF7MultiStep($context) {
+        $context.find('.wpcf7').each(function(){
+            // Is Repeater Use in form
+            var repeater_count = jQuery(this).find('.uacf7-repeater-count').val();
 
-        var uacf7_sid = 1;
-        var form_id = jQuery(this).find("input[name=_wpcf7]").val();
-        var uacf7_next = jQuery(this).find('.uacf7-next[data-form-id="' + form_id + '"]');
-        var uacf7_prev = jQuery(this).find('.uacf7-prev[data-form-id="' + form_id + '"]');
-        var uacf7_step = '.uacf7-step-' + form_id;
-        var total_steps = jQuery(uacf7_step, this).length;
+            var uacf7_sid = 1;
+            var form_id = jQuery(this).find("input[name=_wpcf7]").val();
+            var uacf7_next = jQuery(this).find('.uacf7-next[data-form-id="' + form_id + '"]');
+            var uacf7_prev = jQuery(this).find('.uacf7-prev[data-form-id="' + form_id + '"]');
+            var uacf7_step = '.uacf7-step-' + form_id;
+            var total_steps = jQuery(uacf7_step, this).length;
 
-        jQuery(uacf7_step, this).each(function () {
-            var $this = jQuery(this);
-            $this.attr('id', form_id + 'step-' + uacf7_sid);
-            $this.attr('step-id', uacf7_sid);
+            jQuery(uacf7_step, this).each(function () {
+                var $this = jQuery(this);
+                $this.attr('id', form_id + 'step-' + uacf7_sid);
+                $this.attr('step-id', uacf7_sid);
 
-            if (uacf7_sid == 1) {
-                $this.addClass('step-start');
-            }
+                if (uacf7_sid == 1) {
+                    $this.addClass('step-start');
+                }
 
-            if (total_steps == uacf7_sid) {
-                $this.addClass('step-end');
-            }
+                if (total_steps == uacf7_sid) {
+                    $this.addClass('step-end');
+                }
 
-            uacf7_sid++;
+                uacf7_sid++;
 
+            });
+            uacf7_prev.on('click', function (e) {
+                e.preventDefault();
+            });
+
+            uacf7_next.on('click', function (e) {
+                e.preventDefault();
+
+                var $this = jQuery(this);
+                uacf7_step_validation($this, uacf7_step, form_id, repeater_count);
+            });
         });
-        uacf7_prev.on('click', function (e) {
-            e.preventDefault();
-        });
-
-        uacf7_next.on('click', function (e) {
-            e.preventDefault();
-
-            var $this = jQuery(this);
-            uacf7_step_validation($this, uacf7_step, form_id, repeater_count);
-        });
-    });
+    }
 
 
 
@@ -263,6 +265,7 @@ jQuery(document).ready(function () {
 
         });
     }
+
     function acceptance_validation_disabled_button($this, invert, optional, uacf7_next, checked) {
         if (invert == true && checked == false) {
             var next_disable = false
@@ -281,4 +284,16 @@ jQuery(document).ready(function () {
         }
     }
 
-});
+
+    // On document ready (first load)
+    $(document).ready(function(){
+        initUACF7MultiStep($(document));
+    });
+
+    // When Elementor popup opens
+    $(document).on('elementor/popup/show', function(event, id, instance){
+        var $popup = $(instance.$element);
+        initUACF7MultiStep($popup);
+    });
+
+})(jQuery);

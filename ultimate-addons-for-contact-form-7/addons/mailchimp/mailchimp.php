@@ -4,9 +4,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 class UACF7_MAILCHIMP {
 
-	public $mailchimlConnection = '';
-	public static $mailchimp = null;
-	private $mailchimp_api = '';
+	public  $mailchimlConnection = '';
+	public  static $mailchimp    = null;
+	private $mailchimp_api       = '';
 
 	public function __construct() {
 		require_once( 'inc/functions.php' );
@@ -139,7 +139,6 @@ class UACF7_MAILCHIMP {
 				$response = $this->set_config( $api_key, $path );
 
 				$response = json_decode( $response, true );
-
 				if ( isset( $response['lists'] ) && is_array( $response['lists'] ) ) {
 					foreach ( $response['lists'] as $list ) {
 						$audience[ $list['id'] ] = $list['name'];
@@ -293,6 +292,21 @@ class UACF7_MAILCHIMP {
 					'options' => 'uacf7',
 					'field_width' => '25',
 					'dependency' => [ 'uacf7_mailchimp_form_enable', '==', '1' ],
+				),
+				'uacf7_mailchimp_subscriber_tags' => array(
+					'id'         => 'uacf7_mailchimp_subscriber_tags',
+					'type'       => 'select2',
+					'label'      => __( 'Tags To Add', 'ultimate-addons-cf7' ),
+					'subtitle'   => 'Add tags to your subscribers. These tags will be added from your mailchimp tag list.',
+					'query_args' => array(
+						'post_id'  => $post_id,
+						'specific' => 'text',
+					),
+					'options'     => 'mailchimp_tags',
+					'field_width' => '100',
+					'multiple'    => true,
+					'is_pro'      => true,
+					'dependency'  => [ 'uacf7_mailchimp_form_enable', '==', '1' ],
 				),
 				'uacf7_mailchimp_merge_fields' => array(
 					'id' => 'uacf7_mailchimp_merge_fields',
@@ -461,8 +475,8 @@ class UACF7_MAILCHIMP {
 
 			$subscriber_lname = isset( $mailchimp['uacf7_mailchimp_subscriber_lname'] ) ? $mailchimp['uacf7_mailchimp_subscriber_lname'] : '';
 			$subscriber_lname = ! empty( $subscriber_lname ) ? $posted_data[ $subscriber_lname ] : '';
-
-			$extra_fields = isset( $mailchimp['uacf7_mailchimp_merge_fields'] ) && is_array( $mailchimp['uacf7_mailchimp_merge_fields'] ) ? $mailchimp['uacf7_mailchimp_merge_fields'] : array();
+			$subscriber_tags  = isset( $mailchimp['uacf7_mailchimp_subscriber_tags'] ) ? $mailchimp['uacf7_mailchimp_subscriber_tags'] : [];
+			$extra_fields     = isset( $mailchimp['uacf7_mailchimp_merge_fields'] ) && is_array( $mailchimp['uacf7_mailchimp_merge_fields'] ) ? $mailchimp['uacf7_mailchimp_merge_fields'] : array();
 			
 			$extra_merge_fields = '';
 			foreach ( $extra_fields as $extra_field ) {
@@ -514,6 +528,17 @@ class UACF7_MAILCHIMP {
 			}
 
 			curl_close( $curl );
+
+			do_action(
+				'uacf7_mailchimp_after_subscribe',
+				$id,                 // Form ID
+				$audience,           // List ID
+				$subscriber_email,   // Subscriber email
+				$subscriber_tags,    // Tags array
+				$headers,            // cURL headers
+				$server_prefix       // Server prefix 
+			);
+
 			return $resp;
 		} else {
 			error_log( 'Mailchimp connection failed or missing subscriber email.' );

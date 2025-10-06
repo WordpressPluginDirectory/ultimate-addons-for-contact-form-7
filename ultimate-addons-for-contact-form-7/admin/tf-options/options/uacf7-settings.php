@@ -587,7 +587,7 @@ UACF7_Settings::option(
 								'default'            => false,
 								'is_pro'             => true,
 								'subtitle'           => __( 'Add specific WooCommerce products as dropdowns based on Product ID, with options to connect to Cart/Checkout and show products based on categories or IDs. ', 'ultimate-addons-cf7' ),
-								'demo_link'          => 'https://cf7addons.com/pricing/duct-grid-view-with-thumbnails/',
+								'demo_link'          => 'https://cf7addons.com/preview/woocommerce-product-dropdown/',
 								'documentation_link' => 'https://themefic.com/docs/uacf7/pro-addons/contact-form-7-woocommerce-pro/',
 							),
 							'uacf7_enable_product_auto_cart' => array(

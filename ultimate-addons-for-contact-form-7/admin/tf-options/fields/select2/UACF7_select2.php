@@ -85,11 +85,46 @@ if ( ! class_exists( 'UACF7_select2' ) ) {
 				}
 			}
 
+			if ( ! empty( $args['query_args'] ) && $args['options'] == 'mailchimp_tags' ) {
+				$post_id  = isset( $args['query_args']['post_id'] ) ? (int) $args['query_args']['post_id'] : 0;
+				$args['options'] = [];
+				
+				if ( $post_id > 0 ) {
+					
+					$addon_option = get_option( 'uacf7_settings' );
+					$uacf7_existing_plugin_status = get_option( 'uacf7_existing_plugin_status' );
 
-			$field_name = !empty($this->field['multiple']) ? $this->field_name() . '[]' : $this->field_name();
+					if ( apply_filters( 'uacf7_checked_license_status', '' ) == false || $uacf7_existing_plugin_status != 'done' ) {
+						return;
+					}
+					//Addon - Addon mailchimp pro is enabled
+					if ( isset( $addon_option['uacf7_enable_mailchimp_pro'] ) && $addon_option['uacf7_enable_mailchimp_pro'] != true ) {
+						return;
+					}
+					// Get API key
+					$api_key = uacf7_settings( 'uacf7_mailchimp_api_key' ); // adjust option name
+					// Get selected audience for this form
+					$mailchimp = uacf7_get_form_option( $post_id, 'mailchimp' );
+					$audience_id = isset( $mailchimp['uacf7_mailchimp_audience'] ) ? $mailchimp['uacf7_mailchimp_audience'] : '';
+
+					if ( $api_key && $audience_id ) {
+						$path     = "lists/$audience_id/tag-search?count=100";
+						$response = $this->set_config( $api_key, $path );
+						$response = json_decode( $response, true );
+
+						if ( ! empty( $response['tags'] ) && is_array( $response['tags'] ) ) {
+							foreach ( $response['tags'] as $tag ) {
+								$args['options'][ $tag['name'] ] = $tag['name'];
+							}
+						}
+					}
+				}
+			}
+
+			$field_name           = !empty($this->field['multiple']) ? $this->field_name() . '[]' : $this->field_name();
 			$tf_select2_unique_id = str_replace( array("[","]"),"_",esc_attr( $this->field_name() ) );
-			$parent_class = ( ! empty( $this->parent_field ) ) ? 'tf-select2-parent' : 'tf-select2';
-			$parent_class = ( isset( $this->field['select2'] ) ) ? 'tf-select2' : $parent_class ;
+			$parent_class         = ( ! empty( $this->parent_field ) ) ? 'tf-select2-parent' : 'tf-select2';
+			$parent_class         = ( isset( $this->field['select2'] ) ) ? 'tf-select2' : $parent_class ;
 
 			echo '<select name="' . $field_name . '" id="' . $tf_select2_unique_id . '" class=" tf-select-two '.$parent_class.' " data-placeholder="' . esc_attr( $placeholder ) . '" ' . $multiple . ' '. $this->field_attributes() .'>';
 			foreach ( $args['options'] as $key => $value ) {
@@ -119,6 +154,35 @@ if ( ! class_exists( 'UACF7_select2' ) ) {
 			}
 
 			return $value;
+		}
+
+		private function set_config( $api_key = '', $path = '' ) {
+
+			$server_prefix = explode( "-", $api_key );
+
+			if ( ! isset( $server_prefix[1] ) ) {
+				return;
+			}
+			$server_prefix = $server_prefix[1];
+
+			$url = "https://$server_prefix.api.mailchimp.com/3.0/$path";
+
+			$curl = curl_init( $url );
+			curl_setopt( $curl, CURLOPT_URL, $url );
+			curl_setopt( $curl, CURLOPT_RETURNTRANSFER, true );
+
+			$headers = array(
+				"Authorization: Bearer $api_key"
+			);
+			curl_setopt( $curl, CURLOPT_HTTPHEADER, $headers );
+			//for debug only!
+			curl_setopt( $curl, CURLOPT_SSL_VERIFYHOST, false );
+			curl_setopt( $curl, CURLOPT_SSL_VERIFYPEER, false );
+
+			$resp = curl_exec( $curl );
+			curl_close( $curl );
+
+			return $resp;
 		}
 
 	}

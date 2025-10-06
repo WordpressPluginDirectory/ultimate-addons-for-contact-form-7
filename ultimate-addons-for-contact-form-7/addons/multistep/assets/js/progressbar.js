@@ -1,7 +1,7 @@
 (function ($) {
 
-    $(document).ready(function () {
-        jQuery('.wpcf7-form').each(function(){
+    function initUacf7Progressbar($scope) {
+        $scope.find('.wpcf7-form').each(function () {
                 var form_id = $(this).find("input[name=_wpcf7]").val(),
                 navListItems  = $(this).find('.uacf7-steps div.setup-panel div a[data-form-id="' + form_id + '"]'),
                 allWells      = $(this).find('.uacf7-step'),
@@ -40,8 +40,8 @@
                             title.show();
                             $target.find('input:eq(0)').focus();
                         }
-                     }
-                   
+                    }
+                
                 });
 
                 allPrevBtn.click(function () {
@@ -75,5 +75,17 @@
                 $('#'+form_id+'step-1.uacf7-step.step-content.step-start').show();
         });
         
+    }
+
+    // Run on normal page load
+    $(document).ready(function () {
+        initUacf7Progressbar($(document));
     });
+
+    // Run again when Elementor popup opens
+    $(document).on('elementor/popup/show', function (event, id, instance) {
+        var $popup = $(instance.$element);
+        initUacf7Progressbar($popup);
+    });
+
 })(jQuery);
